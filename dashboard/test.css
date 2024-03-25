@@ -26,21 +26,105 @@ nav ul li a {
 }
 
 body {
-  font-family: "Nunito", sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-image: url(https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/5baf8325-ed69-40b0-b9d2-d8c5d2bde3b0);
-  background-repeat: no-repeat;
-  background-size: cover;
+    font-family: "Nunito", sans-serif;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /*background-image: url(https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/5baf8325-ed69-40b0-b9d2-d8c5d2bde3b0);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 70px;*/
   /* background: #212140; */
+}
+
+.navbar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0 0.5px 0 1px rgba(255, 255, 255, 0.23) inset,
+        0 1px 0 0 rgba(255, 255, 255, 0.66) inset, 0 4px 16px rgba(0, 0, 0, 0.12);
+    position: fixed;
+    border-radius: 10px;
+    top: 0;
+    z-index: 10;
+    background: #fff;
+}
+
+.ucar> img {
+  height: 50px;
+  width : 130px;
+}
+
+.insat> img {
+    height: 50px;
+    width : 50px;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.nav-item button.btn-danger {
+  background-color: darkred;
+    border: none;
+}
+
+b {
+  background-color: darkred;
 }
 
 /* MAIN MENU */
 
+.pfp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.col > img {
+  width: 100px;
+  object-fit: cover;
+}
+
+.row .title {
+  margin-top: 20px;
+}
+
+.student-name-container {
+  display: flex;
+  align-items: center;
+}
+
+.student-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.row .info {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.row .info .col {
+  font-weight: bold;
+}
+
 main {
-  display: grid;
+  display: flex;
   grid-template-columns: 13% 87%;
   width: 100%;
   margin: 40px;
@@ -49,11 +133,12 @@ main {
     0 1px 0 0 rgba(255, 255, 255, 0.66) inset, 0 4px 16px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
   z-index: 10;
+    align-content: center;
 }
 
 .main-menu {
   overflow: hidden;
-  background: rgb(73, 57, 113);
+  background: darkred;
   padding-top: 10px;
   border-radius: 15px 0 0 15px;
   font-family: "Roboto", sans-serif;
@@ -620,6 +705,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 60%;
 }
 
 .card {
@@ -628,6 +714,7 @@ main {
   padding: 5px 7px;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 3px;
+  margin-top: 30px;
 }
 
 .card-two {
@@ -940,4 +1027,6 @@ main {
   .friends-activity {
     display: none;
   }
+  
+  
 }
