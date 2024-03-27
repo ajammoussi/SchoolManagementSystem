@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="main.css" rel="stylesheet">
     <link href="nav bar.css" rel="stylesheet">
 
@@ -19,7 +20,7 @@
         </div>
         <button class="btn btn-deconnect mobile" type="submit">Se Déconnecter</button>
         <div class="profile-nav" >
-          <p class="username-nav">welcome,foulen fouleni</p>
+          <p class="username-nav">Welcome, Foulen Ben Foulen</p>
           <img class="profile-pic-nav" src="src/profile pic.png">
           <button class="btn btn-deconnect" type="submit">Se Déconnecter</button>
         </div>
@@ -29,7 +30,7 @@
     <main>
       <!-- vertical nav bar -->
       <nav class="main-menu">
-        <h1>Menu</h1>
+        <h1 class="current-nav-element">Menu</h1>
         <img class="logo" src="src/logo.png" alt="logo" />
         <ul>
           <li class="nav-item-vertical active">
@@ -111,7 +112,7 @@
                 </div>
               </div>
             </div>
-            <div class="card">
+            <div class="card card-two">
               <div class="row info">
                 <div class="col">
                   <p>Date de naissance: </p>
@@ -131,6 +132,7 @@
       <!-- end of profile section -->
     </section>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 
 
