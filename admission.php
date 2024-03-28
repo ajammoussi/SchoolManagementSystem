@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('admissionDB.php');
+require_once('database/admissionDB.php');
 
 admissionDB::generate_pdf_for_all_submissions();
 
