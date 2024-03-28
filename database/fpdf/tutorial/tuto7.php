@@ -1,4 +1,7 @@
 <?php
+
+use fpdf\FPDF;
+
 require('../fpdf.php');
 
 $pdf = new FPDF();

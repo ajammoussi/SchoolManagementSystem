@@ -9,19 +9,22 @@ $pdo = ConnexionBD::getInstance();
 
 if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email']) && !empty($_POST['password'])) {
     // Check if the email and password match some predefined values (for demonstration purposes)
-    $valid_email = "demo@insat.com";
-    $valid_password = "demo1234";
-    $req=$pdo->prepare("SELECT * FROM etudiant WHERE email = :email AND password = :password");
-    $req->execute(array('email' => $_POST['email'], 'password' => $_POST['password']));
-    $result = $req->fetch();
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    if ($result) {
-        // Authentication successful, redirect to our dashboard
+    // Using prepared statements to prevent SQL injection
+    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE email = :email");
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch();
+
+    if ($user && password_verify($password, $user['password'])) {
+        // Authentication successful
+        $_SESSION['user_id'] = $user['id'];
         header("Location: ../dashboard/dashboard.php");
         exit;
     } else {
-        // if the profile doesn't exist in the database
-        $_SESSION['error'] = "Invalid email or password.";
+        // Invalid email or password
+        $_SESSION['error'] = "Invalid email or password".$password;
         header("Location: form.php");
         exit;
     }
