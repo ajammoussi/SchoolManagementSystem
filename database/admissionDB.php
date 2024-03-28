@@ -3,7 +3,7 @@
 require 'fpdf/fpdf.php';
 
 /**
- * *connects to the requests table
+ * *connects to the requests table in the database
  */
 class admissionDB
 {
@@ -30,6 +30,7 @@ class admissionDB
 
   /**
    * * inserts the new submission in the requests table
+   * @param data input of the registration form
    */
   public static function add_submission($data)
   {
@@ -75,7 +76,10 @@ class admissionDB
         }
     }
 
-
+/**
+ * *generates a pdf file using the data given in the submission
+ * @param data the data given in the submission
+ */
     private static function generate_pdf($data)
     {
         $pdf = new FPDF();
