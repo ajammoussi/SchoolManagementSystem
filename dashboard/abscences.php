@@ -18,7 +18,7 @@
           
 
         </div>
-        <button class="btn btn-deconnect mobile" type="submit" onclick="window.location.href = '../form/form.php';">Se Déconnecter</button>
+        <button class="btn btn-deconnect mobile" type="submit">Se Déconnecter</button>
         <div class="profile-nav" >
           <p class="username-nav">Welcome, Foulen Ben Foulen</p>
           <img class="profile-pic-nav" src="src/profile pic.png">
@@ -33,23 +33,23 @@
         <h1 class="current-nav-element">Menu</h1>
         <img class="logo" src="src/logo.png" alt="logo" />
         <ul>
-          <li class="nav-item-vertical active">
+          <li class="nav-item-vertical">
             <b></b>
             <b></b>
             <a href="#">
               <img src="src/profile pic.png" alt="home img " class="nav-vertical-icons">
-              <span class="nav-text">Profile</span>
+              <span class="nav-text">Home</span>
             </a>
           </li>
 
-          <!-- <li class="nav-item-vertical">
+          <li class="nav-item-vertical active">
             <b></b>
             <b></b>
             <a href="#">
-              <img src="src/profile pic.png" alt="Profile img " class="nav-vertical-icons">
-              <span class="nav-text">Home</span>
+              <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
+              <span class="nav-text">Profile</span>
             </a>
-          </li> -->
+          </li>
 
           <li class="nav-item-vertical">
             <b></b>
@@ -64,8 +64,8 @@
             <b></b>
             <b></b>
             <a href="#">
-              <!-- <img src="src/abscent white.png" alt="abscence img " class="nav-vertical-icons"> -->
-              <span class="nav-text">Abscences</span>
+              <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
+              <span class="nav-text">Activities</span>
             </a>
           </li>
 
@@ -86,7 +86,7 @@
 
       <!-- content of profile section  -->
       <div class="container">
-        <div class="row">
+        <!-- <div class="row">
           <div class="row title">
             <div class="col pfp">
               <img src="src/profile%20pic.png" alt="Profile Pic" class="pfp" />
@@ -127,12 +127,12 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- end of profile section -->
     </section>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
   </body>
 
 

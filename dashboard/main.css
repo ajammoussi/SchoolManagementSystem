@@ -152,9 +152,9 @@ main {
 }
 
 .nav-vertical-icons{
-  width: 40px;
-  height: 40px;
-  margin: 0 10px;
+  width: 50px;
+  height: 50px;
+  margin: 0 35px 0 25px;
 }
 
 /* vertical nav end */
@@ -164,7 +164,6 @@ main {
 .content {
   display: grid;
   grid-template-columns: 75% 25%;
-  margin-left: 2rem;
 }
 
 /* user info */
@@ -185,7 +184,7 @@ main {
 }
 
 .card-two {
-  margin-bottom: 2rem;
+  display: block;
 }
 
 .card-user-info {
@@ -290,7 +289,6 @@ main {
 
   .content {
     grid-template-columns: 70% 30%;
-    margin-left: 2rem;
   }
 }
 
