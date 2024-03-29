@@ -265,7 +265,19 @@ main {
 .row .info .col {
   font-weight: bold;
 }
+
 /* end of user info */
+
+/* admin info */
+
+/* make the submit button less wide*/
+.btn.btn-primary.submit{
+  width: 7rem;
+}
+
+
+/* admin info end */
+
 
 
 @media (max-width: 1100px) {
