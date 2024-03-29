@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  require_once('../database/dbcreation.php');
+  $pdo = ConnexionBD::getInstance();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="main.css" rel="stylesheet">
     <link href="nav bar.css" rel="stylesheet">
+    <link href="abscences.css" rel="stylesheet">
 
 </head>
   <body>
@@ -42,7 +50,7 @@
             </a>
           </li>
 
-          <li class="nav-item-vertical active">
+          <li class="nav-item-vertical">
             <b></b>
             <b></b>
             <a href="#">
@@ -60,12 +68,12 @@
             </a>
           </li>
 
-          <li class="nav-item-vertical">
+          <li class="nav-item-vertical active">
             <b></b>
             <b></b>
             <a href="#">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
-              <span class="nav-text">Activities</span>
+              <span class="nav-text">Abscences</span>
             </a>
           </li>
 
@@ -82,53 +90,42 @@
 
       
     
-    <section class="content">
+    
 
-      <!-- content of profile section  -->
-      <div class="container">
-        <!-- <div class="row">
-          <div class="row title">
-            <div class="col pfp">
-              <img src="src/profile%20pic.png" alt="Profile Pic" class="pfp" />
-            </div>
-            <div class="col-9 student-name-container">
-              <h2 class="student-name">Foulen Ben Foulen</h2>
-            </div>
+      
+      
+      <section class="absences-list">
+          
+          <div class="container text-center list-header">
+              <div>Course</div>
+              <div>Number of Absences</div>
           </div>
-          <div class="card-container">
-            <div class="card">
-              <div class="row info">
-                <div class="col">
-                  <p>N° d'inscription:</p>
-                  <p>Spécialité:</p>
-                  <p>Niveau:</p>
-                  <p>Groupe:</p>
-                </div>
-                <div class="col-9">
-                  <p>2021214</p>
-                  <p>Génie Logiciel</p>
-                  <p>2ème Année</p>
-                  <p>1</p>
-                </div>
-              </div>
-            </div>
-            <div class="card card-two">
-              <div class="row info">
-                <div class="col">
-                  <p>Date de naissance: </p>
-                  <p>Adresse: </p>
-                  <p>Email Institutionnel: </p>
-                </div>
-                <div class="col-9">
-                  <p>28/07/2003</p>
-                  <p>2 Avenue Habib Bourguiba Manouba</p>
-                  <p>foulenbenfoulen@insat.ucar.tn</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-      </div>
+          <hr>
+          <ul class="absences-list-inner">
+            <?php
+
+              $stmt = $pdo->prepare("SELECT * , count(absencedate) as nombre_abscences FROM absence,course WHERE absence.student = :id AND course.id = absence.course
+                                    group by(course)");
+              $stmt->execute(['id' => $_SESSION['user_id']]);
+              $abscences = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              // print_r( $abscences);
+              foreach ($abscences as $abscence) {?>
+
+                <li >
+                  <ul class="abscence-item">
+                    <li class='nav-text'><?= $abscence['coursename']?></p> 
+                    <li class='nav-text'><?=$abscence['nombre_abscences']?></p> 
+                  </ul>
+                </li>
+              
+              <?php
+              }
+            
+            ?>
+
+          </ul>
+        
+        
       <!-- end of profile section -->
     </section>
     </main>
