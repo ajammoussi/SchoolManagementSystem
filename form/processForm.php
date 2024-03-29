@@ -13,7 +13,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email'
     $password = $_POST['password'];
 
     // Using prepared statements to prevent SQL injection
-    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE email = :email");
+    $stmt = $pdo->prepare("SELECT * FROM student WHERE email = :email");
     $stmt->execute(['email' => $email]);
     $user = $stmt->fetch();
 
@@ -24,7 +24,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email'
         exit;
     } else {
         // Invalid email or password
-        $_SESSION['error'] = "Invalid email or password".$password;
+        $_SESSION['error'] = "Invalid email or password";
         header("Location: form.php");
         exit;
     }

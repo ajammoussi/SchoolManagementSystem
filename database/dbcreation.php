@@ -58,8 +58,7 @@ class ConnexionBD
             );
 
 
-        //     // creer un compte demo comme etudiant
-        //     self::insertData_etudiant(array('nom' => 'demo nom', 'prenom' => 'demo prenom', 'filiere' => 'GL', 'classe' => '2/2', 'email' => 'demo@insat.com', 'password' => 'demo1234'));
+        
         } catch (PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
@@ -91,6 +90,56 @@ class ConnexionBD
             $data['password'] = $hashedPassword;
             $stmt->execute($data);
             echo "Data inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
+    }
+    // insert data into the table prof
+    public static function insertData_prof($data)
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                INSERT INTO teacher ( firstname, lastname, email, password,phone,gender)
+                    VALUES (:firstname, :lastname, :email, :password,:phone,:gender) 
+                ");
+
+            // Hash the password before storing
+            $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+            $data['password'] = $hashedPassword;
+            $stmt->execute($data);
+            echo "Data inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
+    }
+    // insert data into the table prof
+    public static function insertData_course($data)
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                INSERT INTO course ( coursename, teacher)
+                    VALUES (:coursename, :teacher) 
+                ");
+
+            
+            $stmt->execute($data);
+            echo "Data inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
+    }
+    // insert data into the table abscence
+    public static function insertData_abscence($data){
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                INSERT INTO absence ( student,course,absencedate)
+                    VALUES (:student,:course,:absencedate) 
+            ");
+            $stmt->execute($data);
+            echo "abscence is inserted successfully";
         } catch (PDOException $e) {
             echo "Error inserting data: " . $e->getMessage();
         }
