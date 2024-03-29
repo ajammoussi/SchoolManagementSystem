@@ -1,6 +1,6 @@
 <?php
 
-require_once('D:\GL2\Semestre 2\Web\Ateliers\TP PHP\SchoolManagementSystem\database\dbcreation.php');
+require_once('../database/dbcreation.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

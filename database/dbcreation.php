@@ -1,6 +1,6 @@
 <?php
 
-use fpdf\FPDF;
+require 'fpdf/fpdf.php';
 
 class ConnexionBD
 {
@@ -121,13 +121,9 @@ class ConnexionBD
             $numberOfSubmissions = $pdo->query("SELECT COUNT(*) FROM request")->fetchColumn();
             if ($numberOfSubmissions == 0) {
                 $data = ["id" => 1] + $data;
-                print_r($data);
             } else {
                 $data = ["id" => $numberOfSubmissions + 1] + $data;
             }
-
-
-            echo gettype($data['birthdate']);
             $stmt = $pdo->prepare("INSERT INTO request (id, firstname, lastname, email, phone,
                                                             address, birthdate, gender, nationality,
                                                             education, program, achievements, essay)

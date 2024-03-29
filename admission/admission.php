@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('D:\GL2\Semestre 2\Web\Ateliers\TP PHP\SchoolManagementSystem\database\dbcreation.php');
+require_once('../database/dbcreation.php');
 
 ConnexionBD::generate_pdf_for_all_submissions();
 
