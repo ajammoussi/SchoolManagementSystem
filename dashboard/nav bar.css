@@ -28,14 +28,21 @@
     justify-content:start;
     margin-left: 10px;
     align-items: center;
-    
-
 }
+
+.nav-text {
+    font-family: "Nunito", sans-serif;
+}
+
+.current-nav-element {
+    font-weight: bold;
+}
+
+
 /* scale imges */
 .ucar> img {
     height: 50px;
     width : 130px;
-    
   }
   
 .insat> img {
@@ -44,15 +51,15 @@
     margin-left: 8px;
 }
 
-  .username-nav{
+.username-nav{
     font-size: 1rem;
     font-weight: 500;
-    
+    margin-top: 1.1rem;
     margin-right: 10px;
-  }
+}
 
-  /* button styling */
-  .btn {
+/* button styling */
+.btn {
     display: block;
     padding: 8px 24px;
     margin: 10px auto;
@@ -68,49 +75,48 @@
     cursor: pointer;
 
     transition: background 0.3s ease, color 0.3s ease;
-  }
-  .btn:hover {
+}
+.btn:hover {
     background: darkred;
     color: #fff;
-  }
+}
 
-  .profile-pic-nav{
+.profile-pic-nav{
     height: 50px;
     width: 50px;
     margin-right: 10px;
-    
-  }
+}
 
 
-  /* hides the second button when on big screen */
-  .mobile{
+/* hides the second button when on big screen */
+.mobile{
     display: none;
-  }
-  
+}
 
-  /* switching to small screen */
-  @media (max-width: 650px) {
+
+/* switching to small screen */
+@media (max-width: 650px) {
     .logo-uni-nav{
       display: none;
-  }
-  .btn-deconnect{
+    }
+    .btn-deconnect{
     display: none;
-  
-  }
-  .container-nav{
+
+    }
+    .container-nav{
     justify-content: right;
-  }
-  .mobile{
+    }
+    .mobile{
     display: block;
 
-  }
-  .btn.mobile{
+    }
+    .btn.mobile{
     padding: 4px 12px;
-    
-    
-  }
 
-  
+
+    }
+
+
 }
   
   

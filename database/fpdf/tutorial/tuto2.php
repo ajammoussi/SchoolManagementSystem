@@ -1,4 +1,7 @@
 <?php
+
+use fpdf\FPDF;
+
 require('../fpdf.php');
 
 class PDF extends FPDF
@@ -31,7 +34,7 @@ function Footer()
 }
 
 // Instanciation of inherited class
-$pdf = new PDF();
+$pdf = new \fpdf\tutorial\PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Times','',12);
