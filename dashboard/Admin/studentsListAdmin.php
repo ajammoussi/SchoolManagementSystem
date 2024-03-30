@@ -1,5 +1,8 @@
 <?php
+    session_start();
     require_once('../../database/dbcreation.php');
+    if (!isset($_SESSION['filter']))
+        $_SESSION['filter'] = "default";
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +17,10 @@
 
 </head>
 <body>
+<script>
+    const filter = "<?=$_SESSION['filter'] ?>";
+    console.log(filter);
+</script>
 <nav class="navbar">
     <div class="container-nav">
         <div class="logo-uni-nav">
@@ -97,47 +104,55 @@
                     </div>
                 </div>
                 <div class="card-container">
-                    <div class="card">
-                        <div class="row info">
+                    <div class="card filter">
+                        <div class="row info filter">
                             <form action="studentsListAdmin.php" method="post">
-                                <p>Filter students by:
-                                    <span>
+                                <div class="col">
+                                    <p>Filter students by:
+                                        <span>
                                         <select name="filter" id="filter">
                                             <option value="default">--</option>
                                             <option value="field">Field</option>
                                             <option value="studyLevel">Study Level</option>
                                         </select>
                                     </span>
-                                </p>
-                                <!-- Select menu for field -->
-                                <p id="fieldSelect" hidden> Select a Field:
-                                    <select name="field" id="field">
-                                        <option value="default">--</option>
-                                        <option value="MPI">MPI</option>
-                                        <option value="CBA">CBA</option>
-                                        <option value="GL">gL</option>
-                                        <option value="RT">RT</option>
-                                        <option value="IIA">IIA</option>
-                                        <option value="IMI">IMI</option>
-                                        <option value="CH">CH</option>
-                                        <option value="BIO">BIO</option>
-                                    </select>
-                                </p>
+                                    </p>
+                                    <!-- Select menu for field -->
+                                    <p id="fieldSelect" hidden> Select a Field:
+                                        <select name="field" id="field">
+                                            <option value="default">--</option>
+                                            <option value="MPI">MPI</option>
+                                            <option value="CBA">CBA</option>
+                                            <option value="GL">gL</option>
+                                            <option value="RT">RT</option>
+                                            <option value="IIA">IIA</option>
+                                            <option value="IMI">IMI</option>
+                                            <option value="CH">CH</option>
+                                            <option value="BIO">BIO</option>
+                                        </select>
+                                    </p>
 
-                                <!-- Select menu for study level -->
-                                <p id="studyLevelSelect" hidden> Select a study level:
-                                    <select name="studyLevel" id="studyLevel">
-                                        <option value="default">--</option>
-                                        <option value="1">1st Year</option>
-                                        <option value="2">2nd Year</option>
-                                        <option value="3">3rd Year</option>
-                                        <option value="4">4th Year</option>
-                                        <option value="5">5th Year</option>
-                                    </select>
-                                </p>
+                                    <!-- Select menu for study level -->
+                                    <p id="studyLevelSelect" hidden> Select a study level:
+                                        <select name="studyLevel" id="studyLevel">
+                                            <option value="default">--</option>
+                                            <option value="1">1st Year</option>
+                                            <option value="2">2nd Year</option>
+                                            <option value="3">3rd Year</option>
+                                            <option value="4">4th Year</option>
+                                            <option value="5">5th Year</option>
+                                        </select>
+                                    </p>
+                                </div>
 
-                                <button class="btn btn-primary submit" type="submit" onclick="window.location.href = 'studentsListAdmin.php';">Filter</button>
-                            </div>
+                                <div class="col">
+                                    <button class="btn btn-primary submit" type="submit" onclick="window.location.href = 'studentsListAdmin.php';">Filter</button>
+                                </div>
+                                <div class="col">
+                                    <button hidden class="btn btn-outline" id="remove" type="submit" onclick="window.location.href = 'studentsListAdmin.php';">Remove Filter</button>
+                                </div>
+
+                        </div>
                         </form>
                     </div>
                     <?php
@@ -147,11 +162,11 @@
                             $studyLevel = $_POST['studyLevel'];
                             $filter = $_POST['filter'];
 
-                            $students = ConnexionBD::showStudents($field, $studyLevel, $filter);
+                            [$students, $_SESSION['filter']] = ConnexionBD::showStudents($field, $studyLevel, $filter);
                         }
                     ?>
                     <div class="card card-two">
-                        <div class="row info">
+                        <div class="row info tbl">
                             <!-- bootstrap table -->
                             <table class="table table-striped table-hover">
                                 <thead>

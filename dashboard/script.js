@@ -3,6 +3,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const fieldSelect = document.getElementById("fieldSelect");
     const studyLevelSelect = document.getElementById("studyLevelSelect");
 
+    const submitButton = document.getElementById("submit");
+    const cancelButton = document.getElementById("remove");
+
+    if (filter === 'field' || filter === 'studylevel') {
+        cancelButton.removeAttribute("hidden");
+    } else {
+        cancelButton.setAttribute("hidden", "");
+    }
+
     filterSelect.addEventListener("change", function() {
         const selectedValue = filterSelect.value;
 
@@ -19,10 +28,12 @@ document.addEventListener("DOMContentLoaded", function() {
             fieldSelect.setAttribute("hidden", "");
         }
     });
+
+
+    const submitForm = (event) => {
+        event.preventDefault();
+    }
+    submitButton.addEventListener("click", submitForm);
+
 });
 
-const submitButton = document.getElementById("submit");
-const submitForm = (event) => {
-    event.preventDefault();
-}
-submitButton.addEventListener("click", submitForm);
