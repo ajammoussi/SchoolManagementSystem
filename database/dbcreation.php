@@ -160,26 +160,17 @@ class ConnexionBD
         }
     }
 
-    public static function showStudents($field, $studyLevel, $filter)
+    public static function getStudents()
     {
         try {
             $pdo = self::getInstance();
-            if ($filter == "field") {
-                $stmt = $pdo->query("SELECT * FROM student WHERE field = '$field';");
-                $_SESSION['filter'] = "field";
-            } else if ($filter == "studyLevel") {
-                $stmt = $pdo->query("SELECT * FROM student WHERE studylevel = '$studyLevel';");
-                $_SESSION['filter'] = "studylevel";
-            } else {
-                $stmt = $pdo->query("SELECT * FROM student;");
-                $_SESSION['filter'] = "default";
-            }
-            $final_filter = $_SESSION['filter'];
+            $stmt = $pdo->query("SELECT * FROM student;");
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-            return [$result, $final_filter];
+            return $result;
 
         } catch (PDOException $e) {
             echo "Error fetching data: " . $e->getMessage();
+            return null;
         }
     }
 

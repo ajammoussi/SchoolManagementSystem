@@ -1,7 +1,6 @@
 <?php
     session_start();
     require_once('../../database/dbcreation.php');
-    $_SESSION['filter'] = "default";
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +42,6 @@
                 <b></b>
                 <b></b>
                 <a href="#">
-                    <img src="../src/profile%20pic.png" alt="home img " class="nav-vertical-icons">
                     <span class="nav-text">Overview</span>
                 </a>
             </li>
@@ -90,6 +88,23 @@
 
     <section class="content">
 
+        <!-- Modal -->
+        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Additional Information:</h5>
+                    </div>
+                    <div class="modal-body" id="studentInfo">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- content of profile section  -->
         <div class="container">
             <div class="row">
@@ -118,7 +133,7 @@
                                             <option value="default">--</option>
                                             <option value="MPI">MPI</option>
                                             <option value="CBA">CBA</option>
-                                            <option value="GL">gL</option>
+                                            <option value="GL">GL</option>
                                             <option value="RT">RT</option>
                                             <option value="IIA">IIA</option>
                                             <option value="IMI">IMI</option>
@@ -140,30 +155,32 @@
                                     </p>
                                 </div>
 
-                                <div class="col">
+                                <!--<div class="col">
                                     <button class="btn btn-primary submit" type="submit" onclick="window.location.href = 'studentsListAdmin.php';">Filter</button>
                                 </div>
-                                <div class="col">
-                                    <button hidden class="btn btn-outline" id="remove" type="submit" onclick="window.location.href = 'studentsListAdmin.php';">Remove Filter</button>
+                                -->
+                                <div class="col-8">
+                                    <button hidden class="btn btn-outline" id="cancel" >Cancel Filter</button>
                                 </div>
 
                         </div>
                         </form>
                     </div>
                     <?php
-                        $students = [];
-                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $students = ConnexionBD::getStudents();
+                        /*if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $field = $_POST['field'];
                             $studyLevel = $_POST['studyLevel'];
                             $filter = $_POST['filter'];
 
                             [$students, $final_filter] = ConnexionBD::showStudents($field, $studyLevel, $filter);
                             $_SESSION['filter'] = $final_filter;
-                        }
+                        }*/
+
                     ?>
                     <script>
                         const filter = "<?=$_SESSION['filter'] ?>";
-                        console.log(filter);
+                        const students = <?= json_encode($students) ?>;
                     </script>
                     <div class="card card-two">
                         <div class="row info tbl">
@@ -178,17 +195,8 @@
                                         <th scope="col">Study Level</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                        foreach ($students as $student) { ?>
-                                            <tr>
-                                                <td><?= $student->id ?></td>
-                                                <td><?= $student->firstname ?></td>
-                                                <td><?= $student->lastname ?></td>
-                                                <td><?= $student->field ?></td>
-                                                <td><?= $student->studylevel ?></td>
-                                            </tr>
-                                        <?php } ?>
+                                <tbody id="body">
+                                    <!-- The student list that will be loaded-->
                                 </tbody>
                             </table>
                         </div>
