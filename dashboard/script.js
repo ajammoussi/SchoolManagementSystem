@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const fieldSelect = document.getElementById("fieldSelect");
     const studyLevelSelect = document.getElementById("studyLevelSelect");
     const tableBody = document.getElementById("body");
-    // const submitButton = document.getElementById("submit");
     const cancelButton = document.getElementById("cancel");
     const showMoreButton = document.getElementById("showMore");
     const modal = document.getElementById("Modal");
     const studentInfo = document.getElementById("studentInfo");
     const span = document.getElementsByClassName("close")[0];
+    const pageTitle = document.getElementById("pageTitle");
 
     if (filter === 'field' || filter === 'studylevel') {
         cancelButton.removeAttribute("hidden");
@@ -17,27 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelButton.setAttribute("hidden", "");
     }
 
-    /*// When the user clicks on <span> (x), close the modal
-    span.onclick = () => {
-        modal.style.display = "none";
-    }
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }*/
-
-    const showMoreInfo = (student) => {
+    const showMoreInfoStudent = (student) => {
         // Display the student's information in the modal
-        /* studentInfo.innerHTML = `
-            ID: ${student.id}<br>
-            First Name: ${student.firstname}<br>
-            Last Name: ${student.lastname}<br>
-            Field: ${student.field}<br>
-            Study Level: ${student.studylevel}<br>
-        `; */
+
         studentInfo.innerHTML = `
             <table class="table">
                 <tbody>
@@ -48,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <tr><th>Password</th><td>${student.password}</td></tr>
                 <tr><th>Phone</th><td>${student.phone}</td></tr>
                 <tr><th>Address</th><td>${student.address}</td></tr>
-                <tr><th>Birthdate</th><td>${student.birthDate}</td></tr>
+                <tr><th>Birthdate</th><td>${student.birthdate}</td></tr>
                 <tr><th>Nationality</th><td>${student.nationality}</td></tr>
                 <tr><th>Gender</th><td>${student.gender}</td></tr>
                 <tr><th>Field</th><td>${student.field}</td></tr>
@@ -80,11 +63,17 @@ document.addEventListener("DOMContentLoaded", () => {
             // Add event listeners to the "Show More" buttons
             arr.forEach((student) => {
                 document.getElementById(`showMore${student.id}`).addEventListener("click", () => {
-                    showMoreInfo(student);
+                    showMoreInfoStudent(student);
                 });
             });
     };
-    showStudents();
+    if (pageTitle.innerHTML === "Students") {
+        showStudents();
+    }
+    else if (pageTitle.innerHTML === "Teachers") {
+        showTeachers();
+    }
+
 
 
 
@@ -137,18 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelButton.setAttribute("hidden", "");
     });
 
-
-
-
-    /*close.addEventListener("click", () => {
-        popup.style.display = "none";
-    });
-    window.addEventListener("click", (event) => {
-        if (event.target === popup) {
-            popup.style.display = "none";
-        }
-    });
-*/
 
 
 });

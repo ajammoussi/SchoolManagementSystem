@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title id="pageTitle">Students</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../main.css" rel="stylesheet">
     <link href="../nav%20bar.css" rel="stylesheet">
@@ -155,10 +155,6 @@
                                     </p>
                                 </div>
 
-                                <!--<div class="col">
-                                    <button class="btn btn-primary submit" type="submit" onclick="window.location.href = 'studentsListAdmin.php';">Filter</button>
-                                </div>
-                                -->
                                 <div class="col-8">
                                     <button hidden class="btn btn-outline" id="cancel" >Cancel Filter</button>
                                 </div>
@@ -168,15 +164,6 @@
                     </div>
                     <?php
                         $students = ConnexionBD::getStudents();
-                        /*if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                            $field = $_POST['field'];
-                            $studyLevel = $_POST['studyLevel'];
-                            $filter = $_POST['filter'];
-
-                            [$students, $final_filter] = ConnexionBD::showStudents($field, $studyLevel, $filter);
-                            $_SESSION['filter'] = $final_filter;
-                        }*/
-
                     ?>
                     <script>
                         const filter = "<?=$_SESSION['filter'] ?>";

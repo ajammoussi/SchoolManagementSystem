@@ -174,6 +174,20 @@ class ConnexionBD
         }
     }
 
+    public static function getTeachers()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT * FROM teacher;");
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $result;
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+
     /**
      * * inserts the new submission in the requests table
      */
