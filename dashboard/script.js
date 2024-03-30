@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+
     const filterSelect = document.getElementById("filter");
     const fieldSelect = document.getElementById("fieldSelect");
     const studyLevelSelect = document.getElementById("studyLevelSelect");

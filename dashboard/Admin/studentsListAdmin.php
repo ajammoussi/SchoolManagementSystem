@@ -1,8 +1,7 @@
 <?php
     session_start();
     require_once('../../database/dbcreation.php');
-    if (!isset($_SESSION['filter']))
-        $_SESSION['filter'] = "default";
+    $_SESSION['filter'] = "default";
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +16,6 @@
 
 </head>
 <body>
-<script>
-    const filter = "<?=$_SESSION['filter'] ?>";
-    console.log(filter);
-</script>
 <nav class="navbar">
     <div class="container-nav">
         <div class="logo-uni-nav">
@@ -162,9 +157,14 @@
                             $studyLevel = $_POST['studyLevel'];
                             $filter = $_POST['filter'];
 
-                            [$students, $_SESSION['filter']] = ConnexionBD::showStudents($field, $studyLevel, $filter);
+                            [$students, $final_filter] = ConnexionBD::showStudents($field, $studyLevel, $filter);
+                            $_SESSION['filter'] = $final_filter;
                         }
                     ?>
+                    <script>
+                        const filter = "<?=$_SESSION['filter'] ?>";
+                        console.log(filter);
+                    </script>
                     <div class="card card-two">
                         <div class="row info tbl">
                             <!-- bootstrap table -->
@@ -200,6 +200,7 @@
     </section>
 </main>
 <script src="../script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 

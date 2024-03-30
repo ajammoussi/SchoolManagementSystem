@@ -63,7 +63,7 @@
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
-            <a href="#">
+            <a href="#" onclick="window.location.href = './abscences.php'">
               <!-- <img src="src/abscent white.png" alt="abscence img " class="nav-vertical-icons"> -->
               <span class="nav-text">Abscences</span>
             </a>
