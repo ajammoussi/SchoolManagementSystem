@@ -1,4 +1,7 @@
 <?php
+
+use fpdf\FPDF;
+
 require('../fpdf.php');
 
 class PDF extends FPDF
@@ -86,7 +89,7 @@ function FancyTable($header, $data)
 }
 }
 
-$pdf = new PDF();
+$pdf = new \fpdf\tutorial\PDF();
 // Column headings
 $header = array('Country', 'Capital', 'Area (sq km)', 'Pop. (thousands)');
 // Data loading

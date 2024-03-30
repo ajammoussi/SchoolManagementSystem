@@ -1,4 +1,7 @@
 <?php
+
+use fpdf\FPDF;
+
 require('../fpdf.php');
 
 class PDF extends FPDF
@@ -99,7 +102,7 @@ function PrintChapter($num, $title, $file)
 }
 }
 
-$pdf = new PDF();
+$pdf = new \fpdf\tutorial\PDF();
 $title = '20000 Leagues Under the Seas';
 $pdf->SetTitle($title);
 $pdf->SetAuthor('Jules Verne');
