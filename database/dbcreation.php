@@ -1,6 +1,6 @@
 <?php
 
-use fpdf\FPDF;
+require 'fpdf/fpdf.php';
 
 class ConnexionBD
 {
@@ -160,6 +160,29 @@ class ConnexionBD
         }
     }
 
+    public static function showStudents($field, $studyLevel, $filter)
+    {
+        try {
+            $pdo = self::getInstance();
+            if ($filter == "field") {
+                $stmt = $pdo->query("SELECT * FROM student WHERE field = '$field';");
+                $_SESSION['filter'] = "field";
+            } else if ($filter == "studyLevel") {
+                $stmt = $pdo->query("SELECT * FROM student WHERE studylevel = '$studyLevel';");
+                $_SESSION['filter'] = "studylevel";
+            } else {
+                $stmt = $pdo->query("SELECT * FROM student;");
+                $_SESSION['filter'] = "default";
+            }
+            $final_filter = $_SESSION['filter'];
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return [$result, $final_filter];
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+        }
+    }
+
     /**
      * * inserts the new submission in the requests table
      */
@@ -175,10 +198,10 @@ class ConnexionBD
             }
             $stmt = $pdo->prepare("INSERT INTO request (id, firstname, lastname, email, phone,
                                                             address, birthdate, gender, nationality,
-                                                            field, education, program, achievements, essay)
+                                                            education, program, achievements, essay)
                                   VALUES (:id, :firstname, :lastname, :email, :phone, :address, 
-                                          :birthdate, :gender, :nationality, :field, :education, 
-                                          :program, :achievements, :essay)
+                                          :birthdate, :gender, :nationality, :education, 
+                                          :program, :achievements, :essay);
             ");
             $stmt->execute($data);
             echo "Data inserted successfully";

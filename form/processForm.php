@@ -20,7 +20,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email'
     if ($user && password_verify($password, $user['password'])) {
         // Authentication successful
         $_SESSION['user_id'] = $user['id'];
-        header("Location: ../dashboard/dashboard.php");
+        header("Location: ../dashboard/dashboardEtudiant.php");
         exit;
     } else {
         // Invalid email or password
