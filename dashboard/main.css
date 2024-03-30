@@ -261,7 +261,7 @@ main {
 
 /* admin info */
 
-<<<<<<< HEAD
+
 /* make the submit button less wide*/
 .btn.btn-primary.submit{
   width: 7rem;
@@ -288,6 +288,22 @@ form {
     margin: 10px;
     justify-content: center;
 }
+.modal-body {
+  overflow: auto;
+}
+.modal-body td {
+  word-wrap: break-word;
+}
+.table td, .table th{
+  align-content: center;
+  text-align: center;
+}
+
+#cancel {
+  margin: 20px;
+}
+
+
 
   /* admin info end */
 
@@ -341,7 +357,7 @@ form {
     } */
 
   }
-=======
+
 @media (max-width: 1100px) {
   main {
     grid-template-columns:  12% 88%;
