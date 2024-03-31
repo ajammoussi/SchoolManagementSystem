@@ -189,7 +189,7 @@ class ConnexionBD
     }
 
     /**
-     * * inserts the new submission in the requests table
+     * * inserts the new submission in the request table
      */
     public static function add_submission($data)
     {
@@ -216,37 +216,26 @@ class ConnexionBD
     }
 
     /**
-     *
+     * *deletes the submission with the same email
+     * @param email email associated to the submission
      */
-    public static function delete_submission($data)
-    {
-        try{
-            $pdo = self::getInstance();
-            $req= $pdo->prepare("DELETE FROM request WHERE id = :id");
-            $req->execute(array('id' =>$data['id']));
-        } catch (PDOException $e) {
-            echo "Error inserting data: " . $e->getMessage();
-        }
-    }
-
-    public static function generate_pdf_for_all_submissions()
+    public static function delete_submission($email)
     {
         try {
             $pdo = self::getInstance();
-            $stmt = $pdo->query("SELECT * FROM request");
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ($results as $row) {
-                self::generate_pdf($row);
-            }
-
-            echo "PDF files generated successfully";
+            $stmt = $pdo->prepare("DELETE FROM request WHERE email = :email");
+            $stmt->execute($email);
+            echo "Submission deleted successfully.";
         } catch (PDOException $e) {
-            echo "Error generating PDF: " . $e->getMessage();
+            echo "Error deleting submission: " . $e->getMessage();
         }
     }
 
 
+    /**
+     * *generates a pdf file using the data given in the submission
+     * @param data the data given in the submission
+     */
     private static function generate_pdf($data)
     {
         $pdf = new FPDF();
@@ -270,4 +259,102 @@ class ConnexionBD
         $pdfFileName = 'admission_pdf/' . $data['email'] . '.pdf';
         $pdf->Output($pdfFileName, 'F');
     }
+
+    /**
+     * generates a pdf file for each submission in the database
+     */
+    public static function generate_pdf_for_all_submissions()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT * FROM request");
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($results as $row) {
+                self::generate_pdf($row);
+            }
+
+            echo "PDF files generated successfully";
+        } catch (PDOException $e) {
+            echo "Error generating PDF: " . $e->getMessage();
+        }
+    }
+
+    /**
+     * * adding new student to Student table using his email
+     * @param email the email of the student to be added
+     */
+    public static function addStudent_byemail($email)
+    {
+        try {
+            $pdo = self::getInstance();
+
+            // Select the student with the given email
+            $stmt = $pdo->prepare("SELECT * FROM student WHERE email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $student = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$student) {
+                echo "No student found with the provided email.";
+                return;
+            }
+
+            // Generate a random password
+            $password = self::generateRandomPassword();
+
+            // Selecting the class with the least number of students in the same field
+            $stmt = $pdo->prepare("SELECT class, COUNT(*) as num_students 
+                                    FROM student 
+                                    WHERE field = :field 
+                                    GROUP BY class 
+                                    ORDER BY num_students ASC 
+                                    LIMIT 1");
+            $stmt->execute($student['field']);
+
+            $classInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $selectedClass = $classInfo['class'];
+
+            // Use insertData_etudiant to add the student to the student table
+            $data = [
+                'firstname' => $student['firstname'],
+                'lastname' => $student['lastname'],
+                'email' => $student['email'],
+                'password' => $student['password'],  // You may need to adjust this depending on your requirements
+                'phone' => $student['phone'],
+                'address' => $student['address'],
+                'birthdate' => $student['birthdate'],
+                'nationality' => $student['nationality'],
+                'gender' => $student['gender'],
+                'field' => $student['field'],
+                'studylevel' => $student['studylevel'],
+                'class' => $selectedClass
+            ];
+
+            // Send email to the student using PHPMailer
+            $mail = new PHPMailer(true);
+
+
+            // admin's email to be changed
+            $mail->setFrom('admin@school.com', 'School Administration');
+            $mail->addAddress($student['email'], $student['firstname'] . ' ' . $student['lastname']);
+            $mail->Subject = 'Welcome to Our School';
+            $mail->Body    = "Dear " . $student['firstname'] . " " . $student['lastname'] . ",\n\n" .
+                             "Congratulations! You have been accepted to our school.\n" .
+                             "Your password is: " . $password . "\n\n" .
+                             "Please keep this password secure and do not share it with anyone.\n\n" .
+                             "Best regards,\n" .
+                             "School Administration";
+
+            $mail->send();
+
+            echo "Email sent successfully.";
+
+            self::insertData_etudiant($data);
+            echo "Student added successfully.";
+        } catch (PDOException $e) {
+            echo "Error adding student: " . $e->getMessage();
+        }
+    }   
 }
