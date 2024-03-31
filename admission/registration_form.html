@@ -4,83 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link href="form.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<form action="submit_request.php" method="post">
-    
-    <!-- Personal Information -->
-    <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" name="firstName" required>
+<div class="container mt-5">
+    <h2 class="text-center" style="color: #B30000;">Registration Form</h2> <!-- Centered title with red color -->
+    <form action="submit_request.php" method="post">
+        
+        <!-- Personal Information -->
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" required>
+        </div>
 
-    <br>
-    <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" required>
-    <br>
-    <!-- Date of Birth -->
-    <label for="birthDate">Date of Birth:</label>
-    <input type="date" id="birthDate" name="birthDate" required>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" required>
+        </div>
 
-    <br>
-    <!-- Gender -->
-    <label for="gender">Gender:</label>
-    <select id="gender" name="gender" required>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-    </select>
+        <!-- Date of Birth -->
+        <div class="form-group">
+            <label for="birthDate">Date of Birth:</label>
+            <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+        </div>
 
-    <br>
-    <!-- Nationality -->
-    <label for="nationality">Nationality:</label>
-    <input type="text" id="nationality" name="nationality" required>
+        <!-- Gender -->
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select class="form-control" id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
 
-    <br>
-    <!-- Contact Information -->
-    <label for="email">Email Address:</label>
-    <input type="email" id="email" name="email" required>
+        <!-- Nationality -->
+        <div class="form-group">
+            <label for="nationality">Nationality:</label>
+            <input type="text" class="form-control" id="nationality" name="nationality" required>
+        </div>
 
-    <br>
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" required>
+        <!-- Contact Information -->
+        <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
 
-    <br>
-    <!-- Address -->
-    <label for="address">Address:</label>
-    <textarea id="address" name="address" rows="4" required></textarea>
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" class="form-control" id="phone" name="phone" required>
+        </div>
 
-    <br>
-    <!-- Previous Education -->
-    <label for="education">Previous Education:</label>
-    <input type="text" id="education" name="education" required>
+        <!-- Address -->
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea class="form-control" id="address" name="address" rows="4" required></textarea>
+        </div>
 
-    <br>
-    <!-- Intended Program of Study -->
-    <label for="program">Intended Program of Study:</label>
-    <select id="program" name="program" required>
-        <option value="mpi">MPI</option>
-        <option value="cba">CBA</option>
-    </select>
+        <!-- Previous Education -->
+        <div class="form-group">
+            <label for="education">Previous Education:</label>
+            <input type="text" class="form-control" id="education" name="education" required>
+        </div>
 
-    <br>
-    <!-- Achievements and Awards -->
-    <label for="achievements">Achievements and Awards:</label>
-    <textarea id="achievements" name="achievements" rows="4"></textarea>
+        <!-- Intended Program of Study -->
+        <div class="form-group">
+            <label for="program">Intended Program of Study:</label>
+            <select class="form-control" id="program" name="program" required>
+                <option value="mpi">MPI</option>
+                <option value="cba">CBA</option>
+            </select>
+        </div>
 
-    <br>
-    <!-- Personal Statement -->
-    <label for="essay">Personal Statement:</label>
-    <textarea id="essay" name="essay" rows="6" required></textarea>
+        <!-- Achievements and Awards -->
+        <div class="form-group">
+            <label for="achievements">Achievements and Awards:</label>
+            <textarea class="form-control" id="achievements" name="achievements" rows="4"></textarea>
+        </div>
 
-    <br>
-    <!-- Declaration Checkbox -->
-    <input type="checkbox" id="declaration" name="declaration" required>
-    <label for="declaration">I hereby declare that the information provided is accurate and complete to the best of my knowledge.</label>
-    
-    <br>
-    <!-- Submit Button -->
-    <input type="submit" value="Submit">
+        <!-- Personal Statement -->
+        <div class="form-group">
+            <label for="essay">Personal Statement:</label>
+            <textarea class="form-control" id="essay" name="essay" rows="6" required></textarea>
+        </div>
 
-</form>
+        <!-- Declaration Checkbox -->
+        <div class="form-group form-check">
+            <input class="form-check-input" type="checkbox" id="declaration" name="declaration" required>
+            <label class="form-check-label" for="declaration">I hereby declare that the information provided is accurate and complete to the best of my knowledge.</label>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-danger" >Submit</button>
+
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

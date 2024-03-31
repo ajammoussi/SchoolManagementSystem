@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require('database/dbcreation.php');
+require'database/dbcreation.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {   
     $action = $_POST['action'];
