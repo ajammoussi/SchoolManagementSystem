@@ -4,10 +4,10 @@ require 'fpdf/fpdf.php';
 
 class ConnexionBD
 {
-    private static $_dbname = "sql11694778";
-    private static $_user = "sql11694778";
-    private static $_pwd = "5ErSzCTYhX";
-    private static $_host = "sql11.freesqldatabase.com";
+    private static string $_dbname = "sql11694778";
+    private static string $_user = "sql11694778";
+    private static string $_pwd = "5ErSzCTYhX";
+    private static string $_host = "sql11.freesqldatabase.com";
     private static $_bdd = null;
     private function __construct()
     {
@@ -72,7 +72,7 @@ class ConnexionBD
     }
 
     // insert data into the table etudiant
-    public static function insertData_etudiant($data)
+    public static function insertData_etudiant($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -95,7 +95,7 @@ class ConnexionBD
         }
     }
     // insert data into the table prof
-    public static function insertData_prof($data)
+    public static function insertData_prof($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -114,7 +114,7 @@ class ConnexionBD
         }
     }
     // insert data into the table prof
-    public static function insertData_course($data)
+    public static function insertData_course($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -131,7 +131,8 @@ class ConnexionBD
         }
     }
     // insert data into the table abscence
-    public static function insertData_abscence($data){
+    public static function insertData_abscence($data): void
+    {
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
@@ -191,7 +192,7 @@ class ConnexionBD
     /**
      * * inserts the new submission in the requests table
      */
-    public static function add_submission($data)
+    public static function add_submission($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -218,7 +219,7 @@ class ConnexionBD
     /**
      *
      */
-    public static function delete_submission($data)
+    public static function delete_submission($data): void
     {
         try{
             $pdo = self::getInstance();
@@ -229,7 +230,7 @@ class ConnexionBD
         }
     }
 
-    public static function generate_pdf_for_all_submissions()
+    public static function generate_pdf_for_all_submissions(): void
     {
         try {
             $pdo = self::getInstance();
@@ -247,7 +248,7 @@ class ConnexionBD
     }
 
 
-    private static function generate_pdf($data)
+    private static function generate_pdf($data): void
     {
         $pdf = new FPDF();
         $pdf->AddPage();
@@ -272,29 +273,32 @@ class ConnexionBD
     }
 
 
-    public static function get_data($option)
+    public static function get_data(): ?array
     {
         try {
             $pdo = self::getInstance();
-            switch ($option) {
-                case 'studentsPerYear':
-                    $stmt = $pdo->query("SELECT studylevel,count(id) as nbStudents FROM student group by(studylevel);");
-                    break;
-                case 'abscencePerMonth':
-                    $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbscences FROM absence WHERE absencedate > DATE_SUB(CURDATE(), INTERVAL 20 DAY) group by(absencedate);");
-                    break;
-                case 'gender':
-                    $stmt = self::getInstance()->query("SELECT gender,count(*) as nbStudents FROM student group by(gender);");
-                    break;
-                
-                default:
-                    echo "option not found";
-                    return;
-            }
-            
-            
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            // print_r($result);
+            $result = [];
+
+            // 'studentsPerYear':
+            $stmt = $pdo->query("SELECT studylevel,count(id) as nbStudents FROM student group by(studylevel);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // 'absencePerMonth':
+            $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbsences FROM absence WHERE absencedate > DATE_SUB(CURDATE(), INTERVAL 20 DAY) group by(absencedate);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            //'studentsPerGender':
+            $stmt = self::getInstance()->query("SELECT gender,count(*) as nbStudents FROM student group by(gender);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // 'studentsPerField':
+            $stmt = self::getInstance()->query("SELECT field,count(*) as nbStudents FROM student group by(field);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // 'teachersPerCourse':
+            $stmt = self::getInstance()->query("SELECT coursename,count(teacher) as nbTeachers FROM course group by(coursename);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             return $result;
 
         } catch (PDOException $e) {

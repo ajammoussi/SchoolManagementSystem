@@ -113,8 +113,8 @@
 
                 <li >
                   <ul class="abscence-item">
-                    <li class='nav-text'><?= $abscence['coursename']?></p> 
-                    <li class='nav-text'><?=$abscence['nombre_abscences']?></p> 
+                    <li class='nav-text'><?= $abscence['coursename']?></li>
+                    <li class='nav-text'><?=$abscence['nombre_abscences']?></li>
                   </ul>
                 </li>
               

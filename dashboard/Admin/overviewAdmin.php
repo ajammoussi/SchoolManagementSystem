@@ -86,26 +86,91 @@
         </ul>
     </nav>
 
-    <section class="content">
+    <section class="container">
+        <div class="row title">
+            <div class="col-9 student-name-container">
+                <h2 class="student-name">Overview</h2>
+            </div>
+        </div>
+        <div class="card-container">
+            <div class="card">
+                <div class="row elements">
+                    <div class="col-6 vertical">
+                        <div class="row">
+                            <h5>Number of Students Per Study Level</h5>
+                        </div>
+                        <div class="row">
+                            <div class="studentsPerYearContainer">
+                                <canvas id="studentsPerYearCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 vertical">
+                        <div class="row">
+                            <h5>Number of Students Per Field</h5>
+                        </div>
+                        <div class="row">
+                            <div class="fieldContainer">
+                                <canvas id="fieldCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-container">
+            <div class="card">
+                <div class="row elements">
+                    <div class="col-6 vertical">
+                        <div class="row">
+                            <h5>Number of Absences Per Month</h5>
+                        </div>
+                        <div class="row">
+                            <div class="absenceContainer">
+                                <canvas id="absenceCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-container">
+            <div class="card">
+                <div class="row elements">
+                    <div class="col-6 vertical">
+                        <div class="row">
+                            <h5>Number of Students per Gender</h5>
+                        </div>
+                        <div class="row">
+                            <div class="genderContainer">
+                                <canvas id="genderCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 vertical">
+                        <div class="row">
+                            <h5>Number of Teachers per Course</h5>
+                        </div>
+                        <div class="row">
+                            <div class="teachersPerCourseContainer">
+                                <canvas id="teachersPerCourseCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div>
-            <canvas id="studentsPerYearCanvas"></canvas>
-        </div>
-        <div>
-            <canvas id="abscenceCanvas"></canvas>
-        </div>
-        <div>
-            <canvas id="genderCanvas" ></canvas>
-        </div>
         <?php 
-            $studentStatistics=ConnexionBD::get_data('studentsPerYear');  
-            $abscenceStatistics=ConnexionBD::get_data('abscencePerMonth');  
-            $genderStatistics=ConnexionBD::get_data('gender');
+            [$studentStatistics, $absenceStatistics, $genderStatistics,
+                $fieldStatistics, $teacherStatistics] = ConnexionBD::get_data();
         ?>
         <script>
             const studentStatistics = <?= json_encode($studentStatistics) ?> ; 
-            const abscenceStatistics = <?= json_encode($abscenceStatistics) ?> ; 
-            const genderStatistics = <?= json_encode($genderStatistics) ?> ; 
+            const absenceStatistics = <?= json_encode($absenceStatistics) ?> ;
+            const genderStatistics = <?= json_encode($genderStatistics) ?> ;
+            const fieldStatistics = <?= json_encode($fieldStatistics) ?> ;
+            const teacherStatistics = <?= json_encode($teacherStatistics) ?> ;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="./overviewAdmin.js" type="module"></script>
