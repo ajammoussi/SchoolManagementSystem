@@ -11,11 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const span = document.getElementsByClassName("close")[0];
     const pageTitle = document.getElementById("pageTitle");
 
-    if (filter === 'field' || filter === 'studylevel') {
-        cancelButton.removeAttribute("hidden");
-    } else {
-        cancelButton.setAttribute("hidden", "");
-    }
+
 
 
     const showMoreInfoStudent = (student) => {
@@ -43,6 +39,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
+    const showMoreInfoTeacher = (teacher) => {
+        // Display the teacher's information in the modal
+
+        studentInfo.innerHTML = `
+            <table class="table">
+                <tbody>
+                <tr><th>ID</th><td>${teacher.id}</td></tr>
+                <tr><th>First Name</th><td>${teacher.firstname}</td></tr>
+                <tr><th>Last Name</th><td>${teacher.lastname}</td></tr>
+                <tr><th>Email</th><td>${teacher.email}</td></tr>
+                <tr><th>Password</th><td>${teacher.password}</td></tr>
+                <tr><th>Phone</th><td>${teacher.phone}</td></tr>
+                <tr><th>Birthdate</th><td>${teacher.gender}</td></tr>
+                </tbody>
+            </table>
+        `;
+    };
+
     const showStudents = (arr = students) => {
         tableBody.innerHTML += arr
             .map(
@@ -67,7 +81,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             });
     };
+
+    const showTeachers = (arr = teachers) => {
+        tableBody.innerHTML += arr
+            .map(
+                (teacher) =>
+                    `
+            <tr>
+                <td>${teacher.id}</td>
+                <td>${teacher.firstname}</td>
+                <td>${teacher.lastname}</td>
+                <td>${teacher.phone}</td>
+                <td><button class="btn btn-primary showMore" id="showMore${teacher.id}" data-bs-toggle="modal" data-bs-target="#Modal">Show More</button></td>
+            </tr>
+        `
+            )
+            .join("");
+
+        // Add event listeners to the "Show More" buttons
+        arr.forEach((teacher) => {
+            document.getElementById(`showMore${teacher.id}`).addEventListener("click", () => {
+                showMoreInfoTeacher(teacher);
+            });
+        });
+    };
+    
     if (pageTitle.innerHTML === "Students") {
+        if (filter === 'field' || filter === 'studylevel') {
+            cancelButton.removeAttribute("hidden");
+        } else {
+            cancelButton.setAttribute("hidden", "");
+        }
         showStudents();
     }
     else if (pageTitle.innerHTML === "Teachers") {

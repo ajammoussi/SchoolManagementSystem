@@ -116,7 +116,7 @@ require_once('../../database/dbcreation.php');
                 <div class="card-container">
 
                     <?php
-                    $teachers = ConnexionBD::getTeachers();
+                        $teachers = ConnexionBD::getTeachers();
                     ?>
                     <script>
                         const filter = "<?=$_SESSION['filter'] ?>";
@@ -127,13 +127,12 @@ require_once('../../database/dbcreation.php');
                             <!-- bootstrap table -->
                             <table class="table table-striped table-hover">
                                 <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
-                                    <th scope="col">Gender</th>
-                                    <th scope="col">Study Level</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Phone</th>
+                                    </tr>
                                 </thead>
                                 <tbody id="body">
                                 <!-- The teachers list that will be loaded-->
