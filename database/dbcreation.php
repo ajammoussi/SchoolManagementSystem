@@ -270,4 +270,36 @@ class ConnexionBD
         $pdfFileName = 'admission_pdf/' . $data['email'] . '.pdf';
         $pdf->Output($pdfFileName, 'F');
     }
+
+
+    public static function get_data($option)
+    {
+        try {
+            $pdo = self::getInstance();
+            switch ($option) {
+                case 'studentsPerYear':
+                    $stmt = $pdo->query("SELECT studylevel,count(id) as nbStudents FROM student group by(studylevel);");
+                    break;
+                case 'abscencePerMonth':
+                    $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbscences FROM absence WHERE absencedate > DATE_SUB(CURDATE(), INTERVAL 20 DAY) group by(absencedate);");
+                    break;
+                case 'gender':
+                    $stmt = self::getInstance()->query("SELECT gender,count(*) as nbStudents FROM student group by(gender);");
+                    break;
+                
+                default:
+                    echo "option not found";
+                    return;
+            }
+            
+            
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // print_r($result);
+            return $result;
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
 }

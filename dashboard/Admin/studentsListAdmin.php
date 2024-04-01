@@ -167,7 +167,9 @@
                     ?>
                     <script>
                         const filter = "<?=$_SESSION['filter'] ?>";
+                        console . log(filter);
                         const students = <?= json_encode($students) ?>;
+                        console.log(students);
                     </script>
                     <div class="card card-two">
                         <div class="row info tbl">

@@ -8,19 +8,18 @@ $pdo = ConnexionBD::getInstance();
 
 
 if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-    // Check if the email and password match some predefined values (for demonstration purposes)
+    
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    // Using prepared statements to prevent SQL injection
     $stmt = $pdo->prepare("SELECT * FROM student WHERE email = :email");
-    $stmt->execute(['email' => $email]);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
         // Authentication successful
         $_SESSION['user_id'] = $user['id'];
-        header("Location: ../dashboard/dashboardEtudiant.php");
+        header("Location: ../dashboard/Student/dashboardEtudiant.php");
         exit;
     } else {
         // Invalid email or password
