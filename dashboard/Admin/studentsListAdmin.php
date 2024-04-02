@@ -41,7 +41,7 @@
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="overviewAdmin.php">
                     <span class="nav-text">Overview</span>
                 </a>
             </li>
@@ -67,7 +67,7 @@
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="teachersListAdmin.php">
                     <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Teachers</span>
                 </a>
@@ -76,7 +76,7 @@
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="absencesAdmin.php">
                     <!-- <img src="src/abscent white.png" alt="abscence img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Absences</span>
                 </a>
@@ -120,12 +120,12 @@
                                 <div class="col">
                                     <p>Filter students by:
                                         <span>
-                                        <select name="filter" id="filter">
-                                            <option value="default">--</option>
-                                            <option value="field">Field</option>
-                                            <option value="studyLevel">Study Level</option>
-                                        </select>
-                                    </span>
+                                            <select name="filterStudents" id="filterStudents">
+                                                <option value="default">--</option>
+                                                <option value="field">Field</option>
+                                                <option value="studyLevel">Study Level</option>
+                                            </select>
+                                        </span>
                                     </p>
                                     <!-- Select menu for field -->
                                     <p id="fieldSelect" hidden> Select a Field:
@@ -166,10 +166,7 @@
                         $students = ConnexionBD::getStudents();
                     ?>
                     <script>
-                        const filter = "<?=$_SESSION['filter'] ?>";
-                        console . log(filter);
                         const students = <?= json_encode($students) ?>;
-                        console.log(students);
                     </script>
                     <div class="card card-two">
                         <div class="row info tbl">
@@ -189,6 +186,8 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <button class="btn btn-primary" id="loadMore">Load More</button>
                     </div>
                 </div>
             </div>

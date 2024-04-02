@@ -189,6 +189,23 @@ class ConnexionBD
         }
     }
 
+    public static function getAbsences()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT a.student AS studentID, CONCAT(s.firstname, ' ', s.lastname) AS studentname, 
+                                    c.coursename, a.absencedate FROM absence a
+                                    JOIN student s ON s.id = a.student
+                                    JOIN course c ON c.id = a.course;");
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $result;
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+
     /**
      * * inserts the new submission in the requests table
      */
@@ -273,7 +290,7 @@ class ConnexionBD
     }
 
 
-    public static function get_data(): ?array
+    public static function get_statistics(): ?array
     {
         try {
             $pdo = self::getInstance();

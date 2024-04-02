@@ -60,7 +60,7 @@
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="studentsListAdmin.php">
                     <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Students</span>
                 </a>
@@ -69,7 +69,7 @@
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="teachersListAdmin.php">
                     <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Teachers</span>
                 </a>
@@ -78,7 +78,7 @@
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="absencesAdmin.php">
                     <!-- <img src="src/abscent white.png" alt="abscence img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Absences</span>
                 </a>
@@ -163,7 +163,7 @@
 
         <?php 
             [$studentStatistics, $absenceStatistics, $genderStatistics,
-                $fieldStatistics, $teacherStatistics] = ConnexionBD::get_data();
+                $fieldStatistics, $teacherStatistics] = ConnexionBD::get_statistics();
         ?>
         <script>
             const studentStatistics = <?= json_encode($studentStatistics) ?> ; 

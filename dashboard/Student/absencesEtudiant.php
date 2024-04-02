@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../main.css" rel="stylesheet">
     <link href="../nav bar.css" rel="stylesheet">
-    <link href="../abscences.css" rel="stylesheet">
+    <link href="../absences.css" rel="stylesheet">
 
 </head>
   <body>
@@ -41,19 +41,11 @@
         <h1 class="current-nav-element">Menu</h1>
         <img class="logo" src="../src/logo.png" alt="logo" />
         <ul>
-          <li class="nav-item-vertical">
-            <b></b>
-            <b></b>
-            <a href="#">
-              <img src="../src/profile%20pic.png" alt="home img " class="nav-vertical-icons">
-              <span class="nav-text">Home</span>
-            </a>
-          </li>
 
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
-            <a href="#">
+            <a href="dashboardEtudiant.php">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
               <span class="nav-text">Profile</span>
             </a>
@@ -73,7 +65,7 @@
             <b></b>
             <a href="#">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
-              <span class="nav-text">Abscences</span>
+              <span class="nav-text">Absences</span>
             </a>
           </li>
 
@@ -104,17 +96,17 @@
           <ul class="absences-list-inner">
             <?php
 
-              $stmt = $pdo->prepare("SELECT * , count(absencedate) as nombre_abscences FROM absence,course WHERE absence.student = :id AND course.id = absence.course
+              $stmt = $pdo->prepare("SELECT * , count(absencedate) as nombre_absences FROM absence,course WHERE absence.student = :id AND course.id = absence.course
                                     group by(course)");
               $stmt->execute(['id' => $_SESSION['user_id']]);
-              $abscences = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              // print_r( $abscences);
-              foreach ($abscences as $abscence) {?>
+              $absences = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              // print_r( $absences);
+              foreach ($absences as $absence) {?>
 
                 <li >
                   <ul class="abscence-item">
-                    <li class='nav-text'><?= $abscence['coursename']?></li>
-                    <li class='nav-text'><?=$abscence['nombre_abscences']?></li>
+                    <li class='nav-text'><?= $absence['coursename']?></li>
+                    <li class='nav-text'><?=$absence['nombre_absences']?></li>
                   </ul>
                 </li>
               
