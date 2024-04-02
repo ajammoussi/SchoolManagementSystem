@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- <link rel="stylesheet" href="iindex.css"> -->
-    <link rel="stylesheet" href="landingPage.css">
+    <link rel="stylesheet" href="style/landingPage.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
-    <link rel="stylesheet" href="FieldsOfStudy.css">
+    <link rel="stylesheet" href="style/FieldsOfStudy.css">
     
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="style/footer.css">
     
     
 </head>
@@ -128,7 +128,7 @@
   <div class="container">
     <div class="row">
       <div >
-        <p class="copyright-text">Copyright &copy; 2017 All Rights Reserved by 
+        <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by 
         <a href="#">insat</a>.
         </p>
       </div>

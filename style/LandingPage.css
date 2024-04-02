@@ -28,7 +28,7 @@ ul {
 }
 
 .landing-page{
-  background-image: url('src/landing page background 4.jpg');
+  background-image: url('../src/landing page background 4.jpg');
   background-size: cover; /* Adjust to cover the entire element */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Do not repeat the background image */
