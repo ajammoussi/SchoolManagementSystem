@@ -155,7 +155,7 @@ main {
 .nav-vertical-icons{
   width: 50px;
   height: 50px;
-  margin: 0 35px 0 25px;
+  margin: 0 8px 0 10px;
 }
 
 /* vertical nav end */
@@ -164,6 +164,11 @@ main {
 
 /* user info */
 
+.container {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: 0.5rem;
+}
 
 .card {
   background-color: #fff;

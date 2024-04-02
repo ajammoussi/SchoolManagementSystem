@@ -20,7 +20,7 @@ require_once('../../database/dbcreation.php');
         <div class="logo-uni-nav">
             <a class="ucar" href="#"><img src="../src/logo-ucar.png"></a>
             <a class="insat" href="#"><img src="../src/logo-insat.png"></a>
-
+            <h3 class="page-title">Admin's Space</h3>
 
         </div>
         <button class="btn btn-deconnect mobile" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
@@ -41,7 +41,7 @@ require_once('../../database/dbcreation.php');
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="overviewAdmin.php">
                     <span class="nav-text">Overview</span>
                 </a>
             </li>
@@ -58,7 +58,7 @@ require_once('../../database/dbcreation.php');
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="studentsListAdmin.php">
                     <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Students</span>
                 </a>
@@ -76,7 +76,7 @@ require_once('../../database/dbcreation.php');
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="absencesAdmin.php">
                     <!-- <img src="src/abscent white.png" alt="abscence img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Absences</span>
                 </a>
@@ -116,10 +116,9 @@ require_once('../../database/dbcreation.php');
                 <div class="card-container">
 
                     <?php
-                    $teachers = ConnexionBD::getTeachers();
+                        $teachers = ConnexionBD::getTeachers();
                     ?>
                     <script>
-                        const filter = "<?=$_SESSION['filter'] ?>";
                         const teachers = <?= json_encode($teachers) ?>;
                     </script>
                     <div class="card card-two">
@@ -127,19 +126,20 @@ require_once('../../database/dbcreation.php');
                             <!-- bootstrap table -->
                             <table class="table table-striped table-hover">
                                 <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
-                                    <th scope="col">Gender</th>
-                                    <th scope="col">Study Level</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Phone</th>
+                                    </tr>
                                 </thead>
                                 <tbody id="body">
                                 <!-- The teachers list that will be loaded-->
                                 </tbody>
                             </table>
                         </div>
+
+                        <button class="btn btn-primary" id="loadMore">Load More</button>
                     </div>
                 </div>
             </div>
