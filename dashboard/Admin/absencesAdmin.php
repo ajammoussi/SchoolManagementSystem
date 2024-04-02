@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    require_once('../../database/dbcreation.php');
+session_start();
+require_once('../../database/dbcreation.php');
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Students</title>
+    <title id="pageTitle">Absences</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../main.css" rel="stylesheet">
     <link href="../nav%20bar.css" rel="stylesheet">
@@ -55,10 +55,10 @@
               </a>
             </li> -->
 
-            <li class="nav-item-vertical active">
+            <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="studentsListAdmin.php">
                     <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Students</span>
                 </a>
@@ -73,10 +73,10 @@
                 </a>
             </li>
 
-            <li class="nav-item-vertical">
+            <li class="nav-item-vertical active">
                 <b></b>
                 <b></b>
-                <a href="absencesAdmin.php">
+                <a href="#">
                     <!-- <img src="src/abscent white.png" alt="abscence img " class="nav-vertical-icons"> -->
                     <span class="nav-text">Absences</span>
                 </a>
@@ -87,70 +87,64 @@
 
 
     <section class="content">
-
-        <!-- Modal -->
-        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Additional Information:</h5>
-                    </div>
-                    <div class="modal-body" id="studentInfo">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <?php
+        $absences = ConnexionBD::getAbsences();
+        $uniqueCourses = array_values(array_unique(array_column($absences, 'coursename')));
+        ?>
+        <script>
+            const absences = <?= json_encode($absences) ?>;
+        </script>
         <!-- content of profile section  -->
         <div class="container">
             <div class="row">
                 <div class="row title">
                     <div class="col-9 student-name-container">
-                        <h2 class="student-name">Students </h2>
+                        <h2 class="student-name">Absences </h2>
                     </div>
                 </div>
                 <div class="card-container">
                     <div class="card filter">
                         <div class="row info filter">
-                            <form action="studentsListAdmin.php" method="post">
+                            <form action="absencesAdmin.php" method="post">
                                 <div class="col">
-                                    <p>Filter students by:
+                                    <p>Filter absences by:
                                         <span>
-                                            <select name="filterStudents" id="filterStudents">
+                                            <select name="filterAbsences" id="filterAbsences">
                                                 <option value="default">--</option>
-                                                <option value="field">Field</option>
-                                                <option value="studyLevel">Study Level</option>
+                                                <option value="course">Course</option>
+                                                <option value="month">Month</option>
                                             </select>
                                         </span>
                                     </p>
-                                    <!-- Select menu for field -->
-                                    <p id="fieldSelect" hidden> Select a Field:
-                                        <select name="field" id="field">
+
+                                    <!-- Select menu for Course -->
+                                    <p id="courseSelect" hidden> Select a Course:
+                                        <select name="course" id="course">
                                             <option value="default">--</option>
-                                            <option value="MPI">MPI</option>
-                                            <option value="CBA">CBA</option>
-                                            <option value="GL">GL</option>
-                                            <option value="RT">RT</option>
-                                            <option value="IIA">IIA</option>
-                                            <option value="IMI">IMI</option>
-                                            <option value="CH">CH</option>
-                                            <option value="BIO">BIO</option>
+                                            <?php
+                                            foreach ($uniqueCourses as $course) {
+                                                echo "<option value='$course'>$course</option>";
+                                            }
+                                            ?>
                                         </select>
                                     </p>
 
-                                    <!-- Select menu for study level -->
-                                    <p id="studyLevelSelect" hidden> Select a study level:
-                                        <select name="studyLevel" id="studyLevel">
+                                    <!-- Select menu for Month -->
+                                    <p id="monthSelect" hidden> Select a Field:
+                                        <select name="month" id="month">
                                             <option value="default">--</option>
-                                            <option value="1">1st Year</option>
-                                            <option value="2">2nd Year</option>
-                                            <option value="3">3rd Year</option>
-                                            <option value="4">4th Year</option>
-                                            <option value="5">5th Year</option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
                                         </select>
                                     </p>
                                 </div>
@@ -159,30 +153,24 @@
                                     <button hidden class="btn btn-outline" id="cancel" >Cancel Filter</button>
                                 </div>
 
-                        </div>
+                            </div>
                         </form>
                     </div>
-                    <?php
-                        $students = ConnexionBD::getStudents();
-                    ?>
-                    <script>
-                        const students = <?= json_encode($students) ?>;
-                    </script>
+
                     <div class="card card-two">
                         <div class="row info tbl">
                             <!-- bootstrap table -->
                             <table class="table table-striped table-hover">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Field</th>
-                                        <th scope="col">Study Level</th>
-                                    </tr>
+                                <tr>
+                                    <th scope="col">Student ID</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Absence Date</th>
+                                </tr>
                                 </thead>
                                 <tbody id="body">
-                                    <!-- The student list that will be loaded-->
+                                <!-- The absence list that will be loaded-->
                                 </tbody>
                             </table>
                         </div>
