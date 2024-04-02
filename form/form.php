@@ -1,3 +1,7 @@
+  <?php
+            session_start();
+            $_SESSION['isGuest']=true;
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +24,6 @@
           <input type="password" id="password" placeholder="demo1234" name="password"/>
           <!-- Display error message if exist -->
           <?php
-            session_start();
             if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
                 echo '<div class="error-message">' . $_SESSION['error'] . '</div>';
                 // Clear the error atr from session
