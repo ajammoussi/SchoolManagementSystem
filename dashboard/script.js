@@ -177,9 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
         endingIndex += 8;
         showFunction(array.slice(startingIndex, endingIndex));
         if (array.length <= endingIndex) {
-            loadMoreButton.disabled = true;
-            loadMoreButton.style.cursor = "not-allowed";
-            loadMoreButton.textContent = "No more data to load";
+            loadMoreButton.setAttribute("hidden", "");
         }
     };
 

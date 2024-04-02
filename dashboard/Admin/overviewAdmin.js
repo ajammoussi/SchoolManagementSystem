@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     'rgba(54, 162, 235)',
                     'rgba(255, 206, 86)',
                     'rgba(75, 192, 192)',
-                    'rgba(153, 102, 255)'
+                    'rgba(153, 102, 255)',
+                    'rgba(255, 159, 64)',
                 ]
             }]
         },
