@@ -1,94 +1,115 @@
-<!DOCTYPE html>
 <?php
-require'database/dbcreation.php';
+require_once('../database/dbcreation.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {   
+// Generate PDF files for each submission
+ConnexionBD::generate_pdf_for_all_submissions();
+
+// Get the list of PDF files from the admission_pdf folder
+$pdfFiles = scandir('admission_pdf');
+
+if (isset($_POST['action'])) {
     $action = $_POST['action'];
     $fileName = $_POST['fileName'];
 
-    if ($action === 'accept') {
-        admissionDB::addStudent_byemail($fileName);
-        admissionDB::delete_submission($fileName);
-    } elseif ($action === 'refuse') {
-        admissionDB::delete_submission($fileName);
+    if ($action == 'accept') {
+        ConnexionBD::addStudent_byemail($fileName);
+        ConnexionBD::delete_submission($fileName);
+    } elseif ($action == 'refuse') {
+        ConnexionBD::delete_submission($fileName);
     }
 }
 
-admissionDB::generate_pdf_for_all_submissions();
-
-$dir = "./admission_pdf/";  // Path to the directory containing the PDF files
-$files = scandir($dir);  // Get all files from the directory
-
-$pdfFiles = array_filter($files, function($file) {
-    return pathinfo($file, PATHINFO_EXTENSION) === 'pdf';  // Filter only PDF files
-});
 ?>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission PDF List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .pdf-item {
+        ul {
+            list-style-type: none;
+        }
+
+        li {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            border: 1px solid red;
+            border-radius: 5px;
             padding: 10px;
-            border: 1px solid #ccc;
+            border-right: 1px solid red; /* Added to display the right border */
         }
-        .pdf-item a {
-            flex-grow: 1;
-            margin-right: 10px;
+
+        button {
+            cursor: pointer;
         }
-        .buttons {
+
+        .button-group {
             display: flex;
             flex-direction: column;
-        }
-        .button {
-            margin-bottom: 5px;
+            align-items: flex-end;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function acceptFile(fileName) {
+            $.ajax({
+                url: '../database/dbcreation.php',
+                type: 'POST',
+                data: {
+                    action: 'accept',
+                    fileName: fileName
+                },
+                success: function(response) {
+                    location.reload(); // Refresh the page to update the list
+                }
+            });
+        }
+
+        function refuseFile(fileName) {
+            $.ajax({
+                url: '../database/dbcreation.php',
+                type: 'POST',
+                data: {
+                    action: 'refuse',
+                    fileName: fileName
+                },
+                success: function(response) {
+                    location.reload(); // Refresh the page to update the list
+                }
+            });
+        }
+    </script>
 </head>
+
 <body>
-    <!--list of request in the form of pdf files -->
+    
     <ul>
-        <?php foreach ($pdfFiles as $pdf): ?>
-            <li class="pdf-item">
-                <a href="<?php echo $dir . $pdf; ?>" target="_blank"><?php echo $pdf; ?></a>
-                <div class="buttons">
-                    <button class="button accept" data-file="<?php echo $pdf; ?>">Accept</button>
-                    <button class="button refuse" data-file="<?php echo $pdf; ?>">Refuse</button>
-                </div>
-            </li>
-        <?php endforeach; ?>
+        <?php
+        foreach ($pdfFiles as $file) {
+            if ($file != "." && $file != "..") {
+                echo "<li>";
+                echo "<span><a href='admission_pdf/$file' target='_blank'>$file</a></span>";
+                echo "<div class='button-group'>";
+                echo "<button class='btn btn-danger mb-2' onclick='acceptFile(\"$file\")'>Accept</button>";
+                echo "<button class='btn btn-danger' onclick='refuseFile(\"$file\")'>Refuse</button>";
+                echo "</div>";
+                echo "</li>";
+            }
+        }
+        ?>
     </ul>
 
-    <script>
-        $(document).ready(function() {
-            $('.button').click(function() {
-                let action = $(this).hasClass('accept') ? 'accept' : 'refuse';
-                let fileName = $(this).data('file');
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-                //applying the change without reloading the whole page
-                $.ajax({
-                    url: 'admission.php',
-                    type: 'POST',
-                    //sending the action type and the name of the file to the server
-                    data: {
-                        action: action,
-                        fileName: fileName
-                    },
-                    success: function(response) {
-                        // Handle success
-                        console.log(response);
-                        location.reload(); // Refresh the page to update the list
-                    },
-                    error: function(error) {
-                        // Handle error
-                        console.error(error);
-                    }
-                });
-            });
-        });
-    </script>
 </body>
+
 </html>

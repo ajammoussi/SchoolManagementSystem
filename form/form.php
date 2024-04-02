@@ -7,7 +7,7 @@
     <link href="form.css" rel="stylesheet">
 </head>
 <body>
-  <img src="./src/logo.png" alt="logo lfac" class="logo-fac">
+  <img src="dashboard/src/logo-insat.png" alt="logo lfac" class="logo-fac">
   <h1>Good to see you again !</h1>
   
   

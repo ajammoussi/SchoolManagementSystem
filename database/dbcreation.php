@@ -1,9 +1,9 @@
 <?php
 
-require 'fpdf/fpdf.php';
+require_once('fpdf/fpdf.php');
 
 class ConnexionBD
-{
+{   
     private static $_dbname = "sql11694778";
     private static $_user = "sql11694778";
     private static $_pwd = "5ErSzCTYhX";
@@ -216,7 +216,7 @@ class ConnexionBD
     }
 
     /**
-     * *deletes the submission with the same email
+     * *deletes the submission that has the same email
      * @param email email associated to the submission
      */
     public static function delete_submission($email)
@@ -224,41 +224,56 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("DELETE FROM request WHERE email = :email");
-            $stmt->execute($email);
-            echo "Submission deleted successfully.";
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
         } catch (PDOException $e) {
             echo "Error deleting submission: " . $e->getMessage();
         }
     }
-
-
+    
     /**
      * *generates a pdf file using the data given in the submission
      * @param data the data given in the submission
      */
     private static function generate_pdf($data)
-    {
-        $pdf = new FPDF();
-        $pdf->AddPage();
+{
+    $pdf = new FPDF();
+    $pdf->AddPage();
 
-        // Set font
-        $pdf->SetFont('Arial', 'B', 16);
+    // Set font for title
+    $pdf->SetFont('Arial', 'B', 16);
+    
+    // Set title color to red
+    $pdf->SetTextColor(179, 0, 0);  // #B30000 in RGB
 
-        // Add title
-        $pdf->Cell(0, 10, 'Request', 0, 1, 'C');
-        $pdf->Ln(10);
+    // Add title
+    $pdf->Cell(0, 10, 'Admission Application', 0, 1, 'C');
+    $pdf->Ln(10);
 
-        $pdf->SetFont('Arial', '', 12);
+    // Reset text color to black for other text
+    $pdf->SetTextColor(0, 0, 0);
 
-        foreach ($data as $key => $value) {
-            $pdf->Cell(50, 10, ucfirst(str_replace("_", " ", $key)) . ':', 0, 0);
-            $pdf->Cell(0, 10, $value, 0, 1);
-        }
+    // Add image at the top left
+    $pdf->Image('../dashboard/src/logo-insat.png', 1, 1, 20);  // Adjust path and dimensions as needed
 
-        // Save PDF to a file with the email address as the filename
-        $pdfFileName = 'admission_pdf/' . $data['email'] . '.pdf';
-        $pdf->Output($pdfFileName, 'F');
+    $pdf->SetFont('Arial', '', 12);
+
+    foreach ($data as $key => $value) {
+        // Set field label color to red
+        $pdf->SetTextColor(179, 0, 0);  // #B30000 in RGB
+        $pdf->Cell(50, 10, ucfirst(str_replace("_", " ", $key)) . ':', 0, 0);
+        
+        // Reset text color to black for field value
+        $pdf->SetTextColor(0, 0, 0);
+        
+        $pdf->Cell(0, 10, $value, 0, 1);
     }
+
+    // Save PDF to a file with the email address as the filename
+    $pdfFileName = 'admission_pdf/' . $data['email'] . '.pdf';
+    $pdf->Output($pdfFileName, 'F');
+}
+
 
     /**
      * generates a pdf file for each submission in the database
@@ -321,7 +336,7 @@ class ConnexionBD
                 'firstname' => $student['firstname'],
                 'lastname' => $student['lastname'],
                 'email' => $student['email'],
-                'password' => $student['password'],  // You may need to adjust this depending on your requirements
+                'password' => $password,
                 'phone' => $student['phone'],
                 'address' => $student['address'],
                 'birthdate' => $student['birthdate'],
@@ -357,4 +372,17 @@ class ConnexionBD
             echo "Error adding student: " . $e->getMessage();
         }
     }   
+
+    public static function accept($fileName) {
+        self::addStudent_byemail($fileName);
+        self::delete_submission($fileName);
+        return 'success';
+    }
+
+    public static function refuse($fileName) {
+        if (self::delete_submission($fileName) == 'success') {
+            return 'success';
+        }
+        return 'error';
+    }
 }
