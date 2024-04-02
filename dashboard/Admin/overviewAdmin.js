@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    
+    // this part is for the GENDER destribution chart
     console.log(genderStatistics);
     const GENDER_CHART = document.getElementById('genderCanvas').getContext('2d');
     new Chart(GENDER_CHART, {
