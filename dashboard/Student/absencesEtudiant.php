@@ -21,9 +21,9 @@
     <nav class="navbar">
       <div class="container-nav">
         <div class="logo-uni-nav">
-          <a class="ucar" href="#"><img src="../src/logo-ucar.png"></a>
-          <a class="insat" href="#"><img src="../src/logo-insat.png"></a>
-          
+            <a class="ucar" href="#"><img src="../src/logo-ucar.png"></a>
+            <a class="insat" href="#"><img src="../src/logo-insat.png"></a>
+            <h3 class="page-title">Student's Space</h3>
 
         </div>
         <button class="btn btn-deconnect mobile" type="submit">Se Déconnecter</button>
@@ -80,42 +80,44 @@
         </ul>
       </nav>
 
-      
-    
-    
-
-      
-      
-      <section class="absences-list">
-          
-          <div class="container text-center list-header">
-              <div>Course</div>
-              <div>Number of Absences</div>
+        <!-- profile section -->
+      <section class="container">
+          <div class="row title">
+              <div class="col-9 student-name-container">
+                  <h2 class="student-name">Absences</h2>
+              </div>
           </div>
-          <hr>
-          <ul class="absences-list-inner">
-            <?php
+            <div class="absences-list">
+                <div class="container text-center list-header">
+                    <div>Course</div>
+                    <div>Number of Absences</div>
+                </div>
+                <hr>
+                <ul class="absences-list-inner">
+                    <?php
 
-              $stmt = $pdo->prepare("SELECT * , count(absencedate) as nombre_absences FROM absence,course WHERE absence.student = :id AND course.id = absence.course
+                    $stmt = $pdo->prepare("SELECT * , count(absencedate) as nombre_absences FROM absence,course WHERE absence.student = :id AND course.id = absence.course
                                     group by(course)");
-              $stmt->execute(['id' => $_SESSION['user_id']]);
-              $absences = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              // print_r( $absences);
-              foreach ($absences as $absence) {?>
+                    $stmt->execute(['id' => $_SESSION['user_id']]);
+                    $absences = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    // print_r( $absences);
+                    foreach ($absences as $absence) {?>
 
-                <li >
-                  <ul class="abscence-item">
-                    <li class='nav-text'><?= $absence['coursename']?></li>
-                    <li class='nav-text'><?=$absence['nombre_absences']?></li>
-                  </ul>
-                </li>
-              
-              <?php
-              }
-            
-            ?>
+                        <li >
+                            <ul class="abscence-item">
+                                <li class='nav-text'><?= $absence['coursename']?></li>
+                                <li class='nav-text'><?=$absence['nombre_absences']?></li>
+                            </ul>
+                        </li>
 
-          </ul>
+                        <?php
+                    }
+
+                    ?>
+
+                </ul>
+            </div>
+
         
         
       <!-- end of profile section -->

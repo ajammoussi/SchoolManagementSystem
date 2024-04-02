@@ -20,7 +20,7 @@ require_once('../../database/dbcreation.php');
         <div class="logo-uni-nav">
             <a class="ucar" href="#"><img src="../src/logo-ucar.png"></a>
             <a class="insat" href="#"><img src="../src/logo-insat.png"></a>
-
+            <h3 class="page-title">Admin's Space</h3>
 
         </div>
         <button class="btn btn-deconnect mobile" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
