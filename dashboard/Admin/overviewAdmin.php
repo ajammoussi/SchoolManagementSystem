@@ -21,10 +21,10 @@
         <div class="logo-uni-nav">
             <a class="ucar" href="#"><img src="../src/logo-ucar.png"></a>
             <a class="insat" href="#"><img src="../src/logo-insat.png"></a>
-
+            <h3 class="page-title">Admin's Space</h3>
 
         </div>
-        <button class="btn btn-deconnect mobile" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
+
         <div class="profile-nav" >
             <p class="username-nav">Welcome, Admin</p>
             <img class="profile-pic-nav" src="../src/profile%20pic.png">
@@ -123,7 +123,7 @@
                 <div class="row elements">
                     <div class="col-6 vertical">
                         <div class="row">
-                            <h5>Number of Absences Per Month</h5>
+                            <h5>Number of Recent Absences</h5>
                         </div>
                         <div class="row">
                             <div class="absenceContainer">

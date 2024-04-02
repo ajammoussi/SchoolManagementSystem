@@ -13,9 +13,9 @@
     <nav class="navbar">
       <div class="container-nav">
         <div class="logo-uni-nav">
-          <a class="ucar" href="#"><img src="../src/logo-ucar.png"></a>
-          <a class="insat" href="#"><img src="../src/logo-insat.png"></a>
-          
+            <a class="ucar" href="#"><img src="../src/logo-ucar.png"></a>
+            <a class="insat" href="#"><img src="../src/logo-insat.png"></a>
+            <h3 class="page-title">Student's Space</h3>
 
         </div>
         <button class="btn btn-deconnect mobile" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
@@ -99,30 +99,34 @@
             <div class="card">
               <div class="row info">
                 <div class="col">
-                  <p>N° d'inscription:</p>
-                  <p>Spécialité:</p>
-                  <p>Niveau:</p>
-                  <p>Groupe:</p>
+                    <p>ID Number:</p>
+                    <p>Institutional Email: </p>
+                    <p>Field:</p>
+                    <p>Study Level:</p>
+                    <p>Class:</p>
                 </div>
                 <div class="col-9">
-                  <p>2021214</p>
-                  <p>Génie Logiciel</p>
-                  <p>2ème Année</p>
-                  <p>1</p>
+                    <p>2021214</p>
+                    <p>foulenbenfoulen@insat.ucar.tn</p>
+                    <p>GL</p>
+                    <p>2nd Year</p>
+                    <p>1</p>
                 </div>
               </div>
             </div>
             <div class="card card-two">
               <div class="row info">
                 <div class="col">
-                  <p>Date de naissance: </p>
-                  <p>Adresse: </p>
-                  <p>Email Institutionnel: </p>
+                    <p>Birthdate: </p>
+                    <p>Address: </p>
+                    <p>Nationality: </p>
+                    <p>Gender: </p>
                 </div>
                 <div class="col-9">
-                  <p>28/07/2003</p>
-                  <p>2 Avenue Habib Bourguiba Manouba</p>
-                  <p>foulenbenfoulen@insat.ucar.tn</p>
+                    <p>28/07/2003</p>
+                    <p>2 Avenue Habib Bourguiba Manouba</p>
+                    <p>Tunisian</p>
+                    <p>Male</p>
                 </div>
               </div>
             </div>

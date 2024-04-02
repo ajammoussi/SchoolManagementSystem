@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: studentStatistics.map(row => row.studylevel),
+            labels: studentStatistics.map(row => 'Year '+row.studylevel),
             datasets: [{
                 data: studentStatistics.map(row => row.nbStudents),
                 backgroundColor: [
