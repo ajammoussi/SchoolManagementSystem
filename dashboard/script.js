@@ -1,21 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const filterSelect = document.getElementById("filter");
+    const filterStudentsSelect = document.getElementById("filterStudents");
     const fieldSelect = document.getElementById("fieldSelect");
     const studyLevelSelect = document.getElementById("studyLevelSelect");
+    const filterAbsencesSelect = document.getElementById("filterAbsences");
+    const courseSelect = document.getElementById("courseSelect");
+    const monthSelect = document.getElementById("monthSelect");
     const tableBody = document.getElementById("body");
     const cancelButton = document.getElementById("cancel");
-    const showMoreButton = document.getElementById("showMore");
-    const modal = document.getElementById("Modal");
     const studentInfo = document.getElementById("studentInfo");
-    const span = document.getElementsByClassName("close")[0];
     const pageTitle = document.getElementById("pageTitle");
+    const loadMoreButton = document.getElementById("loadMore");
 
-    if (filter === 'field' || filter === 'studylevel') {
-        cancelButton.removeAttribute("hidden");
-    } else {
-        cancelButton.setAttribute("hidden", "");
-    }
+    // Variables to keep track of the starting and ending index of the list to be shown
+    var startingIndex;
+    var endingIndex;
 
 
     const showMoreInfoStudent = (student) => {
@@ -43,6 +42,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
+    const showMoreInfoTeacher = (teacher) => {
+        // Display the teacher's information in the modal
+
+        studentInfo.innerHTML = `
+            <table class="table">
+                <tbody>
+                <tr><th>ID</th><td>${teacher.id}</td></tr>
+                <tr><th>First Name</th><td>${teacher.firstname}</td></tr>
+                <tr><th>Last Name</th><td>${teacher.lastname}</td></tr>
+                <tr><th>Email</th><td>${teacher.email}</td></tr>
+                <tr><th>Password</th><td>${teacher.password}</td></tr>
+                <tr><th>Phone</th><td>${teacher.phone}</td></tr>
+                <tr><th>Birthdate</th><td>${teacher.gender}</td></tr>
+                </tbody>
+            </table>
+        `;
+    };
+
     const showStudents = (arr = students) => {
         tableBody.innerHTML += arr
             .map(
@@ -67,62 +84,181 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             });
     };
+
+    const showTeachers = (arr = teachers) => {
+        tableBody.innerHTML += arr
+            .map(
+                (teacher) =>
+                    `
+            <tr>
+                <td>${teacher.id}</td>
+                <td>${teacher.firstname}</td>
+                <td>${teacher.lastname}</td>
+                <td>${teacher.phone}</td>
+                <td><button class="btn btn-primary showMore" id="showMore${teacher.id}" data-bs-toggle="modal" data-bs-target="#Modal">Show More</button></td>
+            </tr>
+        `
+            )
+            .join("");
+
+        // Add event listeners to the "Show More" buttons
+        arr.forEach((teacher) => {
+            document.getElementById(`showMore${teacher.id}`).addEventListener("click", () => {
+                showMoreInfoTeacher(teacher);
+            });
+        });
+    };
+
+    const showAbsences = (arr = absences) => {
+        tableBody.innerHTML += arr
+            .map(
+                (absence) =>
+                    `
+            <tr>
+                <td>${absence.studentID}</td>
+                <td>${absence.studentname}</td>
+                <td>${absence.coursename}</td>
+                <td>${absence.absencedate}</td>
+                <td><button class="btn btn-primary" style="visibility: hidden;"></button></td>
+            </tr>
+        `
+            )
+            .join("");
+    };
+
+    // eventListener for filtering students or absences
+    const handleFilterChange = (filterSelect, selectOne, selectTwo, filterOne, filterTwo, showFunction, filterFunctionOne, filterFunctionTwo) => {
+        filterSelect.addEventListener("change", (choice) => {
+            const selectedValue = filterSelect.value;
+
+            // Hide all select menus
+            selectOne.classList.add("hidden");
+            selectTwo.classList.add("hidden");
+
+            // Show select menu based on user's selection
+            if (selectedValue === filterOne) {
+                selectOne.removeAttribute("hidden");
+                selectTwo.setAttribute("hidden", "");
+            } else if (selectedValue === filterTwo) {
+                selectTwo.removeAttribute("hidden");
+                selectOne.setAttribute("hidden", "");
+            } else {
+                selectOne.setAttribute("hidden", "");
+                selectTwo.setAttribute("hidden", "");
+            }
+
+            //Showing the data
+            tableBody.innerHTML = "";
+            switch (choice.target.value) {
+                case filterOne:
+                    selectOne.addEventListener("change", (choice) => {
+                        tableBody.innerHTML = "";
+                        showFunction(filterFunctionOne(choice.target.value));
+                        cancelButton.removeAttribute("hidden");
+                    });
+                    break;
+                case filterTwo:
+                    selectTwo.addEventListener("change", (choice) => {
+                        tableBody.innerHTML = "";
+                        showFunction(filterFunctionTwo(choice.target.value));
+                        cancelButton.removeAttribute("hidden");
+                    });
+                    break;
+                default:
+                    showFunction();
+                    cancelButton.setAttribute("hidden", "");
+            }
+        });
+    }
+
+    // Load more students
+    const fetchMoreElements = (array, showFunction) => {
+        startingIndex += 8;
+        endingIndex += 8;
+        showFunction(array.slice(startingIndex, endingIndex));
+        if (array.length <= endingIndex) {
+            loadMoreButton.disabled = true;
+            loadMoreButton.style.cursor = "not-allowed";
+            loadMoreButton.textContent = "No more data to load";
+        }
+    };
+
+
+
     if (pageTitle.innerHTML === "Students") {
-        showStudents();
+
+        startingIndex = 0;
+        endingIndex = 8;
+
+        // Show the first 8 students
+        showStudents(students.slice(startingIndex, endingIndex));
+
+        // Use the eventListener for filterStudentsSelect
+        handleFilterChange(
+            filterStudentsSelect,
+            fieldSelect,
+            studyLevelSelect,
+            "field",
+            "studyLevel",
+            showStudents,
+            (value) => students.filter((student) => student.field === value),
+            (value) => students.filter((student) => student.studylevel === parseInt(value))
+        );
+
+        // Load more students
+        loadMoreButton.addEventListener("click", () => {
+            fetchMoreElements(students, showStudents)
+        });
+
+    } else if (pageTitle.innerHTML === "Teachers") {
+
+        startingIndex = 0;
+        endingIndex = 8;
+
+        // Show the first 8 teachers
+        showTeachers(teachers.slice(startingIndex, endingIndex));
+
+        // Load more teachers
+        loadMoreButton.addEventListener("click", () => {
+            fetchMoreElements(teachers, showTeachers)
+        });
+
+    } else if (pageTitle.innerHTML === "Absences") {
+
+        startingIndex = 0;
+        endingIndex = 8;
+
+        // Show the first 8 absences
+        showAbsences(absences.slice(startingIndex, endingIndex));
+
+        // Use the eventListener for filterAbsencesSelect
+        handleFilterChange(
+            filterAbsencesSelect,
+            courseSelect,
+            monthSelect,
+            "course",
+            "month",
+            showAbsences,
+            (value) => absences.filter((absence) => absence.coursename === value),
+            (value) => absences.filter((absence) => absence.absencedate.includes('-'+String(value).padStart(2, '0')+'-'))
+        );
+
+        // Load more absences
+        loadMoreButton.addEventListener("click", () => {
+            fetchMoreElements(absences, showAbsences)
+        });
     }
-    else if (pageTitle.innerHTML === "Teachers") {
-        showTeachers();
-    }
 
 
 
 
-    filterSelect.addEventListener("change", (choice) => {
-        const selectedValue = filterSelect.value;
-
-        // Hide all select menus
-        fieldSelect.classList.add("hidden");
-        studyLevelSelect.classList.add("hidden");
-
-        // Show select menu based on user's selection
-        if (selectedValue === "field") {
-            fieldSelect.removeAttribute("hidden");
-            studyLevelSelect.setAttribute("hidden", "");
-        } else if (selectedValue === "studyLevel") {
-            studyLevelSelect.removeAttribute("hidden");
-            fieldSelect.setAttribute("hidden", "");
-        } else {
-            fieldSelect.setAttribute("hidden", "");
-            studyLevelSelect.setAttribute("hidden", "");
-        }
-
-        //Showing the students
-        tableBody.innerHTML = "";
-        switch (choice.target.value) {
-            case "field":
-                fieldSelect.addEventListener("change", (choice) => {
-                    tableBody.innerHTML = "";
-                    showStudents(students.filter((student) => student.field === choice.target.value));
-                    cancelButton.removeAttribute("hidden");
-                });
-                break;
-            case "studyLevel":
-                studyLevelSelect.addEventListener("change", (choice) => {
-                    tableBody.innerHTML = "";
-                    showStudents(students.filter((student) => student.studylevel === parseInt(choice.target.value)));
-                    cancelButton.removeAttribute("hidden");
-                });
-                break;
-            default:
-                showStudents();
-                cancelButton.setAttribute("hidden", "");
-        }
-
-    });
 
     cancelButton.addEventListener("click", () => {
         tableBody.innerHTML = "";
-        showStudents();
+        if (pageTitle.innerHTML === "Students")
+            showStudents();
+        else if (pageTitle.innerHTML === "Absences")
+            showAbsences();
         cancelButton.setAttribute("hidden", "");
     });
 

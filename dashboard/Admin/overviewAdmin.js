@@ -1,5 +1,5 @@
 
-// this ensure that the page is fully loaded before the script is executed
+// this ensures that the page is fully loaded before the script is executed
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('studentsPerYearCanvas').getContext('2d');
     new Chart(ctx, {
@@ -7,42 +7,64 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: studentStatistics.map(row => row.studylevel),
             datasets: [{
-                label: 'number of students per study level',
-                data: studentStatistics.map(row => row.nbStudents)
+                data: studentStatistics.map(row => row.nbStudents),
+                backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)'
+                ]
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+
         }
     });
     
 
-    //this part is for the abscence chart
-    //we need to add the missing days with 0 abscences
-    const currentdate= new Date();
+    //this part is for the absence chart
+    //we need to add the missing days with 0 absences
+    /*const currentdate= new Date();
     let date= new Date(currentdate);
     date.setDate(date.getDate()-20);
     
     let j=0;  
     for(let i=0; i<20; i++){
-        if(abscenceStatistics[j].absencedate!=formatDate(date)){
-            abscenceStatistics.splice(j,0,{absencedate: formatDate(date), nbAbscences: 0});
+        if(absenceStatistics[j].absencedate!==formatDate(date)){
+            absenceStatistics.splice(j,0,{absencedate: formatDate(date), nbAbsences: 0});
             
         }
         else{
             j++;
         }
         date.setDate(date.getDate()+1);
-    }
+    }*/
     // now we sort the array by date
-    abscenceStatistics.sort((a, b) => new Date(a.absencedate) - new Date(b.absencedate));
+    absenceStatistics.sort((a, b) => new Date(a.absencedate) - new Date(b.absencedate));
     // now we can draw the chart
-    const ABSCENCE_CHART = document.getElementById('abscenceCanvas').getContext('2d');
-    new Chart(ABSCENCE_CHART, {
-        type: 'bar',
+    const ABSENCE_CHART = document.getElementById('absenceCanvas').getContext('2d');
+    new Chart(ABSENCE_CHART, {
+        type: 'line',
         data: {
-            labels: abscenceStatistics.map(row => row.absencedate),
+            labels: absenceStatistics.map(row => row.absencedate),
             datasets: [{
-                label: 'number of abscences per day',
-                data: abscenceStatistics.map(row => row.nbAbscences)
+                data: absenceStatistics.map(row => row.nbAbsences)
             }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
         }
     });
 
@@ -55,17 +77,70 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: genderStatistics.map(row => row.gender),
             datasets: [{
-                label: 'Number of students',
-                data: genderStatistics.map(row => row.nbStudents)
+                data: genderStatistics.map(row => row.nbStudents),
+                backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)'
+                ]
             }]
         },
 
-        // I set these options so that the chart does not maintain it's default proportions !!!!!!!!!!!
+        // I set these options so that the chart does not maintain its default proportions !!!!!!!!!!!
         options: {
             responsive: true,
             maintainAspectRatio: false
         }
     });
+    const FIELD_CHART = document.getElementById('fieldCanvas').getContext('2d');
+    new Chart(FIELD_CHART, {
+        type: 'polarArea',
+        data: {
+            labels: fieldStatistics.map(row => row.field),
+            datasets: [{
+                data: fieldStatistics.map(row => row.nbStudents),
+                backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)',
+                    'rgba(255, 159, 64)',
+                    'rgba(255, 99, 71)',
+                    'rgba(128, 0, 128)',
+                ]
+            }]
+        },
+
+        // I set these options so that the chart does not maintain its default proportions !!!!!!!!!!!
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    const TEACHER_CHART = document.getElementById('teachersPerCourseCanvas').getContext('2d');
+    new Chart(TEACHER_CHART, {
+        type: 'doughnut',
+        data: {
+            labels: teacherStatistics.map(row => row.coursename),
+            datasets: [{
+                data: teacherStatistics.map(row => row.nbTeachers),
+                backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
 });
 
 
