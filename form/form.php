@@ -1,6 +1,8 @@
   <?php
             session_start();
+            session_destroy();
             $_SESSION['isGuest']=true;
+            require_once('../form/verifyAdmin.php');
   ?>
 <!DOCTYPE html>
 <html lang="en">

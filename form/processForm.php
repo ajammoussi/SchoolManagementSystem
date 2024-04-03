@@ -1,5 +1,6 @@
 
 <?php
+
 session_start();
 // Include the dbcreation.php file
 require_once('../database/dbcreation.php');
@@ -24,6 +25,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email'
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_type'] = $user['type'];
+            $_SESSION['isGuest'] = false;
 
             echo "User authenticated successfully";
 

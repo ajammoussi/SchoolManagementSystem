@@ -1,6 +1,8 @@
 <?php
   session_start();
   require_once('../../database/dbcreation.php');
+  require_once('../../form/verifyAdmin.php');
+  verifyAdmin();
   $pdo = ConnexionBD::getInstance();
   
 ?>
@@ -13,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../main.css" rel="stylesheet">
     <link href="../nav%20bar.css" rel="stylesheet">
-    <link href="overviewAdmin.css" rel="stylesheet">
+    <link href="dashboardAdmin.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar">
@@ -173,7 +175,7 @@
             const teacherStatistics = <?= json_encode($teacherStatistics) ?> ;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="./overviewAdmin.js" type="module"></script>
+        <script src="dashboardAdmin.js" type="module"></script>
     </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
