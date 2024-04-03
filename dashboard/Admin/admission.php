@@ -5,7 +5,7 @@ require_once('../database/dbcreation.php');
 ConnexionBD::generate_pdf_for_all_submissions();
 
 // Get the list of PDF files from the admission_pdf folder
-$pdfFiles = scandir('admission_pdf');
+$pdfFiles = scandir('admission/admission_pdf');
 
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -95,7 +95,7 @@ if (isset($_POST['action'])) {
         foreach ($pdfFiles as $file) {
             if ($file != "." && $file != "..") {
                 echo "<li>";
-                echo "<span><a href='admission_pdf/$file' target='_blank'>$file</a></span>";
+                echo "<span><a href='admission/admission_pdf/$file' target='_blank'>$file</a></span>";
                 echo "<div class='button-group'>";
                 echo "<button class='btn btn-danger mb-2' onclick='acceptFile(\"$file\")'>Accept</button>";
                 echo "<button class='btn btn-danger' onclick='refuseFile(\"$file\")'>Refuse</button>";
