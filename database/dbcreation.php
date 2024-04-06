@@ -56,7 +56,23 @@ class ConnexionBD
                      FOREIGN KEY(student) REFERENCES student(id),
                     FOREIGN KEY(course) REFERENCES course(id));"
             );
-
+            //create admin table
+            self::$_bdd ->query("create table if not exists admin 
+                    (id INT primary key auto_increment, username VARCHAR(50),email VARCHAR(50),
+                    password VARCHAR(80));"
+            );
+            // Create the view after creating the tables
+            self::$_bdd->query("
+            CREATE OR REPLACE VIEW user_auth AS
+            SELECT id, email, password, 'student' AS type
+            FROM student
+            UNION ALL
+            SELECT id, email, password, 'teacher' AS type
+            FROM teacher
+            UNION ALL
+            SELECT id, email, password, 'admin' AS type
+            FROM admin
+            ");
 
         
         } catch (PDOException $e) {
@@ -69,6 +85,26 @@ class ConnexionBD
             new ConnexionBD();
         }
         return (self::$_bdd);
+    }
+
+    //insert data into admin table
+    public static function insertData_admin($data)
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                INSERT INTO admin ( username, email, password)
+                    VALUES (:username, :email, :password) 
+                ");
+
+            // Hash the password before storing
+            $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+            $data['password'] = $hashedPassword;
+            $stmt->execute($data);
+            echo "Data inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
     }
 
     // insert data into the table etudiant

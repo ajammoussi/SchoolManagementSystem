@@ -90,6 +90,8 @@
     text-align:center
   }
 }
+
+/*sociall icons*/
 .social-icons
 {
   padding-left:0;
@@ -162,8 +164,7 @@
   }
 }
 
-
-/* .container{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}@media (min-width:768px){.container{width:750px}}@media (min-width:992px){.container{width:970px}} */
+/*container*/
 .container {
   padding-right: 15px;
   padding-left: 15px;
@@ -182,7 +183,7 @@
     width: 970px;
   }
 }
-
+/*row*/
 .row {
   display: grid;
   grid-template-columns: 3fr 1fr;

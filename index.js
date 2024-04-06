@@ -39,4 +39,21 @@ var swiper = new Swiper(".swiper", {
       }
     }
   });
-  
+
+  // this function is for the animation when the eleents are in view
+  document.addEventListener("DOMContentLoaded", function() {
+    var elements1 = Array.from(document.querySelectorAll('.swiper'));
+    var elements2 = Array.from(document.querySelectorAll('.discover-fields-of-study'));
+    var elements = elements1.concat(elements2);
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+    elements.forEach(function(element) {
+      observer.observe(element);
+    });
+  });

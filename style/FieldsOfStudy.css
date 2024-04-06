@@ -1,11 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Roboto:wght@300;400;500;900&display=swap");
 
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
-  } */
 
 .fields-of-study {
   position: relative;
@@ -51,6 +45,7 @@
   background-size: 100%;
   background-repeat: repeat;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
@@ -90,10 +85,14 @@
   border: 0.125rem solid #005baa;
   color: #005baa;
 }
-
+/* configuring swiper*/
 .swiper {
   width: 100%;
   padding-top: 3.125rem;
+}
+/*animation (when appearnig on screen)*/
+.swiper.active{
+  animation: fadeInFromRight 1s ease-out;
 }
 
 .swiper-pagination-bullet,
@@ -194,6 +193,7 @@
   background-image: none;
 }
 
+/* fixing screen responsiveness */
 @media screen and (min-width: 48rem) {
   .fields-of-study {
     display: flex;
@@ -209,4 +209,7 @@
   .swiper {
     width: 85%;
   }
+}
+.discover-fields-of-study.active{
+  animation: fadeInFromLeft 1s ease-out;
 }
