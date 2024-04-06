@@ -47,7 +47,7 @@
         </div>
       </section>
       <section class="fields-of-study" id="fieldsOfStudy">
-        <div>
+        <div class="discover-fields-of-study">
           <span>discover</span>
           <h1>fields of study</h1>
           <hr>

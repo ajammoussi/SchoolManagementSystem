@@ -1,6 +1,8 @@
 <?php
   session_start();
   require_once('../../database/dbcreation.php');
+  require_once('../../form/verifyAdmin.php');
+  verifyStudent();
   $pdo = ConnexionBD::getInstance();
 ?>
 
@@ -95,10 +97,11 @@
                 <hr>
                 <ul class="absences-list-inner">
                     <?php
-
+                    //preparing and binding statement
                     $stmt = $pdo->prepare("SELECT * , count(absencedate) as nombre_absences FROM absence,course WHERE absence.student = :id AND course.id = absence.course
                                     group by(course)");
-                    $stmt->execute(['id' => $_SESSION['user_id']]);
+                    $stmt->bindParam(':id',$_SESSION['user_id'], type: PDO::PARAM_INT);
+                    $stmt->execute();
                     $absences = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // print_r( $absences);
                     foreach ($absences as $absence) {?>

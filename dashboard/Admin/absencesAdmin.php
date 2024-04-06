@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once('../../database/dbcreation.php');
+require_once('../../form/verifyAdmin.php');
+verifyAdmin();
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +43,7 @@ require_once('../../database/dbcreation.php');
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="overviewAdmin.php">
+                <a href="dashboardAdmin.php">
                     <span class="nav-text">Overview</span>
                 </a>
             </li>
