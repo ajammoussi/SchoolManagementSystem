@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // eventListener for filtering students or absences
-    const handleFilterChange = (filterSelect, selectOne, selectTwo, filterOne, filterTwo, showFunction, filterFunctionOne, filterFunctionTwo) => {
+    const handleFilterChange = (arr, filterSelect, selectOne, selectTwo, filterOne, filterTwo, showFunction, filterFunctionOne, filterFunctionTwo) => {
         filterSelect.addEventListener("change", (choice) => {
             const selectedValue = filterSelect.value;
 
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     cancelButton.setAttribute("hidden", "");
             }
         });
-    }
+    };
 
     // Load more students
     const fetchMoreElements = (array, showFunction) => {
@@ -193,6 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Use the eventListener for filterStudentsSelect
         handleFilterChange(
+            students,
             filterStudentsSelect,
             fieldSelect,
             studyLevelSelect,
@@ -231,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Use the eventListener for filterAbsencesSelect
         handleFilterChange(
+            absences,
             filterAbsencesSelect,
             courseSelect,
             monthSelect,

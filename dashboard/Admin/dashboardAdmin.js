@@ -60,6 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }]
         },
         options: {
+            // y-axis from 0 to 5
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: 5
+                }
+            },
             plugins: {
                 legend: {
                     display: false
@@ -119,11 +126,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    const abbrev_name = (str1) => {
+
+        var split_names = str1.trim().split(" ");
+
+        if (split_names.length > 1) {
+
+            return (split_names[0] + " " + split_names[1].charAt(0) + ".");
+        }
+
+        return split_names[0];
+    };
+
     const TEACHER_CHART = document.getElementById('teachersPerCourseCanvas').getContext('2d');
     new Chart(TEACHER_CHART, {
         type: 'doughnut',
         data: {
-            labels: teacherStatistics.map(row => row.coursename),
+            labels: teacherStatistics.map(row => abbrev_name(row.coursename)),
             datasets: [{
                 data: teacherStatistics.map(row => row.nbTeachers),
                 backgroundColor: [

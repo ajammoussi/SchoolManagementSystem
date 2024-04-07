@@ -4,10 +4,10 @@ require 'fpdf/fpdf.php';
 
 class ConnexionBD
 {
-    private static string $_dbname = "sql11694778";
-    private static string $_user = "sql11694778";
-    private static string $_pwd = "5ErSzCTYhX";
-    private static string $_host = "sql11.freesqldatabase.com";
+    private static string $_dbname = "insatplatform";
+    private static string $_user = "root";
+    private static string $_pwd = "";
+    private static string $_host = "localhost";
     private static $_bdd = null;
     private function __construct()
     {
@@ -44,7 +44,7 @@ class ConnexionBD
             //create course table
             self::$_bdd ->query("create table if not exists course 
                     (id INT primary key auto_increment, coursename VARCHAR(50), 
-                     teacher INT,
+                     teacher INT, field VARCHAR(50), studylevel INT,
                     FOREIGN KEY(teacher) REFERENCES teacher(id));"
             );
 
@@ -62,8 +62,7 @@ class ConnexionBD
                     password VARCHAR(80));"
             );
             // Create the view after creating the tables
-            self::$_bdd->query("
-            CREATE OR REPLACE VIEW user_auth AS
+            self::$_bdd ->query("CREATE OR REPLACE VIEW user_auth AS
             SELECT id, email, password, 'student' AS type
             FROM student
             UNION ALL
@@ -72,6 +71,25 @@ class ConnexionBD
             UNION ALL
             SELECT id, email, password, 'admin' AS type
             FROM admin
+            ");
+            // Create a trigger that verifies when inserting or updating the absence table whether the student is enrolled in the course
+            self::$_bdd ->query("
+                CREATE OR REPLACE TRIGGER check_student_course
+                BEFORE INSERT ON absence FOR EACH ROW
+                BEGIN
+                    DECLARE std_field VARCHAR(50);
+                    DECLARE std_level INT;
+                    DECLARE crs_field VARCHAR(50);
+                    DECLARE crs_level INT;
+                    SELECT field INTO std_field FROM student WHERE id = NEW.student;
+                    SELECT studylevel INTO std_level FROM student WHERE id = NEW.student;
+                    SELECT field INTO crs_field FROM course WHERE id = NEW.course;
+                    SELECT studylevel INTO crs_level FROM course WHERE id = NEW.course;
+                    IF (std_field != crs_field OR std_level != crs_level) THEN
+                        SIGNAL SQLSTATE '45000'
+                        SET MESSAGE_TEXT = 'Student is not enrolled in the course';
+                    END IF;
+                END;
             ");
 
         
@@ -93,8 +111,8 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO admin ( username, email, password)
-                    VALUES (:username, :email, :password) 
+                REPLACE INTO admin (id, username, email, password)
+                    VALUES (:id, :username, :email, :password) 
                 ");
 
             // Hash the password before storing
@@ -113,10 +131,10 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO student ( firstname, lastname, email, password,
+                REPLACE INTO student (id, firstname, lastname, email, password,
                                      phone, address, birthdate, nationality,
                                      gender, field, studylevel, class)
-                    VALUES (:firstname, :lastname, :email, :password,
+                    VALUES (:id, :firstname, :lastname, :email, :password,
                             :phone, :address, :birthdate, :nationality, 
                             :gender, :field, :studylevel, :class) 
             ");
@@ -136,8 +154,8 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO teacher ( firstname, lastname, email, password,phone,gender)
-                    VALUES (:firstname, :lastname, :email, :password,:phone,:gender) 
+                REPLACE INTO teacher (id, firstname, lastname, email, password,phone,gender)
+                    VALUES (:id, :firstname, :lastname, :email, :password,:phone,:gender) 
                 ");
 
             // Hash the password before storing
@@ -149,14 +167,14 @@ class ConnexionBD
             echo "Error inserting data: " . $e->getMessage();
         }
     }
-    // insert data into the table prof
+    // insert data into the table course
     public static function insertData_course($data): void
     {
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO course ( coursename, teacher)
-                    VALUES (:coursename, :teacher) 
+                REPLACE INTO course (id, coursename, teacher, field, studylevel)
+                    VALUES (:id, :coursename, :teacher, :field, :studylevel) 
                 ");
 
             
@@ -172,7 +190,7 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO absence ( student,course,absencedate)
+                REPLACE INTO absence ( student,course,absencedate)
                     VALUES (:student,:course,:absencedate) 
             ");
             $stmt->execute($data);
@@ -337,7 +355,7 @@ class ConnexionBD
             $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             // 'absencePerMonth':
-            $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbsences FROM absence WHERE absencedate > DATE_SUB(CURDATE(), INTERVAL 20 DAY) group by(absencedate);");
+            $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbsences FROM absence group by(absencedate);");
             $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             //'studentsPerGender':
