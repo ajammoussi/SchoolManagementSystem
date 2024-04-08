@@ -77,6 +77,15 @@
                     <span class="nav-text">Absences</span>
                 </a>
             </li>
+
+            <li class="nav-item-vertical">
+                <b></b>
+                <b></b>
+                <a href="applicationsAdmin.php">
+                    <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
+                    <span class="nav-text">Applications</span>
+                </a>
+            </li>
         </ul>
     </nav>
 

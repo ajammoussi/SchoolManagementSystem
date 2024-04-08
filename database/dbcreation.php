@@ -4,10 +4,10 @@ require_once('fpdf/fpdf.php');
 
 class ConnexionBD
 {   
-    private static $_dbname = "sql11694778";
-    private static $_user = "sql11694778";
-    private static $_pwd = "5ErSzCTYhX";
-    private static $_host = "sql11.freesqldatabase.com";
+    private static $_dbname = "insatplatform";
+    private static $_user = "root";
+    private static $_pwd = "";
+    private static $_host = "localhost";
     private static $_bdd = null;
     private function __construct()
     {
@@ -188,6 +188,58 @@ class ConnexionBD
         }
     }
 
+    public static function getAbsences()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT a.student AS studentID, CONCAT(s.firstname, ' ', s.lastname) AS studentname, 
+                                    c.coursename, a.absencedate FROM absence a
+                                    JOIN student s ON s.id = a.student
+                                    JOIN course c ON c.id = a.course;");
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $result;
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public static function get_statistics(): ?array
+    {
+        try {
+            $pdo = self::getInstance();
+            $result = [];
+
+            // 'studentsPerYear':
+            $stmt = $pdo->query("SELECT studylevel,count(id) as nbStudents FROM student group by(studylevel);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // 'absencePerMonth':
+            $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbsences FROM absence WHERE absencedate > DATE_SUB(CURDATE(), INTERVAL 20 DAY) group by(absencedate);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            //'studentsPerGender':
+            $stmt = self::getInstance()->query("SELECT gender,count(*) as nbStudents FROM student group by(gender);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // 'studentsPerField':
+            $stmt = self::getInstance()->query("SELECT field,count(*) as nbStudents FROM student group by(field);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // 'teachersPerCourse':
+            $stmt = self::getInstance()->query("SELECT coursename,count(teacher) as nbTeachers FROM course group by(coursename);");
+            $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+
+
     /**
      * * inserts the new submission in the request table
      */
@@ -254,7 +306,7 @@ class ConnexionBD
     $pdf->SetTextColor(0, 0, 0);
 
     // Add image at the top left
-    $pdf->Image('../dashboard/src/logo-insat.png', 1, 1, 20);  // Adjust path and dimensions as needed
+    $pdf->Image(__DIR__ . '/../dashboard/src/logo-insat.png', 1, 1, 20);  // Adjust path and dimensions as needed
 
     $pdf->SetFont('Arial', '', 12);
 
@@ -270,30 +322,41 @@ class ConnexionBD
     }
 
     // Save PDF to a file with the email address as the filename
-    $pdfFileName = 'admission_pdf/' . $data['email'] . '.pdf';
+    $pdfFileName = '../../admission/admission_pdf/' . $data['email'] . '.pdf';
     $pdf->Output($pdfFileName, 'F');
 }
 
 
-    /**
-     * generates a pdf file for each submission in the database
-     */
-    public static function generate_pdf_for_all_submissions()
-    {
-        try {
-            $pdo = self::getInstance();
-            $stmt = $pdo->query("SELECT * FROM request");
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ($results as $row) {
-                self::generate_pdf($row);
+/**
+ * Generates a pdf file for each submission in the database
+ * Deletes all existing PDF files in the directory before generating new ones
+ */
+public static function generate_pdf_for_all_submissions()
+{
+    try {
+        // Delete all existing PDF files in the directory
+        $pdfDirectory = '../../admission/admission_pdf/';
+        $files = glob($pdfDirectory . '*'); // get all file names
+        foreach ($files as $file) { // iterate files
+            if (is_file($file)) {
+                unlink($file); // delete file
             }
-
-            echo "PDF files generated successfully";
-        } catch (PDOException $e) {
-            echo "Error generating PDF: " . $e->getMessage();
         }
+
+        $pdo = self::getInstance();
+        $stmt = $pdo->query("SELECT * FROM request");
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($results as $row) {
+            self::generate_pdf($row);
+        }
+
+        echo "PDF files generated successfully";
+    } catch (PDOException $e) {
+        echo "Error generating PDF: " . $e->getMessage();
     }
+}
+
 
     /**
      * * adding new student to Student table using his email
