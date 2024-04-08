@@ -86,6 +86,7 @@ $courses = [
     [14, 'Statistics', 5, 'MPI', 3],
     [15, 'Bioinformatics', 9, 'CBA', 2],
     [16, 'Genetics', 9, 'CBA', 3],
+    [17,'Python', 4, 'GL', 2],
 ];
 
 $absences = [
@@ -103,6 +104,9 @@ $absences = [
     [33,1,'2024-02-10'],
     [36,6,'2024-04-09'],
     [39,1,'2024-04-10'],
+    [39,17,'2024-04-10'],
+    [39,17,'2024-04-11'],
+    [39,17,'2024-04-12'],
 ];
 
 $admins = [
@@ -127,23 +131,23 @@ function insert($keys, $table, $db, $func)
 
 
 
-/*
-insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
-    'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
-    $students, 'ConnexionBD', 'insertData_etudiant');
 
-insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
-    $teachers, 'ConnexionBD', 'insertData_prof');
+// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
+//     'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
+//     $students, 'ConnexionBD', 'insertData_etudiant');
 
-insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
-    $courses, 'ConnexionBD', 'insertData_course');
+// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
+//     $teachers, 'ConnexionBD', 'insertData_prof');
 
-insert(['student', 'course', 'absencedate'],
-    $absences, 'ConnexionBD', 'insertData_abscence');
+// insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
+//     $courses, 'ConnexionBD', 'insertData_course');
 
-insert(['id', 'username', 'email', 'password'],
-    $admins, 'ConnexionBD', 'insertData_admin');
-*/
+// insert(['student', 'course', 'absencedate'],
+//     $absences, 'ConnexionBD', 'insertData_abscence');
+
+// insert(['id', 'username', 'email', 'password'],
+//     $admins, 'ConnexionBD', 'insertData_admin');
+
 
 
 
@@ -151,7 +155,6 @@ insert(['id', 'username', 'email', 'password'],
 
 
 /////////////////// old db ////////////////////////////////////////////
-
 
 
 

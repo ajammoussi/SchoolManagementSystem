@@ -20,7 +20,7 @@ class ConnexionBD
             // create student table
             self::$_bdd ->query("create table if not exists student 
                     (id INT primary key auto_increment, firstname VARCHAR(50),
-                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(50),
+                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(80),
                     phone INT(8), address VARCHAR(80), birthdate DATE, gender VARCHAR(10),
                     nationality VARCHAR(50), field VARCHAR(50), studylevel INT, class INT);"
             );
@@ -37,7 +37,7 @@ class ConnexionBD
             //create teacher table
             self::$_bdd ->query("create table if not exists teacher 
                     (id INT primary key auto_increment, firstname VARCHAR(50),
-                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(50), 
+                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(80), 
                     phone INT(8), gender VARCHAR(10));"
             );
 

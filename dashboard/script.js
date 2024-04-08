@@ -83,6 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     showMoreInfoStudent(student);
                 });
             });
+            if (arr.length <= endingIndex) {
+                loadMoreButton.setAttribute("hidden", "");
+            }
     };
 
     const showTeachers = (arr = teachers) => {
@@ -153,14 +156,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 case filterOne:
                     selectOne.addEventListener("change", (choice) => {
                         tableBody.innerHTML = "";
-                        showFunction(filterFunctionOne(choice.target.value));
+                        filteredElements=filterFunctionOne(choice.target.value);
+                        showFunction(filteredElements);
                         cancelButton.removeAttribute("hidden");
                     });
                     break;
                 case filterTwo:
                     selectTwo.addEventListener("change", (choice) => {
                         tableBody.innerHTML = "";
-                        showFunction(filterFunctionTwo(choice.target.value));
+                        filteredElements=filterFunctionTwo(choice.target.value);
+                        showFunction(filteredElements);
                         cancelButton.removeAttribute("hidden");
                     });
                     break;
@@ -182,9 +187,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-
-    if (pageTitle.innerHTML === "Students") {
-
+    // not good to use innerHTML can be a vulnirability !!!!
+    // reminderr!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if (pageTitle.innerHTML === "Students") { 
+        filteredElements=students;
         startingIndex = 0;
         endingIndex = 8;
 
@@ -206,11 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Load more students
         loadMoreButton.addEventListener("click", () => {
-            fetchMoreElements(students, showStudents)
+            fetchMoreElements(filteredElements, showStudents)
         });
 
     } else if (pageTitle.innerHTML === "Teachers") {
-
+        filteredElements=teachers;
         startingIndex = 0;
         endingIndex = 8;
 
@@ -223,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     } else if (pageTitle.innerHTML === "Absences") {
-
+        filteredElements=absences;
         startingIndex = 0;
         endingIndex = 8;
 
@@ -245,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Load more absences
         loadMoreButton.addEventListener("click", () => {
-            fetchMoreElements(absences, showAbsences)
+            fetchMoreElements(filteredElements, showAbsences)
         });
     }
 
