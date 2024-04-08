@@ -56,7 +56,23 @@ class ConnexionBD
                      FOREIGN KEY(student) REFERENCES student(id),
                     FOREIGN KEY(course) REFERENCES course(id));"
             );
-
+            //create admin table
+            self::$_bdd ->query("create table if not exists admin 
+                    (id INT primary key auto_increment, username VARCHAR(50),email VARCHAR(50),
+                    password VARCHAR(80));"
+            );
+            // Create the view after creating the tables
+            self::$_bdd->query("
+            CREATE OR REPLACE VIEW user_auth AS
+            SELECT id, email, password, 'student' AS type
+            FROM student
+            UNION ALL
+            SELECT id, email, password, 'teacher' AS type
+            FROM teacher
+            UNION ALL
+            SELECT id, email, password, 'admin' AS type
+            FROM admin
+            ");
 
         
         } catch (PDOException $e) {
@@ -71,8 +87,28 @@ class ConnexionBD
         return (self::$_bdd);
     }
 
+    //insert data into admin table
+    public static function insertData_admin($data)
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                INSERT INTO admin ( username, email, password)
+                    VALUES (:username, :email, :password) 
+                ");
+
+            // Hash the password before storing
+            $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+            $data['password'] = $hashedPassword;
+            $stmt->execute($data);
+            echo "Data inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
+    }
+
     // insert data into the table etudiant
-    public static function insertData_etudiant($data)
+    public static function insertData_etudiant($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -95,7 +131,7 @@ class ConnexionBD
         }
     }
     // insert data into the table prof
-    public static function insertData_prof($data)
+    public static function insertData_prof($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -114,7 +150,7 @@ class ConnexionBD
         }
     }
     // insert data into the table prof
-    public static function insertData_course($data)
+    public static function insertData_course($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -131,7 +167,8 @@ class ConnexionBD
         }
     }
     // insert data into the table abscence
-    public static function insertData_abscence($data){
+    public static function insertData_abscence($data): void
+    {
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
@@ -243,7 +280,7 @@ class ConnexionBD
     /**
      * * inserts the new submission in the request table
      */
-    public static function add_submission($data)
+    public static function add_submission($data): void
     {
         try {
             $pdo = self::getInstance();
@@ -357,7 +394,6 @@ public static function generate_pdf_for_all_submissions()
     }
 }
 
-
     /**
      * * adding new student to Student table using his email
      * @param email the email of the student to be added
@@ -435,17 +471,4 @@ public static function generate_pdf_for_all_submissions()
             echo "Error adding student: " . $e->getMessage();
         }
     }   
-
-    public static function accept($fileName) {
-        self::addStudent_byemail($fileName);
-        self::delete_submission($fileName);
-        return 'success';
-    }
-
-    public static function refuse($fileName) {
-        if (self::delete_submission($fileName) == 'success') {
-            return 'success';
-        }
-        return 'error';
-    }
 }

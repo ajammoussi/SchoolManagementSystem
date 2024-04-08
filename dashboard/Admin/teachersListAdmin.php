@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once('../../database/dbcreation.php');
+require_once('../../form/verifyAdmin.php');
+verifyAdmin();
 ?>
 
 <!DOCTYPE html>
