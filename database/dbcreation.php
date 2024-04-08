@@ -450,7 +450,15 @@ public static function generate_pdf_for_all_submissions()
             $mail = new PHPMailer(true);
 
 
-            // admin's email to be changed
+            // Gmail SMTP configuration
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'your_email@gmail.com'; // Your Gmail email address
+            $mail->Password = 'your_password'; // Your Gmail password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
             $mail->setFrom('admin@school.com', 'School Administration');
             $mail->addAddress($student['email'], $student['firstname'] . ' ' . $student['lastname']);
             $mail->Subject = 'Welcome to Our School';
@@ -471,4 +479,22 @@ public static function generate_pdf_for_all_submissions()
             echo "Error adding student: " . $e->getMessage();
         }
     }   
+
+    /**
+     * * generates a random password
+     * @param length the length of the password with the default value of 8
+     */
+    private static function generateRandomPassword($length = 8)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}|:<>?';
+        $charactersLength = strlen($characters);
+        $randomPassword = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomPassword .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomPassword;
+    }
+
 }
