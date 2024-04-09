@@ -1,9 +1,9 @@
-  <?php
-            session_start();
-            session_destroy();
-            $_SESSION['isGuest']=true;
-            require_once('../form/verifyAdmin.php');
-  ?>
+<?php
+    session_start();
+    session_destroy();
+    $_SESSION['isGuest'] = true;
+    require_once('../form/verifyAdmin.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,30 +11,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link href="form.css" rel="stylesheet">
+    <style>
+        .logo-fac {
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-  <img src="dashboard/src/logo-insat.png" alt="logo lfac" class="logo-fac">
-  <h1>Good to see you again !</h1>
-  
-  
-  <form id="msform" action="processForm.php" method="post">
-      <fieldset>
-          <h2 class="fs-title">Log in</h2>
-          <label for="email" class="form-label">Email:</label>
-          <input type="text" name="email" placeholder="demo@insat.com" id="email" name="email"/>
-          <label for="password" class="form-label">Password:</label>
-          <input type="password" id="password" placeholder="demo1234" name="password"/>
-          <!-- Display error message if exist -->
-          <?php
-            if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-                echo '<div class="error-message">' . $_SESSION['error'] . '</div>';
-                // Clear the error atr from session
-                unset($_SESSION['error']);
-            }
-          ?>
-          
-          <input type="submit" name="next" class="next action-button" value="Sign in" />
-      </fieldset>
-  </form>
+    <img src="../src/logo-insat.png" alt="logo lfac" class="logo-fac">
+    <h1>Good to see you again !</h1>
+
+    <form id="msform" action="processForm.php" method="post">
+        <fieldset>
+            <h2 class="fs-title">Log in</h2>
+            <label for="email" class="form-label">Email:</label>
+            <input type="text" name="email" placeholder="demo@insat.com" id="email" name="email"/>
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password" placeholder="demo1234" name="password"/>
+            
+            <!-- Display error message if exist -->
+            <?php
+                if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
+                    echo '<div class="error-message">' . $_SESSION['error'] . '</div>';
+                    // Clear the error atr from session
+                    unset($_SESSION['error']);
+                }
+            ?>
+            
+            <input type="submit" name="next" class="next action-button" value="Sign in" />
+        </fieldset>
+    </form>
 </body>
 </html>

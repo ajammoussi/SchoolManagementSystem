@@ -17,8 +17,8 @@ body {
 	font-family: montserrat, arial, verdana;
 }
 .logo-fac{
-    width: 200px;
-    height: 100px;
+    max-width: 200px;
+    height: auto;
     margin: 10px auto 0 10px;
     display: block;
 

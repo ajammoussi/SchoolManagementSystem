@@ -30,7 +30,7 @@
               <li><a href="#landing-page">About Us</a></li>
               <li><a href="#fieldsOfStudy">Fields of Study</a></li>
               <li><a href="contact_us/contact_us.html">Contact us</a></li> <!-- Updated contact us link -->
-              <li><button class="nav-btn nav-btn-login" onclick="window.location.href = './form/form.php';">Log in</button></li>
+              <li><button class="nav-btn nav-btn-login" onclick="window.location.href = '../form/form.php';">Log in</button></li>
               <li><button class="nav-btn" onclick="window.location.href = '../admission/registration_form.html';">Get Started</button></li>
             </ul>
           </div>
