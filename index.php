@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,9 +29,9 @@
               <li><a href="#landing-page">Home</a></li>
               <li><a href="#landing-page">About Us</a></li>
               <li><a href="#fieldsOfStudy">Fields of Study</a></li>
-              <li><a href="#landing-page">Contact us</a></li>
+              <li><a href="contact_us/contact_us.html">Contact us</a></li> <!-- Updated contact us link -->
               <li><button class="nav-btn nav-btn-login" onclick="window.location.href = './form/form.php';">Log in</button></li>
-              <li><button class="nav-btn" >Get Started</button></li>
+              <li><button class="nav-btn" onclick="window.location.href = '../admission/registration_form.html';">Get Started</button></li>
             </ul>
           </div>
         </header>
@@ -116,7 +115,7 @@
         <h6>Quick Links</h6>
         <ul class="footer-links">
           <li><a href="#landing-page">About Us</a></li>
-          <li><a href="#contact-us">Contact Us</a></li>
+          <li><a href="contact_us/contact_us.html">Contact Us</a></li> <!-- Updated contact us link -->
           <li><a href="">Contribute</a></li>
           <li><a href="">Privacy Policy</a></li>
           
@@ -145,6 +144,3 @@
   </div>
 </footer>
 </html>
-
-
-
