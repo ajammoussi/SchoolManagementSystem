@@ -61,6 +61,10 @@ class ConnexionBD
                     (id INT primary key auto_increment, username VARCHAR(50),email VARCHAR(50),
                     password VARCHAR(80));"
             );
+            //create coursevideo table
+            self::$_bdd ->query("create table if not exists coursevideo 
+                    (id INT primary key auto_increment, title VARCHAR(150),url VARCHAR(150) ,description varchar(500),field VARCHAR(50), studylevel INT);"
+            );
             // Create the view after creating the tables
             self::$_bdd ->query("CREATE OR REPLACE VIEW user_auth AS
             SELECT id, email, password, 'student' AS type
@@ -199,6 +203,21 @@ class ConnexionBD
             echo "Error inserting data: " . $e->getMessage();
         }
     }
+    // insert data into the table courseVideo
+    public static function insertData_courseVideo($data): void
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                REPLACE INTO courseVideo (id, url,title,description,field , studylevel)
+                    VALUES (:id,:url,:title,:description,:field,:studylevel) 
+            ");
+            $stmt->execute($data);
+            echo "courseVideo is inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
+    }
 
     // shows the data from a table in the database
     public static function showData($table)
@@ -260,6 +279,36 @@ class ConnexionBD
         }
     }
 
+    // get the VideoCourses of a student 
+    public static function getVideosByLevel()
+{
+    try {
+        $pdo = self::getInstance();
+        $stmt = $pdo->prepare("SELECT * FROM coursevideo WHERE (studylevel = :studylevel AND field = :field)");
+        $stmt->bindParam(':studylevel', $_SESSION['studylevel'], PDO::PARAM_INT);
+        $stmt->bindParam(':field', $_SESSION['field'], PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    } catch (PDOException $e) {
+        echo "Error fetching data: " . $e->getMessage();
+        return null;
+    }
+}
+    public static function getStudentInfo()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT id,firstname , lastname,email,phone,address,birthdate,gender,nationality,field,studylevel,class FROM student WHERE id = " . $_SESSION['user_id']);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+    
     /**
      * * inserts the new submission in the requests table
      */

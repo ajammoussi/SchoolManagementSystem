@@ -109,9 +109,18 @@ $absences = [
     [39,17,'2024-04-12'],
 ];
 
+$courseVideos=[
+    [1,'https://www.youtube.com/watch?v=-uleG_Vecis','Computer Science Concepts Explained','Learn the fundamentals of Computer Science with a quick breakdown of jargon that every software engineer should know. Over 100 technical concepts from the CS curriculum are explained to provide a foundation for programmers.','GL',2],
+    [2,'https://www.youtube.com/watch?v=oHQvWa6J8dU','Introduction to Networking Basics','This video introduces the basics of Networking','RT',3],
+    [3,'https://www.youtube.com/watch?v=JwSS70SZdyM','Introduction to Phython','This video introduces the basics of Phython','RT',4],
+    [4,'https://www.youtube.com/watch?v=oHQvWa6J8dU','Introduction to Networking Basics','This video introduces the basics of Networking','GL',2],
+    [5,'https://www.youtube.com/watch?v=JwSS70SZdyM','Introduction to Phython','This video introduces the basics of Phython','GL',2]
+];
+
 $admins = [
     [1, 'adminuser', 'admin@example.com', 'admin123']
 ];
+
 
 function insert($keys, $table, $db, $func)
 {
@@ -147,6 +156,9 @@ function insert($keys, $table, $db, $func)
 
 // insert(['id', 'username', 'email', 'password'],
 //     $admins, 'ConnexionBD', 'insertData_admin');
+
+insert(['id','url','title','description','field','studylevel'],
+$courseVideos, 'ConnexionBD', 'insertData_coursevideo');
 
 
 

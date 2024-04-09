@@ -336,33 +336,6 @@ form {
       grid-template-columns: 70% 30%;
     }
   }
-
-  @media (max-width: 1310px) {
-    /* main {
-      grid-template-columns: 6% 92%;
-      margin: 30px;
-    } */
-
-  }
-
-
-  @media (max-width: 910px) {
-    /* main {
-      grid-template-columns: 10% 90%;
-      margin: 20px;
-    } */
-
-
-  }
-
-
-  @media (max-width: 700px) {
-    /* main {
-      grid-template-columns: 15% 85%;
-    } */
-
-  }
-
 @media (max-width: 1100px) {
   main {
     grid-template-columns:  12% 88%;
@@ -385,10 +358,10 @@ form {
   
 }
 
-@media (max-width: 810px) {
+@media (max-width: 910px) {
   main {
     margin: 100px 0;
-    grid-template-columns:  15% 85%;
+    /* grid-template-columns:  15% 85%; */
     
   }
   .nav-vertical-icons{
@@ -397,7 +370,14 @@ form {
   .nav-vertical-icons{
     width: 40px;
     height: 40px;
-    margin: 0 35px 0 25px;
+    margin: 0 35px 0 5px;
+  }
+  
+  /* big brain moment here */
+  .nav-item-vertical a {
+    padding: 10px 10px 10px 30px;
+    margin-left: -40px;
+    min-width: 60px;
   }
 
 }
@@ -406,5 +386,3 @@ form {
 
 
 
-
->>>>>>> main
