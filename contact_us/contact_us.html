@@ -7,33 +7,120 @@
     <title>Contact Us</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style/landingPage.css">
+    <link rel="stylesheet" href="../style/footer.css">
+    <style>
+        .logo-insat {
+            max-height: 40px;
+            margin-right: 10px;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container mt-5">
-    <h1 class="text-danger text-center">Contact Us</h1>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../index.php">
+                    <img src="../src/logo-insat.png" alt="logo insat" class="logo-insat">
+                    INSAT <b>platform</b>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.php#fieldsOfStudy">Fields of Study</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-btn nav-btn-login" onclick="window.location.href = '../form/form.php';">Log in</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-btn" onclick="window.location.href = '../admission/registration_form.html';">Get Started</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <form action="send_email.php" method="post">
-        <div class="mb-3">
-            <label for="email" class="form-label text-danger">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+    <div class="container mt-5">
+        <h1 class="text-danger text-center">Contact Us</h1>
+
+        <form action="send_email.php" method="post">
+            <div class="mb-3">
+                <label for="email" class="form-label text-danger">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="message" class="form-label text-danger">Message:</label>
+                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+            </div>
+
+            <div class="text-end">
+                <input type="submit" class="btn btn-danger" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="about-us">
+        <div class="container">
+            <div class="row">
+                <div class="About-text">
+                    <h6>About</h6>
+                    <p class="text-justify">Welcome to INSAT, the National Institute of Applied Sciences and Technology, where excellence meets innovation. Established in 1996, INSAT is dedicated to providing world-class engineering education, fostering cutting-edge research, and nurturing future leaders in various engineering disciplines.</p>
+                </div>
+
+                <div>
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="#landing-page">About Us</a></li>
+                        <li><a href="#contact-us">Contact Us</a></li>
+                        <li><a href="">Contribute</a></li>
+                        <li><a href="">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
         </div>
+        <div class="container">
+            <div class="row">
+                <div>
+                    <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by <a href="#">insat</a>.</p>
+                </div>
 
-        <div class="mb-3">
-            <label for="message" class="form-label text-danger">Message:</label>
-            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                <div>
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="https://www.facebook.com/insat.rnu.tn"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+    </footer>
 
-        <div class="text-end">
-            <input type="submit" class="btn btn-danger" value="Submit">
-        </div>
-    </form>
-</div>
-
-<!-- Bootstrap JS and Popper.js -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
+
 </html>
