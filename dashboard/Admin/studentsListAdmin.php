@@ -43,11 +43,7 @@
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-<<<<<<< HEAD
                 <a href="overviewAdmin.php">
-=======
-                <a href="dashboardAdmin.php">
->>>>>>> a3a19c30e5c5ac4a6ad79a2a9b3b73a1c9921c89
                     <span class="nav-text">Overview</span>
                 </a>
             </li>
