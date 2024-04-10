@@ -16,7 +16,7 @@
     <link href="form.css" rel="stylesheet">
 </head>
 <body>
-    <img src="../src/logo-insat.png" alt="logo lfac" class="logo-fac">
+    <img src="../Landing%20Page/src/logo-insat.png" alt="logo lfac" class="logo-fac">
     <h1>Good to see you again !</h1>
 
     <form id="msform" action="processForm.php" method="post">

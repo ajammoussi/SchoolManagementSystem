@@ -50,6 +50,7 @@ Notes
 -----
 
 - Make sure XAMPP is properly configured and running before starting the server.
+
 Contributors
 ------------
 

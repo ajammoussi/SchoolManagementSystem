@@ -83,9 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     showMoreInfoStudent(student);
                 });
             });
-            if (arr.length <= endingIndex) {
-                loadMoreButton.setAttribute("hidden", "");
-            }
     };
 
     const showTeachers = (arr = teachers) => {

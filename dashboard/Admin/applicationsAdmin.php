@@ -112,23 +112,23 @@ if (isset($_POST['action'])) {
                             <ul class="list-group">
                                 <?php
                                 foreach ($pdfFiles as $file) {
-                                    if ($file != "." && $file != "..") {
-                                        echo "<li class='list-group-item d-flex justify-content-between align-items-center' style='border: none; border-radius: 5px; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease-in-out;'>";
-                                        echo "<span><a href='../../admission/admission_pdf/$file' target='_blank' style='color: #dc3545 !important;' class='text-decoration-none'>$file</a></span>";
-                                        echo "<div class='button-group'>";
-                                        echo "<form method='post'>";
-                                        echo "<input type='hidden' name='action' value='accept'>";
-                                        echo "<input type='hidden' name='fileName' value='$file'>";
-                                        echo "<button type='submit' class='btn btn-danger'>Accept</button>";
-                                        echo "</form>";
-                                        echo "<form method='post'>";
-                                        echo "<input type='hidden' name='action' value='refuse'>";
-                                        echo "<input type='hidden' name='fileName' value='$file'>";
-                                        echo "<button type='submit' class='btn btn-danger'>Refuse</button>";
-                                        echo "</form>";
-                                        echo "</div>";
-                                        echo "</li>";
-                                    }
+                                    if ($file != "." && $file != "..") { ?>
+                                        <li class='list-group-item d-flex justify-content-evenly align-items-center' style='border: none; border-radius: 5px; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease-in-out;'>
+                                            <div><a href='../../admission/admission_pdf/<?=$file?>' target='_blank' style='color: #dc3545 !important;' class='text-decoration-none'><?=$file?></a></div>
+                                            <div class='button-group d-flex'>
+                                                <form method='post'>
+                                                    <input type='hidden' name='action' value='accept'>
+                                                    <input type='hidden' name='fileName' value='<?=$file?>'>
+                                                    <button type='submit' class='btn btn-danger'>Accept</button>
+                                                </form>
+                                                <form method='post'>
+                                                    <input type='hidden' name='action' value='refuse'>
+                                                    <input type='hidden' name='fileName' value='<?=$file?>'>
+                                                    <button type='submit' class='btn btn-danger'>Refuse</button>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    <?php }
                                 }
                                 ?>
                             </ul>

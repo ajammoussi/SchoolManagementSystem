@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style/landingPage.css">
+    <link rel="stylesheet" href="Landing Page/style/landingPage.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
-    <link rel="stylesheet" href="style/FieldsOfStudy.css">
-    <link rel="stylesheet" href="style/footer.css">
+    <link rel="stylesheet" href="Landing Page/style/FieldsOfStudy.css">
+    <link rel="stylesheet" href="Landing Page/style/footer.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -21,7 +21,7 @@
         <header>
             <div class="header-container">
                 <a href="#" class="logo">
-                    <img src="src/logo-insat.png" alt="logo insat" class="logo-insat">
+                    <img src="Landing Page/src/logo-insat.png" alt="logo insat" class="logo-insat">
                     INSAT <b>platform</b>
                 </a>
                 <ul class="links">
@@ -29,8 +29,8 @@
                     <li><a href="#landing-page">About Us</a></li>
                     <li><a href="#fieldsOfStudy">Fields of Study</a></li>
                     <li><a href="#contact-form-section">Contact us</a></li>
-                    <li><button class="nav-btn nav-btn-login" onclick="window.location.href = '../form/form.php';">Log in</button></li>
-                    <li><button class="nav-btn" onclick="window.location.href = '../admission/registration_form.html';">Get Started</button></li>
+                    <li><button class="nav-btn nav-btn-login" onclick="window.location.href = 'form/form.php';">Log in</button></li>
+                    <li><button class="nav-btn" onclick="window.location.href = 'admission/registration_form.html';">Get Started</button></li>
                 </ul>
             </div>
         </header>
@@ -87,7 +87,11 @@
     <section class="contact-form-section" id="contact-form-section">
         <div class="container-fluid mt-5" style="background-color: #26272b; color: #fff; padding: 20px;">
             <h1>Contact Us</h1>
-            <form action="send_email.php" method="post">
+            <form action="Landing Page/send_email.php" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" style="background-color: #33353d; color: #eceeef;" required>
+                </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
                     <input type="email" class="form-control" id="email" name="email" style="background-color: #33353d; color: #eceeef;" required>
@@ -141,7 +145,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
-    <script src="index.js"></script>
+    <script src="Landing Page/index.js"></script>
 </body>
 
 </html>

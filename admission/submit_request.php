@@ -22,5 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // add the submission to the database
     ConnexionBD::add_submission($data);
+
+    //redirect to index
+    header("Location: ../index.php");
 }
 ?>
