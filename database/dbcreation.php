@@ -3,11 +3,11 @@
 require_once('fpdf/fpdf.php');
 
 class ConnexionBD
-{   
-    private static $_dbname = "insatplatform";
-    private static $_user = "root";
-    private static $_pwd = "";
-    private static $_host = "localhost";
+{
+    private static string $_dbname = "insatplatform";
+    private static string $_user = "root";
+    private static string $_pwd = "";
+    private static string $_host = "localhost";
     private static $_bdd = null;
     private function __construct()
     {
@@ -20,7 +20,7 @@ class ConnexionBD
             // create student table
             self::$_bdd ->query("create table if not exists student 
                     (id INT primary key auto_increment, firstname VARCHAR(50),
-                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(50),
+                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(80),
                     phone INT(8), address VARCHAR(80), birthdate DATE, gender VARCHAR(10),
                     nationality VARCHAR(50), field VARCHAR(50), studylevel INT, class INT);"
             );
@@ -37,14 +37,14 @@ class ConnexionBD
             //create teacher table
             self::$_bdd ->query("create table if not exists teacher 
                     (id INT primary key auto_increment, firstname VARCHAR(50),
-                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(50), 
+                    lastname VARCHAR(50), email VARCHAR(50), password VARCHAR(80), 
                     phone INT(8), gender VARCHAR(10));"
             );
 
             //create course table
             self::$_bdd ->query("create table if not exists course 
                     (id INT primary key auto_increment, coursename VARCHAR(50), 
-                     teacher INT,
+                     teacher INT, field VARCHAR(50), studylevel INT,
                     FOREIGN KEY(teacher) REFERENCES teacher(id));"
             );
 
@@ -61,9 +61,12 @@ class ConnexionBD
                     (id INT primary key auto_increment, username VARCHAR(50),email VARCHAR(50),
                     password VARCHAR(80));"
             );
+            //create coursevideo table
+            self::$_bdd ->query("create table if not exists coursevideo 
+                    (id INT primary key auto_increment, title VARCHAR(150),url VARCHAR(150) ,description varchar(500),field VARCHAR(50), studylevel INT);"
+            );
             // Create the view after creating the tables
-            self::$_bdd->query("
-            CREATE OR REPLACE VIEW user_auth AS
+            self::$_bdd ->query("CREATE OR REPLACE VIEW user_auth AS
             SELECT id, email, password, 'student' AS type
             FROM student
             UNION ALL
@@ -72,6 +75,25 @@ class ConnexionBD
             UNION ALL
             SELECT id, email, password, 'admin' AS type
             FROM admin
+            ");
+            // Create a trigger that verifies when inserting or updating the absence table whether the student is enrolled in the course
+            self::$_bdd ->query("
+                CREATE OR REPLACE TRIGGER check_student_course
+                BEFORE INSERT ON absence FOR EACH ROW
+                BEGIN
+                    DECLARE std_field VARCHAR(50);
+                    DECLARE std_level INT;
+                    DECLARE crs_field VARCHAR(50);
+                    DECLARE crs_level INT;
+                    SELECT field INTO std_field FROM student WHERE id = NEW.student;
+                    SELECT studylevel INTO std_level FROM student WHERE id = NEW.student;
+                    SELECT field INTO crs_field FROM course WHERE id = NEW.course;
+                    SELECT studylevel INTO crs_level FROM course WHERE id = NEW.course;
+                    IF (std_field != crs_field OR std_level != crs_level) THEN
+                        SIGNAL SQLSTATE '45000'
+                        SET MESSAGE_TEXT = 'Student is not enrolled in the course';
+                    END IF;
+                END;
             ");
 
         
@@ -93,8 +115,8 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO admin ( username, email, password)
-                    VALUES (:username, :email, :password) 
+                REPLACE INTO admin (id, username, email, password)
+                    VALUES (:id, :username, :email, :password) 
                 ");
 
             // Hash the password before storing
@@ -113,10 +135,10 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO student ( firstname, lastname, email, password,
+                REPLACE INTO student (id, firstname, lastname, email, password,
                                      phone, address, birthdate, nationality,
                                      gender, field, studylevel, class)
-                    VALUES (:firstname, :lastname, :email, :password,
+                    VALUES (:id, :firstname, :lastname, :email, :password,
                             :phone, :address, :birthdate, :nationality, 
                             :gender, :field, :studylevel, :class) 
             ");
@@ -136,8 +158,8 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO teacher ( firstname, lastname, email, password,phone,gender)
-                    VALUES (:firstname, :lastname, :email, :password,:phone,:gender) 
+                REPLACE INTO teacher (id, firstname, lastname, email, password,phone,gender)
+                    VALUES (:id, :firstname, :lastname, :email, :password,:phone,:gender) 
                 ");
 
             // Hash the password before storing
@@ -149,14 +171,14 @@ class ConnexionBD
             echo "Error inserting data: " . $e->getMessage();
         }
     }
-    // insert data into the table prof
+    // insert data into the table course
     public static function insertData_course($data): void
     {
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO course ( coursename, teacher)
-                    VALUES (:coursename, :teacher) 
+                REPLACE INTO course (id, coursename, teacher, field, studylevel)
+                    VALUES (:id, :coursename, :teacher, :field, :studylevel) 
                 ");
 
             
@@ -172,11 +194,26 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("
-                INSERT INTO absence ( student,course,absencedate)
+                REPLACE INTO absence ( student,course,absencedate)
                     VALUES (:student,:course,:absencedate) 
             ");
             $stmt->execute($data);
             echo "abscence is inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
+    }
+    // insert data into the table courseVideo
+    public static function insertData_courseVideo($data): void
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                REPLACE INTO courseVideo (id, url,title,description,field , studylevel)
+                    VALUES (:id,:url,:title,:description,:field,:studylevel) 
+            ");
+            $stmt->execute($data);
+            echo "courseVideo is inserted successfully";
         } catch (PDOException $e) {
             echo "Error inserting data: " . $e->getMessage();
         }
@@ -242,6 +279,120 @@ class ConnexionBD
         }
     }
 
+    // get the VideoCourses of a student 
+    public static function getVideosByLevel()
+{
+    try {
+        $pdo = self::getInstance();
+        $stmt = $pdo->prepare("SELECT * FROM coursevideo WHERE (studylevel = :studylevel AND field = :field)");
+        $stmt->bindParam(':studylevel', $_SESSION['studylevel'], PDO::PARAM_INT);
+        $stmt->bindParam(':field', $_SESSION['field'], PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    } catch (PDOException $e) {
+        echo "Error fetching data: " . $e->getMessage();
+        return null;
+    }
+}
+    public static function getStudentInfo()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT id,firstname , lastname,email,phone,address,birthdate,gender,nationality,field,studylevel,class FROM student WHERE id = " . $_SESSION['user_id']);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+    
+    /**
+     * * inserts the new submission in the requests table
+     */
+    // public static function add_submission($data): void
+    // {
+    //     try {
+    //         $pdo = self::getInstance();
+    //         $numberOfSubmissions = $pdo->query("SELECT COUNT(*) FROM request")->fetchColumn();
+    //         if ($numberOfSubmissions == 0) {
+    //             $data = ["id" => 1] + $data;
+    //         } else {
+    //             $data = ["id" => $numberOfSubmissions + 1] + $data;
+    //         }
+    //         $stmt = $pdo->prepare("INSERT INTO request (id, firstname, lastname, email, phone,
+    //                                                         address, birthdate, gender, nationality,
+    //                                                         education, program, achievements, essay)
+    //                               VALUES (:id, :firstname, :lastname, :email, :phone, :address, 
+    //                                       :birthdate, :gender, :nationality, :education, 
+    //                                       :program, :achievements, :essay);
+    //         ");
+    //         $stmt->execute($data);
+    //         echo "Data inserted successfully";
+    //     } catch (PDOException $e) {
+    //         echo "Error inserting data: " . $e->getMessage();
+    //     }
+    // }
+
+    /**
+     *
+     */
+    // public static function delete_submission($data): void
+    // {
+    //     try{
+    //         $pdo = self::getInstance();
+    //         $req= $pdo->prepare("DELETE FROM request WHERE id = :id");
+    //         $req->execute(array('id' =>$data['id']));
+    //     } catch (PDOException $e) {
+    //         echo "Error inserting data: " . $e->getMessage();
+    //     }
+    // }
+
+    // public static function generate_pdf_for_all_submissions(): void
+    // {
+    //     try {
+    //         $pdo = self::getInstance();
+    //         $stmt = $pdo->query("SELECT * FROM request");
+    //         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    //         foreach ($results as $row) {
+    //             self::generate_pdf($row);
+    //         }
+
+    //         echo "PDF files generated successfully";
+    //     } catch (PDOException $e) {
+    //         echo "Error generating PDF: " . $e->getMessage();
+    //     }
+    // }
+
+
+    // private static function generate_pdf($data): void
+    // {
+    //     $pdf = new FPDF();
+    //     $pdf->AddPage();
+
+    //     // Set font
+    //     $pdf->SetFont('Arial', 'B', 16);
+
+    //     // Add title
+    //     $pdf->Cell(0, 10, 'Request', 0, 1, 'C');
+    //     $pdf->Ln(10);
+
+    //     $pdf->SetFont('Arial', '', 12);
+
+    //     foreach ($data as $key => $value) {
+    //         $pdf->Cell(50, 10, ucfirst(str_replace("_", " ", $key)) . ':', 0, 0);
+    //         $pdf->Cell(0, 10, $value, 0, 1);
+    //     }
+
+    //     // Save PDF to a file with the email address as the filename
+    //     $pdfFileName = 'admission_pdf/' . $data['email'] . '.pdf';
+    //     $pdf->Output($pdfFileName, 'F');
+    // }
+
+
     public static function get_statistics(): ?array
     {
         try {
@@ -253,7 +404,7 @@ class ConnexionBD
             $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             // 'absencePerMonth':
-            $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbsences FROM absence WHERE absencedate > DATE_SUB(CURDATE(), INTERVAL 20 DAY) group by(absencedate);");
+            $stmt = self::getInstance()->query("SELECT absencedate,count(*) as nbAbsences FROM absence group by(absencedate);");
             $result[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             //'studentsPerGender':

@@ -1,6 +1,13 @@
 <?php
-require_once('../../form/verifyAdmin.php');
-verifyStudent();
+  session_start();
+  require_once('../../form/verifyAdmin.php');
+  require_once('../../database/dbcreation.php');
+  verifyStudent();
+  $pdo = ConnexionBD::getInstance();
+  $studentInfo=ConnexionBD::getStudentInfo();
+  $_SESSION['field']=$studentInfo['field'];
+  $_SESSION['studylevel']=$studentInfo['studylevel'];
+  $_SESSION['studentID']=$studentInfo['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +31,7 @@ verifyStudent();
         </div>
         <button class="btn btn-deconnect mobile" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
         <div class="profile-nav" >
-          <p class="username-nav">Welcome, Foulen Ben Foulen</p>
+          <p class="username-nav">Welcome, <?=$studentInfo['firstname']." ".$studentInfo['lastname'] ?>  </p>
           <img class="profile-pic-nav" src="../src/profile%20pic.png">
           <button class="btn btn-deconnect" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
         </div>
@@ -76,9 +83,9 @@ verifyStudent();
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
-            <a href="#">
+            <a href="videoCourses.php">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
-              <span class="nav-text">Settings</span>
+              <span class="nav-text">Courses</span>
             </a>
           </li>
         </ul>
@@ -110,11 +117,11 @@ verifyStudent();
                     <p>Class:</p>
                 </div>
                 <div class="col-9">
-                    <p>2021214</p>
-                    <p>foulenbenfoulen@insat.ucar.tn</p>
-                    <p>GL</p>
-                    <p>2nd Year</p>
-                    <p>1</p>
+                    <p><?= $studentInfo['id'] ?></p>
+                    <p><?= $studentInfo['email'] ?></p>
+                    <p><?= $studentInfo['field'] ?></p>
+                    <p><?= ($studentInfo['studylevel']=='1')? $studentInfo['studylevel']."st" : $studentInfo['studylevel']."nd" ?> Year</p>
+                    <p><?= $studentInfo['class'] ?></p>
                 </div>
               </div>
             </div>
@@ -127,10 +134,10 @@ verifyStudent();
                     <p>Gender: </p>
                 </div>
                 <div class="col-9">
-                    <p>28/07/2003</p>
-                    <p>2 Avenue Habib Bourguiba Manouba</p>
-                    <p>Tunisian</p>
-                    <p>Male</p>
+                    <p><?= $studentInfo['birthdate'] ?></p>
+                    <p><?= $studentInfo['address'] ?></p>
+                    <p><?= $studentInfo['nationality'] ?></p>
+                    <p><?= $studentInfo['gender'] ?></p>
                 </div>
               </div>
             </div>

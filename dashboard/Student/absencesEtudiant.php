@@ -74,9 +74,9 @@
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
-            <a href="#">
+            <a href="videoCourses.php>
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
-              <span class="nav-text">Settings</span>
+              <span class="nav-text">courses</span>
             </a>
           </li>
         </ul>
@@ -103,13 +103,12 @@
                     $stmt->bindParam(':id',$_SESSION['user_id'], type: PDO::PARAM_INT);
                     $stmt->execute();
                     $absences = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    // print_r( $absences);
                     foreach ($absences as $absence) {?>
 
                         <li >
                             <ul class="abscence-item">
-                                <li class='nav-text'><?= $absence['coursename']?></li>
-                                <li class='nav-text'><?=$absence['nombre_absences']?></li>
+                                <li ><?= $absence['coursename']?></li>
+                                <li ><?=$absence['nombre_absences']?></li>
                             </ul>
                         </li>
 
