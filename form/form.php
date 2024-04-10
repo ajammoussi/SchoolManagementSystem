@@ -11,12 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link href="form.css" rel="stylesheet">
-    <style>
-        .logo-fac {
-            max-width: 200px;
-            height: auto;
-        }
-    </style>
 </head>
 <body>
     <img src="../src/logo-insat.png" alt="logo lfac" class="logo-fac">

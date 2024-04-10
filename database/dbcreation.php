@@ -2,6 +2,10 @@
 
 require_once('fpdf/fpdf.php');
 
+// PHPMailer library
+require_once('../PHPMailer/src/PHPMailer.php'); 
+require_once('../PHPMailer/src/SMTP.php');  // Include SMTP class
+
 class ConnexionBD
 {
     private static string $_dbname = "insatplatform";
@@ -598,7 +602,7 @@ public static function generate_pdf_for_all_submissions()
             ];
 
             // Send email to the student using PHPMailer
-            $mail = new PHPMailer(true);
+            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 
 
             // Gmail SMTP configuration
