@@ -4,10 +4,15 @@
 }*/
 require_once('fpdf/fpdf.php');
 
-// PHPMailer library
-//require_once('../PHPMailer/src/PHPMailer.php');
-//require_once('../PHPMailer/src/SMTP.php');  // Include SMTP class
 
+// PHPMailer library
+//require_once('../PHPMailer/src/SMTP.php');  // Include SMTP class
+//require_once('../PHPMailer/src/PHPMailer.php');
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+require dirname(dirname(__FILE__)).'/PHPMailer/src/Exception.php';
+require dirname(dirname(__FILE__)).'/PHPMailer/src/PHPMailer.php';
+require dirname(dirname(__FILE__)).'/PHPMailer/src/SMTP.php';
 class ConnexionBD
 {
     private static string $_dbname = "insatplatform";

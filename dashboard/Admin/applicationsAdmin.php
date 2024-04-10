@@ -15,11 +15,11 @@ if (isset($_POST['action'])) {
     if ($action == 'accept') {
         ConnexionBD::addStudent_byemail($fileName);
         ConnexionBD::delete_submission($fileName);
-        header("Location: anotherpage.php"); // Refresh the current page
+        header("Location: applicationsAdmin.php"); // Refresh the current page
         exit;
     } elseif ($action == 'refuse') {
         ConnexionBD::delete_submission($fileName);
-        header("Location: anotherpage.php"); // Refresh the current page
+        header("Location: applicationsAdmin.php"); // Refresh the current page
         exit;
     }
 }
