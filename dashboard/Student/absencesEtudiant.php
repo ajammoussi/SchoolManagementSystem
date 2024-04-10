@@ -74,7 +74,7 @@
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
-            <a href="videoCourses.php>
+            <a href="videoCourses.php">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
               <span class="nav-text">courses</span>
             </a>

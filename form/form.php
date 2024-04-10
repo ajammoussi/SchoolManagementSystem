@@ -3,6 +3,9 @@
     session_destroy();
     $_SESSION['isGuest'] = true;
     require_once('../form/verifyAdmin.php');
+    // create the database if not exists and fill it with data
+    $running_form = true;
+    require_once('../database/dbcreation.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

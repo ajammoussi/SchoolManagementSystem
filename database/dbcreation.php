@@ -1,10 +1,12 @@
 <?php
-
+/*if (!isset($running_form)) {
+    die('This script cannot be accessed directly');
+}*/
 require_once('fpdf/fpdf.php');
 
 // PHPMailer library
-require_once('../PHPMailer/src/PHPMailer.php'); 
-require_once('../PHPMailer/src/SMTP.php');  // Include SMTP class
+//require_once('../PHPMailer/src/PHPMailer.php');
+//require_once('../PHPMailer/src/SMTP.php');  // Include SMTP class
 
 class ConnexionBD
 {
@@ -16,7 +18,21 @@ class ConnexionBD
     private function __construct()
     {
         try {
-            // create database
+            // Create the database if it doesn't exist
+            self::createDatabase();
+
+            // create database connexion
+            self::$_bdd = new PDO("mysql:host=" . self::$_host . ";dbname=" . self::$_dbname .
+                ";charset=utf8", self::$_user, self::$_pwd,
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'));
+
+            // Rest of your code...
+        } catch (PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+
+        try {
+            // create database connexion
             self::$_bdd = new PDO("mysql:host=" . self::$_host . ";dbname=" . self::$_dbname .
                 ";charset=utf8", self::$_user, self::$_pwd,
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'));
@@ -111,6 +127,28 @@ class ConnexionBD
             new ConnexionBD();
         }
         return (self::$_bdd);
+    }
+
+    // Create the database if it doesn't exist
+    public static function createDatabase(): void
+    {
+        try {
+            // Connect to MySQL server
+            $pdo = new PDO("mysql:host=" . self::$_host, self::$_user, self::$_pwd);
+
+            // Check if the database already exists
+            $stmt = $pdo->prepare("SHOW DATABASES LIKE :dbname");
+            $stmt->execute(['dbname' => self::$_dbname]);
+
+            if ($stmt->rowCount() == 0) {
+                // Database does not exist, so create it
+                $pdo->exec("CREATE DATABASE IF NOT EXISTS " . self::$_dbname);
+                $running_db_creation = true;
+                require_once('insertdemo.php');
+            }
+        } catch (PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
     }
 
     //insert data into admin table

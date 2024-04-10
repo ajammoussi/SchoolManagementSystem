@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+if (!isset($running_db_creation)) {
+    die('This script cannot be accessed directly');
+}
 // Include the dbcreation.php file
 require_once('../database/dbcreation.php');
 
@@ -141,21 +143,21 @@ function insert($keys, $table, $db, $func)
 
 
 
-// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
-//     'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
-//     $students, 'ConnexionBD', 'insertData_etudiant');
+ insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
+     'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
+     $students, 'ConnexionBD', 'insertData_etudiant');
 
-// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
-//     $teachers, 'ConnexionBD', 'insertData_prof');
+ insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
+     $teachers, 'ConnexionBD', 'insertData_prof');
 
-// insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
-//     $courses, 'ConnexionBD', 'insertData_course');
+ insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
+     $courses, 'ConnexionBD', 'insertData_course');
 
-// insert(['student', 'course', 'absencedate'],
-//     $absences, 'ConnexionBD', 'insertData_abscence');
+ insert(['student', 'course', 'absencedate'],
+     $absences, 'ConnexionBD', 'insertData_abscence');
 
-// insert(['id', 'username', 'email', 'password'],
-//     $admins, 'ConnexionBD', 'insertData_admin');
+ insert(['id', 'username', 'email', 'password'],
+     $admins, 'ConnexionBD', 'insertData_admin');
 
 insert(['id','url','title','description','field','studylevel'],
 $courseVideos, 'ConnexionBD', 'insertData_coursevideo');

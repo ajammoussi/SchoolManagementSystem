@@ -2,7 +2,9 @@
   session_start();
   require_once('../../database/dbcreation.php');
   $pdo = ConnexionBD::getInstance();
-  
+
+  require_once('../../form/verifyAdmin.php');
+  verifyAdmin();
 ?>
 <!DOCTYPE html>
 <html lang="en">
