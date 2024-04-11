@@ -7,23 +7,6 @@ ConnexionBD::generate_pdf_for_all_submissions();
 
 // Get the list of PDF files from the admission_pdf folder
 $pdfFiles = scandir('../../admission/admission_pdf');
-
-if (isset($_POST['action'])) {
-    $action = $_POST['action'];
-    $fileName = $_POST['fileName'];
-
-    if ($action == 'accept') {
-        ConnexionBD::addStudent_byemail($fileName);
-        ConnexionBD::delete_submission($fileName);
-        header("Location: applicationsAdmin.php"); // Refresh the current page
-        exit;
-    } elseif ($action == 'refuse') {
-        ConnexionBD::delete_submission($fileName);
-        header("Location: applicationsAdmin.php"); // Refresh the current page
-        exit;
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -136,6 +119,25 @@ if (isset($_POST['action'])) {
                     </div>
                 </div>
             </div>
+
+            <?php
+                if (isset($_POST['action'])) {
+                    $action = $_POST['action'];
+                    $fileName = $_POST['fileName'];
+
+                    if ($action == 'accept') {
+                        ConnexionBD::addStudent_byemail($fileName);
+                        ConnexionBD::delete_submission($fileName);
+                        header("Location: applicationsAdmin.php"); // Refresh the current page
+                        exit;
+                    } elseif ($action == 'refuse') {
+                        ConnexionBD::delete_submission($fileName);
+                        header("Location: applicationsAdmin.php"); // Refresh the current page
+                        exit;
+                    }
+                }
+            ?>
+
         </section>
     </main>
     <script src="../script.js"></script>

@@ -509,6 +509,7 @@ class ConnexionBD
         try {
             $pdo = self::getInstance();
             $stmt = $pdo->prepare("DELETE FROM request WHERE email = :email");
+            $email = substr($email, 0, -4);
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
         } catch (PDOException $e) {
@@ -600,7 +601,8 @@ public static function generate_pdf_for_all_submissions()
             $pdo = self::getInstance();
 
             // Select the student with the given email
-            $stmt = $pdo->prepare("SELECT * FROM student WHERE email = :email");
+            $stmt = $pdo->prepare("SELECT * FROM request WHERE email = :email");
+            $email = substr($email, 0, -4);
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
 
@@ -620,7 +622,7 @@ public static function generate_pdf_for_all_submissions()
                                     WHERE field = :field 
                                     GROUP BY class 
                                     ORDER BY num_students ASC 
-                                    LIMIT 1");
+                                    LIMIT 1;");
             $stmt->execute($student['field']);
 
             $classInfo = $stmt->fetch(PDO::FETCH_ASSOC);
