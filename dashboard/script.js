@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterAbsencesSelect = document.getElementById("filterAbsences");
     const courseSelect = document.getElementById("courseSelect");
     const monthSelect = document.getElementById("monthSelect");
+    const filterCourseFieldLevelSelect = document.getElementById("filterCourseFieldLevel")
     const tableBody = document.getElementById("body");
     const cancelButton = document.getElementById("cancel");
     const studentInfo = document.getElementById("studentInfo");
@@ -124,6 +125,18 @@ document.addEventListener("DOMContentLoaded", () => {
         `
             )
             .join("");
+    };
+
+    const handleSingleFilterChange = (arr, filterSelect, filterFunction, showFunction) => {
+        filterSelect.addEventListener("change", (choice) => {
+            const selectedValue = filterSelect.value;
+
+            // Showing the data
+            tableBody.innerHTML = "";
+            filteredElements = filterFunction(selectedValue);
+            showFunction(filteredElements);
+            cancelButton.removeAttribute("hidden");
+        });
     };
 
     // eventListener for filtering students or absences
@@ -250,6 +263,30 @@ document.addEventListener("DOMContentLoaded", () => {
         loadMoreButton.addEventListener("click", () => {
             fetchMoreElements(filteredElements, showAbsences)
         });
+    } else if (pageTitle.innerHTML === "My Students") {
+        filteredElements=students;
+        startingIndex = 0;
+        endingIndex = 8;
+
+        // Show the first 8 students
+        showStudents(students.slice(startingIndex, endingIndex));
+
+        // Use the eventListener for filterCourseFieldLevelSelect
+        handleSingleFilterChange(
+            students,
+            filterCourseFieldLevelSelect,
+            (value) => {
+                const [course, field, level] = value.split('-');
+                console.log(course, field, level);
+                return students.filter((student) => student.field === field && student.studylevel === level);
+            },
+            showStudents
+        );
+
+        // Load more students
+        loadMoreButton.addEventListener("click", () => {
+            fetchMoreElements(filteredElements, showStudents)
+        });
     }
 
 
@@ -262,6 +299,8 @@ document.addEventListener("DOMContentLoaded", () => {
             showStudents();
         else if (pageTitle.innerHTML === "Absences")
             showAbsences();
+        else if (pageTitle.innerHTML === "My Students")
+            showStudents();
         cancelButton.setAttribute("hidden", "");
     });
 

@@ -3,7 +3,7 @@
   require_once('../../database/dbcreation.php');
   require_once('../../form/verifyAdmin.php');
   verifyStudent();
-  $pdo = ConnexionBD::getInstance();
+  $studentInfo=ConnexionBD::getUserInfo('student');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +50,7 @@
       </div>
       <button class="btn btn-deconnect mobile" type="submit">Se Déconnecter</button>
       <div class="profile-nav" >
-        <p class="username-nav">Welcome, Foulen Ben Foulen</p>
+        <p class="username-nav">Welcome, <?=$studentInfo['firstname']." ".$studentInfo['lastname'] ?></p>
         <img class="profile-pic-nav" src="../src/profile%20pic.png">
         <button class="btn btn-deconnect" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
       </div>
@@ -60,13 +60,11 @@
   <!-- vertical nav bar -->
   <nav class="main-menu">
         <h1 class="current-nav-element">Menu</h1>
-        <img class="logo" src="../src/logo.png" alt="logo" />
         <ul>
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
             <a href="dashboardEtudiant.php">
-              <img src="../src/profile%20pic.png" alt="home img " class="nav-vertical-icons">
               <span class="nav-text">Profile</span>
             </a>
           </li>
@@ -98,10 +96,19 @@
           </li>
         </ul>
       </nav>
-  <section class="container">
+  <section class="container" style="padding: 2rem">
     <?php
       $courseVideos = ConnexionBD::getVideosByLevel();
-      $currentVideo = $courseVideos[0];
+      if (empty($courseVideos)) {
+          ?>
+        <div class="row title">
+            <div class="col-9 student-name-container">
+                <h2 class="styled-text" style="margin-left: 3rem">There are no videos.</h2>
+            </div>
+        </div>
+            <?php
+      } else {
+        $currentVideo = $courseVideos[0];
     ?>
     <script> 
       let currentID = "<?= $currentVideo->id ?>"; 
@@ -131,7 +138,7 @@
       
     </div>
     <div>
-      <h2>my space</h2>
+      <h2>My Video Courses</h2>
       <ul class="list-group">
       <?php foreach($courseVideos as $course): ?>
         
@@ -151,6 +158,9 @@
       <?php endforeach; ?>
       </ul>
     </div>
+      <?php
+      }
+      ?>
   </section>
    <!-- Include Video.js JavaScript -->
   <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>

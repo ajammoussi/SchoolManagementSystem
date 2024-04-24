@@ -3,8 +3,7 @@
   require_once('../../form/verifyAdmin.php');
   require_once('../../database/dbcreation.php');
   verifyStudent();
-  $pdo = ConnexionBD::getInstance();
-  $studentInfo=ConnexionBD::getStudentInfo();
+  $studentInfo=ConnexionBD::getUserInfo('student');
   $_SESSION['field']=$studentInfo['field'];
   $_SESSION['studylevel']=$studentInfo['studylevel'];
   $_SESSION['studentID']=$studentInfo['id'];
@@ -29,11 +28,10 @@
             <h3 class="page-title">Student's Space</h3>
 
         </div>
-        <button class="btn btn-deconnect mobile" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
         <div class="profile-nav" >
           <p class="username-nav">Welcome, <?=$studentInfo['firstname']." ".$studentInfo['lastname'] ?>  </p>
           <img class="profile-pic-nav" src="../src/profile%20pic.png">
-          <button class="btn btn-deconnect" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
+          <button class="btn btn-deconnect" type="submit" onclick="window.location.href = '../../form/form.php';">Log Out</button>
         </div>
 
       </div>
@@ -103,7 +101,7 @@
               <img src="../src/profile%20pic.png" alt="Profile Pic" class="pfp" />
             </div>
             <div class="col-9 student-name-container">
-              <h2 class="student-name">Foulen Ben Foulen</h2>
+              <h2 class="student-name"><?=$studentInfo['firstname']." ".$studentInfo['lastname'] ?></h2>
             </div>
           </div>
           <div class="card-container">

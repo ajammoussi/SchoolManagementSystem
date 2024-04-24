@@ -3,7 +3,7 @@
   require_once('../../database/dbcreation.php');
   require_once('../../form/verifyAdmin.php');
   verifyStudent();
-  $pdo = ConnexionBD::getInstance();
+  $studentInfo=ConnexionBD::getUserInfo('student');
 ?>
 
 
@@ -28,9 +28,9 @@
             <h3 class="page-title">Student's Space</h3>
 
         </div>
-        <button class="btn btn-deconnect mobile" type="submit">Se Déconnecter</button>
+        <button class="btn btn-deconnect mobile" type="submit">Log Out</button>
         <div class="profile-nav" >
-          <p class="username-nav">Welcome, Foulen Ben Foulen</p>
+          <p class="username-nav">Welcome, <?=$studentInfo['firstname']." ".$studentInfo['lastname'] ?></p>
           <img class="profile-pic-nav" src="../src/profile%20pic.png">
           <button class="btn btn-deconnect" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
         </div>
@@ -76,7 +76,7 @@
             <b></b>
             <a href="videoCourses.php">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
-              <span class="nav-text">courses</span>
+              <span class="nav-text">Courses</span>
             </a>
           </li>
         </ul>

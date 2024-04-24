@@ -340,11 +340,16 @@ class ConnexionBD
         return null;
     }
 }
-    public static function getStudentInfo()
+    public static function getUserInfo($user_type)
     {
         try {
+
             $pdo = self::getInstance();
-            $stmt = $pdo->query("SELECT id,firstname , lastname,email,phone,address,birthdate,gender,nationality,field,studylevel,class FROM student WHERE id = " . $_SESSION['user_id']);
+            if ($user_type == 'student') {
+                $stmt = $pdo->query("SELECT id,firstname , lastname,email,phone,address,birthdate,gender,nationality,field,studylevel,class FROM student WHERE id = " . $_SESSION['user_id']);
+            } elseif ($user_type == 'teacher') {
+                $stmt = $pdo->query("SELECT id,firstname , lastname,email,phone, gender FROM teacher WHERE id = " . $_SESSION['user_id']);
+            }
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result;
 
@@ -352,6 +357,36 @@ class ConnexionBD
             echo "Error fetching data: " . $e->getMessage();
             return null;
         }
+    }
+
+    public static function getCoursesOfTeacher($id)
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT * FROM course WHERE teacher = ".$id);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public static function getStudentsByTeacher($teacherId) {
+        // Connect to the database
+        $pdo = self::getInstance();
+        // Prepare the SQL query
+        $sql = "SELECT s.* FROM student s
+                    JOIN course c ON s.field = c.field AND s.studylevel = c.studylevel
+                    JOIN teacher t ON c.teacher = t.id
+                    WHERE c.teacher = :teacherId";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':teacherId', $teacherId);
+        // Execute the query
+        $stmt->execute();
+        // Fetch the results
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
     /**

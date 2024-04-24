@@ -7,33 +7,11 @@ a{
   
 }
 
-main {
-  grid-template-columns:  minmax(100px, 5%) 95%;
-  margin: 100px 0;
-  /* background-color: #767676; */
-}
-.main-menu h1 {
-  display: none;
-}
+
 .logo {
   display: block;
   width: 30px;
   margin: 20px auto;
-}
-.nav-text {
-  display: none;
-}
-.nav-vertical-icons{
-  width: 40px;
-  height: 40px;
-  margin: 0 25px 0 5px;
-}
-
-/* big brain moment here */
-.nav-item-vertical a {
-  padding: 10px 10px 10px 30px;
-  margin-left: -40px;
-  min-width: 60px;
 }
 
 .container{
@@ -71,13 +49,13 @@ main {
 
 
 .listed-video {
-  line-height: 42px;
-  margin-bottom: 20px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: rgb(255,27,0);
-background: rgb(104, 0, 0);
+    line-height: 42px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+
+    background: rgb(104, 0, 0);
 }
 .listed-video:hover {
 

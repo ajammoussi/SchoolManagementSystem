@@ -30,7 +30,7 @@
         <div class="profile-nav" >
             <p class="username-nav">Welcome, Admin</p>
             <img class="profile-pic-nav" src="../src/profile%20pic.png">
-            <button class="btn btn-deconnect" type="submit" onclick="window.location.href = '../../form/form.php';">Se Déconnecter</button>
+            <button class="btn btn-deconnect" type="submit" onclick="window.location.href = '../../form/form.php';">Log Out</button>
         </div>
 
     </div>
