@@ -71,7 +71,7 @@
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
-            <a href="#">
+            <a href="scheduleStudent.php">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
               <span class="nav-text">Schedule</span>
             </a>

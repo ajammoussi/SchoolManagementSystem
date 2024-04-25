@@ -45,7 +45,7 @@ $Schedule=ConnexionBD::getScheduleTeacher();
             <li class="nav-item-vertical">
                 <b></b>
                 <b></b>
-                <a href="#">
+                <a href="dashboardTeacher.php">
                     <img src="../src/profile%20pic.png" alt="home img " class="nav-vertical-icons">
                     <span class="nav-text">Profile</span>
                 </a>
@@ -110,10 +110,6 @@ $Schedule=ConnexionBD::getScheduleTeacher();
         events.push(event);
       });
 
-      function getDayOfWeek(day) {
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        return days.indexOf(day);
-      }
 
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');

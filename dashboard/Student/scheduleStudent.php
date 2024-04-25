@@ -7,6 +7,7 @@
   $_SESSION['field']=$studentInfo['field'];
   $_SESSION['studylevel']=$studentInfo['studylevel'];
   $_SESSION['studentID']=$studentInfo['id'];
+  $Schedule=ConnexionBD::getScheduleStudent();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +18,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../main.css" rel="stylesheet">
     <link href="../nav%20bar.css" rel="stylesheet">
+    <link rel="stylesheet" href="../schedule.css">
+
 
 </head>
   <body>
@@ -50,10 +53,20 @@
               <span class="nav-text">Profile</span>
             </a>
           </li>
+
+          <!-- <li class="nav-item-vertical">
+            <b></b>
+            <b></b>
+            <a href="#">
+              <img src="src/profile pic.png" alt="Profile img " class="nav-vertical-icons">
+              <span class="nav-text">Home</span>
+            </a>
+          </li> -->
+
           <li class="nav-item-vertical">
             <b></b>
             <b></b>
-            <a href="scheduleStudent.php">
+            <a href="#">
               <!-- <img src="src/Profile.png" alt="Profile img " class="nav-vertical-icons"> -->
               <span class="nav-text">Schedule</span>
             </a>
@@ -80,60 +93,49 @@
       </nav>
 
       
-    
-    <section class="content">
-
-      <!-- content of profile section  -->
-      <div class="container">
-        <div class="row">
-          <div class="row title">
-            <div class="col pfp">
-              <img src="../src/profile%20pic.png" alt="Profile Pic" class="pfp" />
-            </div>
-            <div class="col-9 student-name-container">
-              <h2 class="student-name"><?=$studentInfo['firstname']." ".$studentInfo['lastname'] ?></h2>
-            </div>
-          </div>
-          <div class="card-container">
-            <div class="card">
-              <div class="row info">
-                <div class="col">
-                    <p>ID Number:</p>
-                    <p>Institutional Email: </p>
-                    <p>Field:</p>
-                    <p>Study Level:</p>
-                    <p>Class:</p>
-                </div>
-                <div class="col-9">
-                    <p><?= $studentInfo['id'] ?></p>
-                    <p><?= $studentInfo['email'] ?></p>
-                    <p><?= $studentInfo['field'] ?></p>
-                    <p><?= ($studentInfo['studylevel']=='1')? $studentInfo['studylevel']."st" : $studentInfo['studylevel']."nd" ?> Year</p>
-                    <p><?= $studentInfo['class'] ?></p>
-                </div>
-              </div>
-            </div>
-            <div class="card card-two">
-              <div class="row info">
-                <div class="col">
-                    <p>Birthdate: </p>
-                    <p>Address: </p>
-                    <p>Nationality: </p>
-                    <p>Gender: </p>
-                </div>
-                <div class="col-9">
-                    <p><?= $studentInfo['birthdate'] ?></p>
-                    <p><?= $studentInfo['address'] ?></p>
-                    <p><?= $studentInfo['nationality'] ?></p>
-                    <p><?= $studentInfo['gender'] ?></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end of profile section -->
+      <section class="content">
+        <script>console.log("<?=$_SESSION['field']?>")</script>
+        <div id='calendar' class="calendar"></div>  
     </section>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script>
+      let schedule = <?= json_encode($Schedule); ?>;
+      console.log(schedule);
+    //   console.log(schedule[0]['day_of_week']);
+
+      let events = [];
+        let colors=['#6e2020','#165a16','#0000FF','#17176e','#54b5b5','#9b489b'];
+        let bindColor={};
+      schedule.forEach(function(item) {
+        let start_task = item['start_date']+'T'+item['start_time'];
+        let end_task = item['start_date']+'T'+item['end_time'];
+        if(!bindColor[item['description']]){
+            bindColor[item['description']]=colors.pop();
+        }
+        let event = {
+          title: item['description'], // Description
+          start: start_task, // Start time
+          end: end_task, // End time
+          color: bindColor[item['description']] // Color (you can customize this from the list of available colors)
+        };
+
+        events.push(event);
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'timeGridWeek',
+          allDaySlot: false,
+          slotMinTime: '08:00:00',
+          slotMaxTime: '22:00:00',
+          hiddenDays: [0],
+          events: events // Pass the events array here
+        });
+        calendar.render();
+      });
+</script>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>

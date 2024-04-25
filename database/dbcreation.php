@@ -408,8 +408,8 @@ class ConnexionBD
     {
         try {
             $pdo = self::getInstance();
-            $stmt = $pdo->query("SELECT * FROM schedule WHERE instructor = ".$_SESSION['user_id']);
-            $stmt->execute();
+            $stmt = $pdo->prepare("SELECT * FROM schedule WHERE instructor = :instructor");
+            $stmt->execute(array(':instructor' => $_SESSION['user_id']));
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
             return $result;
         } catch (PDOException $e) {
@@ -421,8 +421,8 @@ class ConnexionBD
     {
         try {
             $pdo = self::getInstance();
-            $stmt = $pdo->query("SELECT * FROM schedule WHERE course_id = ");
-            $stmt->execute();
+            $stmt = $pdo->prepare("SELECT * FROM schedule WHERE field = :field AND studylevel = :studylevel");
+            $stmt->execute(array(':field' => $_SESSION['field'], ':studylevel' => $_SESSION['studylevel']));
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
             return $result;
         } catch (PDOException $e) {
