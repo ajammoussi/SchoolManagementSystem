@@ -435,7 +435,7 @@ class ConnexionBD
         // Connect to the database
         $pdo = self::getInstance();
         // Prepare the SQL query
-        $sql = "SELECT s.* FROM student s
+        $sql = "SELECT s.*, CONCAT('(', c.id, ') ',c.coursename) AS enrolledcourse FROM student s
                     JOIN course c ON s.field = c.field AND s.studylevel = c.studylevel
                     JOIN teacher t ON c.teacher = t.id
                     WHERE c.teacher = :teacherId";

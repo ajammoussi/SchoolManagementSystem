@@ -90,8 +90,8 @@ $teacherInfo=ConnexionBD::getUserInfo('teacher');
 
     <section class="content">
 
-        <!-- Modal -->
-        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Show More Modal -->
+        <div class="modal fade" id="showMoreModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -99,6 +99,51 @@ $teacherInfo=ConnexionBD::getUserInfo('teacher');
                     </div>
                     <div class="modal-body" id="studentInfo">
                         ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mark Absence Modal -->
+        <div class="modal fade" id="markAbsenceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mark Absence:</h5>
+                    </div>
+                    <div class="modal-body mark-absence">
+                        <form action="markAbsence.php" method="post">
+                            <div class="form-group row">
+                                <label for="studentID" class="col-sm-2 col-form-label">Student ID:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="studentID" name="studentID" required readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="courseID" class="col-sm-2 col-form-label">Course ID: </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="courseID" name="courseID" required readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="absenceDate" class="col-sm-2 col-form-label">Date:</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="absenceDate" name="absenceDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="absenceReason" class="col-sm-2 col-form-label">Reason:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="absenceReason" name="absenceReason" required>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary" name="markAbsence">Mark Absence</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -135,7 +180,6 @@ $teacherInfo=ConnexionBD::getUserInfo('teacher');
                             <form action="studentsOfTeachers.php" method="post">
                                 <div class="col">
                                     <p>Filter students by Course: <br>
-                                        <span>
                                             <select name="filterCourseFieldLevel" id="filterCourseFieldLevel">
                                                 <option value="default">--</option>
                                                 <!-- Populate this with the courses the teacher teaches -->
@@ -150,7 +194,6 @@ $teacherInfo=ConnexionBD::getUserInfo('teacher');
                                                 <?php }
                                                 ?>
                                             </select>
-                                        </span>
                                     </p>
                                     <script>
                                         const courses = <?= json_encode($courses) ?>;
@@ -172,9 +215,9 @@ $teacherInfo=ConnexionBD::getUserInfo('teacher');
                                                 <th scope="col">ID</th>
                                                 <th scope="col">First Name</th>
                                                 <th scope="col">Last Name</th>
-                                                <th scope="col">Course</th>
                                                 <th scope="col">Field</th>
                                                 <th scope="col">Level</th>
+                                                <th scope="col">Enrolled Course</th>
                                             </tr>
                                         </thead>
                                         <tbody id="body">
