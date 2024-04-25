@@ -88,6 +88,23 @@ class ConnexionBD
             self::$_bdd ->query("create table if not exists coursevideo 
                     (id INT primary key auto_increment, title VARCHAR(150),url VARCHAR(150) ,description varchar(500),field VARCHAR(50), studylevel INT);"
             );
+            // create schedule table
+            self::$_bdd ->query("CREATE TABLE if not exists Schedule (
+                schedule_id INT AUTO_INCREMENT PRIMARY KEY,
+                course_id INT,
+                start_date date,
+                start_time TIME,
+                end_time TIME,
+                room VARCHAR(50),
+                instructor INT,
+                description VARCHAR(255),
+                expiry_date DATETIME,
+                field VARCHAR(50), 
+                studylevel INT,
+                FOREIGN KEY (course_id) REFERENCES Course(id),
+                FOREIGN KEY (instructor) REFERENCES Teacher(id)
+            );"
+            );
             // Create the view after creating the tables
             self::$_bdd ->query("CREATE OR REPLACE VIEW user_auth AS
             SELECT id, email, password, 'student' AS type
@@ -263,6 +280,21 @@ class ConnexionBD
             echo "Error inserting data: " . $e->getMessage();
         }
     }
+    // insert data into the table Schedule
+    public static function insertData_schedule($data): void
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->prepare("
+                REPLACE INTO schedule (schedule_id,course_id,start_date, start_time, end_time, room, instructor, description, expiry_date, field, studylevel)
+                    VALUES (:schedule_id,:course_id,:start_date, :start_time, :end_time, :room, :instructor, :description, :expiry_date, :field, :studylevel) 
+            ");
+            $stmt->execute($data);
+            echo "schedule is inserted successfully";
+        } catch (PDOException $e) {
+            echo "Error inserting data: " . $e->getMessage();
+        }
+    }
 
     // shows the data from a table in the database
     public static function showData($table)
@@ -372,6 +404,32 @@ class ConnexionBD
             return null;
         }
     }
+    public static function getScheduleTeacher()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT * FROM schedule WHERE instructor = ".$_SESSION['user_id']);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
+    public static function getScheduleStudent()
+    {
+        try {
+            $pdo = self::getInstance();
+            $stmt = $pdo->query("SELECT * FROM schedule WHERE course_id = ");
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error fetching data: " . $e->getMessage();
+            return null;
+        }
+    }
 
     public static function getStudentsByTeacher($teacherId) {
         // Connect to the database
@@ -388,91 +446,6 @@ class ConnexionBD
         // Fetch the results
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    /**
-     * * inserts the new submission in the requests table
-     */
-    // public static function add_submission($data): void
-    // {
-    //     try {
-    //         $pdo = self::getInstance();
-    //         $numberOfSubmissions = $pdo->query("SELECT COUNT(*) FROM request")->fetchColumn();
-    //         if ($numberOfSubmissions == 0) {
-    //             $data = ["id" => 1] + $data;
-    //         } else {
-    //             $data = ["id" => $numberOfSubmissions + 1] + $data;
-    //         }
-    //         $stmt = $pdo->prepare("INSERT INTO request (id, firstname, lastname, email, phone,
-    //                                                         address, birthdate, gender, nationality,
-    //                                                         education, program, achievements, essay)
-    //                               VALUES (:id, :firstname, :lastname, :email, :phone, :address, 
-    //                                       :birthdate, :gender, :nationality, :education, 
-    //                                       :program, :achievements, :essay);
-    //         ");
-    //         $stmt->execute($data);
-    //         echo "Data inserted successfully";
-    //     } catch (PDOException $e) {
-    //         echo "Error inserting data: " . $e->getMessage();
-    //     }
-    // }
-
-    /**
-     *
-     */
-    // public static function delete_submission($data): void
-    // {
-    //     try{
-    //         $pdo = self::getInstance();
-    //         $req= $pdo->prepare("DELETE FROM request WHERE id = :id");
-    //         $req->execute(array('id' =>$data['id']));
-    //     } catch (PDOException $e) {
-    //         echo "Error inserting data: " . $e->getMessage();
-    //     }
-    // }
-
-    // public static function generate_pdf_for_all_submissions(): void
-    // {
-    //     try {
-    //         $pdo = self::getInstance();
-    //         $stmt = $pdo->query("SELECT * FROM request");
-    //         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    //         foreach ($results as $row) {
-    //             self::generate_pdf($row);
-    //         }
-
-    //         echo "PDF files generated successfully";
-    //     } catch (PDOException $e) {
-    //         echo "Error generating PDF: " . $e->getMessage();
-    //     }
-    // }
-
-
-    // private static function generate_pdf($data): void
-    // {
-    //     $pdf = new FPDF();
-    //     $pdf->AddPage();
-
-    //     // Set font
-    //     $pdf->SetFont('Arial', 'B', 16);
-
-    //     // Add title
-    //     $pdf->Cell(0, 10, 'Request', 0, 1, 'C');
-    //     $pdf->Ln(10);
-
-    //     $pdf->SetFont('Arial', '', 12);
-
-    //     foreach ($data as $key => $value) {
-    //         $pdf->Cell(50, 10, ucfirst(str_replace("_", " ", $key)) . ':', 0, 0);
-    //         $pdf->Cell(0, 10, $value, 0, 1);
-    //     }
-
-    //     // Save PDF to a file with the email address as the filename
-    //     $pdfFileName = 'admission_pdf/' . $data['email'] . '.pdf';
-    //     $pdf->Output($pdfFileName, 'F');
-    // }
-
-
     public static function get_statistics(): ?array
     {
         try {

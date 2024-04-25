@@ -135,6 +135,28 @@ $courseVideos=[
     [24, 'https://www.youtube.com/watch?v=789def', 'Introduction to Biology', 'An overview of basic biology concepts and life sciences.', 'CBA', 1],
     [25, 'https://www.youtube.com/watch?v=xyz123', 'Chemistry Essentials', 'Foundational concepts in chemistry, including atoms, molecules, and chemical reactions.', 'CBA', 1]
 ];
+$Schedule=[
+    [1, 1,  '2024-04-22' , '09:00:00', '11:00:00', 'Room A', 1, 'Introduction to Programming', '2024-04-22 00:00:00', 'GL', 2],
+    [2, 2,    '2024-04-22' ,'13:00:00', '15:00:00', 'Room B', 2, 'Database Management', '2024-04-23 00:00:00', 'GL', 2],
+    [3, 3,  '2024-04-23' ,'10:00:00', '12:00:00', 'Room C', 3, 'Network Security', '2024-04-24 00:00:00', 'GL', 2],
+    [4, 4,  '2024-04-23' ,'09:00:00', '11:00:00', 'Room D', 4, 'Web Development', '2024-04-25 00:00:00', 'GL', 2],
+    [5, 5,  '2024-04-24' ,'08:00:00', '10:00:00', 'Room E', 5, 'Computer Architecture', '2024-04-26 00:00:00', 'GL', 2],
+    [6, 6,  '2024-04-24' ,'14:00:00', '16:00:00', 'Room F', 6, 'Software Engineering', '2024-04-29 00:00:00', 'GL', 2],
+    [7, 7,  '2024-04-25' ,'09:00:00', '11:00:00', 'Room G', 7, 'Operating Systems', '2024-04-30 00:00:00', 'GL', 2],
+    [8, 8,  '2024-04-25' ,'13:00:00', '15:00:00', 'Room H', 8, 'Data Structures', '2024-05-01 00:00:00', 'GL', 2],
+    [9, 9,  '2024-04-26' ,'10:00:00', '12:00:00', 'Room I', 9, 'Cybersecurity Fundamentals', '2024-05-02 00:00:00', 'GL', 2],
+    [10,10,  '2024-04-27' ,'09:00:00', '11:00:00', 'Room J', 10, 'Software Testing', '2024-05-03 00:00:00', 'GL', 2],
+    [11,11,  '2024-04-28' ,'11:00:00', '13:00:00', 'Room K', 11, 'Computer Networks', '2024-05-06 00:00:00', 'GL', 2],
+    [12,12,  '2024-04-28' ,'14:00:00', '16:00:00', 'Room L', 12, 'Information Security', '2024-05-07 00:00:00', 'GL', 2],
+    [13,13,  '2024-04-29' ,'08:00:00', '10:00:00', 'Room M', 13, 'Artificial Intelligence', '2024-05-08 00:00:00', 'GL', 2],
+    [14,14,  '2024-04-29' ,'13:00:00', '15:00:00', 'Room N', 14, 'Mobile App Development', '2024-05-09 00:00:00', 'GL', 2],
+    [15, 5,  '2024-04-24' ,'10:00:00', '12:00:00', 'Room E', 5, 'Computer Architecture', '2024-04-26 00:00:00', 'GL', 2],
+    [16, 5,  '2024-04-24' ,'14:00:00', '16:00:00', 'Room E', 5, 'Computer Architecture', '2024-04-26 00:00:00', 'GL', 2],
+    [17,5,  '2024-04-26' ,'08:00:00', '10:00:00', 'Room M', 5, 'Artificial Intelligence', '2024-05-08 00:00:00', 'GL', 2],
+    [18,5,  '2024-04-26' ,'10:00:00', '11:30:00', 'Room M', 5, 'Artificial Intelligence', '2024-05-08 00:00:00', 'GL', 2],
+    [19,5,  '2024-04-26' ,'14:00:00', '16:00:00', 'Room M', 5, 'Artificial Intelligence', '2024-05-08 00:00:00', 'GL', 2],
+
+];
 
 $admins = [
     [1, 'adminuser', 'admin@example.com', 'admin123']
@@ -160,24 +182,28 @@ function insert($keys, $table, $db, $func)
 
 
 
- insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
-     'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
-     $students, 'ConnexionBD', 'insertData_etudiant');
+// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
+//     'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
+//     $students, 'ConnexionBD', 'insertData_etudiant');
 
- insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
-     $teachers, 'ConnexionBD', 'insertData_prof');
+// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
+//     $teachers, 'ConnexionBD', 'insertData_prof');
 
- insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
-     $courses, 'ConnexionBD', 'insertData_course');
+// insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
+//     $courses, 'ConnexionBD', 'insertData_course');
 
- insert(['student', 'course', 'absencedate'],
-     $absences, 'ConnexionBD', 'insertData_abscence');
+// insert(['student', 'course', 'absencedate'],
+//     $absences, 'ConnexionBD', 'insertData_abscence');
 
- insert(['id', 'username', 'email', 'password'],
-     $admins, 'ConnexionBD', 'insertData_admin');
+// insert(['id', 'username', 'email', 'password'],
+//     $admins, 'ConnexionBD', 'insertData_admin');
 
-insert(['id','url','title','description','field','studylevel'],
-$courseVideos, 'ConnexionBD', 'insertData_coursevideo');
+// insert(['id','url','title','description','field','studylevel'],
+// $courseVideos, 'ConnexionBD', 'insertData_coursevideo');
+
+
+insert(['schedule_id','course_id','start_date', 'start_time', 'end_time', 'room', 'instructor', 'description', 'expiry_date', 'field', 'studylevel'],
+$Schedule, 'ConnexionBD', 'insertData_schedule');
 
 
 

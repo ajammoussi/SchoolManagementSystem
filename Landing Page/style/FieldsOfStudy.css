@@ -172,13 +172,13 @@
 
 .swiper-slide--three {
   background: linear-gradient(to top, #0f2027, #203a4300, #2c536400),
-    url(../Landing Page/src/IAA.jpg)
+    url("../Landing Page/src/IAA.jpg")
       no-repeat 50% 50% / cover;
 }
 
 .swiper-slide--four {
   background: linear-gradient(to top, #0f2027, #203a4300, #2c536400),
-    url(../Landing Page/src/IMI.jpg)
+    url("../Landing Page/src/IMI.jpg")
       no-repeat 50% 50% / cover;
 }
 
