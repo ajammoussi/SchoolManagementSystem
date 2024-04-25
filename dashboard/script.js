@@ -61,20 +61,29 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     };
 
-    const showStudents = (arr = students) => {
+    const showStudents = (arr = students, inTeacherSection = false) => {
         tableBody.innerHTML += arr
             .map(
-                (student) =>
-                    `
-            <tr>
-                <td>${student.id}</td>
-                <td>${student.firstname}</td>
-                <td>${student.lastname}</td>
-                <td>${student.field}</td>
-                <td>${student.studylevel}</td>
-                <td><button class="btn btn-primary showMore" id="showMore${student.id}" data-bs-toggle="modal" data-bs-target="#Modal">Show More</button></td>
-            </tr>
-        `
+                (student) => {
+                    let table =
+                        `
+                        <tr>
+                            <td>${student.id}</td>
+                            <td>${student.firstname}</td>
+                            <td>${student.lastname}</td>
+                            <td>${student.field}</td>
+                            <td>${student.studylevel}</td>
+                            `;
+                    if (inTeacherSection) {
+                        table += ` <td>${student.enrolledcourse}</td> `;
+                    }
+                    table += `<td><button class="btn btn-primary showMore" id="showMore${student.id}" data-bs-toggle="modal" data-bs-target="#showMoreModal">Show More</button></td>`;
+                    if (inTeacherSection) {
+                        table += ` <td><button class="btn btn-danger showMore" id="markAbsence${student.id}" data-bs-toggle="modal" data-bs-target="#markAbsenceModal">Mark Absence</button></td> `;
+                    }
+                    return table + `</tr>`;
+                }
+
             )
             .join("");
 
@@ -83,6 +92,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById(`showMore${student.id}`).addEventListener("click", () => {
                     showMoreInfoStudent(student);
                 });
+            });
+
+            // Add event listeners to the "Mark Absence" buttons
+            arr.forEach((student) => {
+                if (inTeacherSection) {
+                    document.getElementById(`markAbsence${student.id}`).addEventListener("click", () => {
+                        const studentID = document.getElementById("studentID");
+                        studentID.value = student.id;
+                        const courseID = document.getElementById("courseID");
+                        // add to courseid.value the id of the course whoch is only the number between () in the enrolledcourse
+                        courseID.value = student.enrolledcourse.match(/\(([^)]+)\)/)[1];
+                        console.log(courseID.value);
+                        /*// Mark absence
+                        const absence = {
+                            studentID: student.id,
+                            studentname: student.firstname + " " + student.lastname,
+                            coursename: "Math",
+                            absencedate: new Date().toISOString().slice(0, 10)
+                        };
+                        absences.push(absence);
+                        tableBody.innerHTML = "";
+                        showAbsences(absences);*/
+                    });
+                }
             });
     };
 
@@ -269,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
         endingIndex = 8;
 
         // Show the first 8 students
-        showStudents(students.slice(startingIndex, endingIndex));
+        showStudents(students.slice(startingIndex, endingIndex), true);
 
         // Use the eventListener for filterCourseFieldLevelSelect
         handleSingleFilterChange(
@@ -277,15 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
             filterCourseFieldLevelSelect,
             (value) => {
                 const [course, field, level] = value.split('-');
-                console.log(course, field, level);
-                return students.filter((student) => student.field === field && student.studylevel === level);
+                return students.filter((student) => student.field === field && student.studylevel === parseInt(level));
             },
-            showStudents
+            (filteredStudents) => showStudents(filteredStudents, true)
         );
 
         // Load more students
         loadMoreButton.addEventListener("click", () => {
-            fetchMoreElements(filteredElements, showStudents)
+            fetchMoreElements(filteredElements, (filteredStudents) => showStudents(filteredStudents, true))
         });
     }
 

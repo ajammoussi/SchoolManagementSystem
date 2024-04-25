@@ -313,6 +313,31 @@ form {
   /* admin info end */
 
 
+/*      IN TEACHER PAGE        */
+
+
+/* Students of Teacher  */
+
+.mark-absence form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  justify-content: center;
+}
+
+.mark-absence form .row {
+  margin: 10px;
+}
+
+label[for="studentID"], label[for="courseID"] {
+  white-space: nowrap;
+}
+
+.mark-absence .col-sm-10 {
+  padding-left: 30px;
+}
+
+
   @media (max-width: 1100px) {
     main {
       grid-template-columns: 6% 94%;
