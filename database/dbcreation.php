@@ -9,8 +9,8 @@ require_once('fpdf/fpdf.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-require dirname(dirname(__FILE__)).'/PHPMailer/src/PHPMailer.php';
-require dirname(dirname(__FILE__)).'/PHPMailer/src/SMTP.php';
+require dirname(dirname(__FILE__)) . '/PHPMailer/src/PHPMailer.php';
+require dirname(dirname(__FILE__)) . '/PHPMailer/src/SMTP.php';
 class ConnexionBD
 {
     private static string $_dbname = "insatplatform";
