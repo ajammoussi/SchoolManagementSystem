@@ -16,13 +16,6 @@ html {
 body {
 	font-family: montserrat, arial, verdana;
 }
-.logo-fac{
-    max-width: 200px;
-    height: auto;
-    margin: 10px auto 0 10px;
-    display: block;
-
-}
 h1{
     padding-top: 150px;
     color: #fff;
@@ -31,6 +24,15 @@ h1{
     margin-bottom: 20px;
     font-weight: 900;
     
+}
+/* img style */
+.logo-fac{
+	position: absolute;
+	top: 0;
+	left: 0;
+	max-width: 150px;
+	margin: 10px auto 0 10px;
+
 }
 /*form styles*/
 #msform {

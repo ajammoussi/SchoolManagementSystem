@@ -86,8 +86,8 @@
     <!-- Contact Form Section -->
     <section class="contact-form-section" id="contact-form-section">
         <div class="container-fluid mt-5" style="background-color: #26272b; color: #fff; padding: 20px;">
-            <h1>Contact Us</h1>
-            <form action="Landing Page/send_email.php" method="post">
+            <h1 style="text-align:center;">Contact Us</h1>
+            <form action="Landing Page/send_email.php" method="post" style="margin:0 15%;">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" style="background-color: #33353d; color: #eceeef;" required>

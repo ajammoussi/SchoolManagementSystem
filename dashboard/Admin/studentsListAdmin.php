@@ -46,16 +46,6 @@
                     <span class="nav-text">Overview</span>
                 </a>
             </li>
-
-            <!-- <li class="nav-item-vertical">
-              <b></b>
-              <b></b>
-              <a href="#">
-                <img src="src/profile pic.png" alt="Profile img " class="nav-vertical-icons">
-                <span class="nav-text">Home</span>
-              </a>
-            </li> -->
-
             <li class="nav-item-vertical active">
                 <b></b>
                 <b></b>

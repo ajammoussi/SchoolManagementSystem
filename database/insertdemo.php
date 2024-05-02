@@ -182,24 +182,24 @@ function insert($keys, $table, $db, $func)
 
 
 
-// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
-//     'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
-//     $students, 'ConnexionBD', 'insertData_etudiant');
+insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone',
+    'address', 'birthdate', 'gender', 'nationality', 'field', 'studylevel', 'class'],
+    $students, 'ConnexionBD', 'insertData_etudiant');
 
-// insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
-//     $teachers, 'ConnexionBD', 'insertData_prof');
+insert(['id', 'firstname', 'lastname', 'email', 'password', 'phone', 'gender'],
+    $teachers, 'ConnexionBD', 'insertData_prof');
 
-// insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
-//     $courses, 'ConnexionBD', 'insertData_course');
+insert(['id', 'coursename', 'teacher', 'field', 'studylevel'],
+    $courses, 'ConnexionBD', 'insertData_course');
 
-// insert(['student', 'course', 'absencedate'],
-//     $absences, 'ConnexionBD', 'insertData_abscence');
+insert(['student', 'course', 'absencedate'],
+    $absences, 'ConnexionBD', 'insertData_abscence');
 
-// insert(['id', 'username', 'email', 'password'],
-//     $admins, 'ConnexionBD', 'insertData_admin');
+insert(['id', 'username', 'email', 'password'],
+    $admins, 'ConnexionBD', 'insertData_admin');
 
-// insert(['id','url','title','description','field','studylevel'],
-// $courseVideos, 'ConnexionBD', 'insertData_coursevideo');
+insert(['id','url','title','description','field','studylevel'],
+$courseVideos, 'ConnexionBD', 'insertData_coursevideo');
 
 
 insert(['schedule_id','course_id','start_date', 'start_time', 'end_time', 'room', 'instructor', 'description', 'expiry_date', 'field', 'studylevel'],
