@@ -81,6 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (inTeacherSection) {
                         table += ` <td><button class="btn btn-danger showMore" id="markAbsence${student.id}" data-bs-toggle="modal" data-bs-target="#markAbsenceModal">Mark Absence</button></td> `;
                     }
+                    //add number of absences
+                    table += `<td>  </td>`
                     return table + `</tr>`;
                 }
 

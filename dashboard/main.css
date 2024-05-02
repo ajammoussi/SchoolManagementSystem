@@ -308,6 +308,23 @@ form {
   margin: 20px;
 }
 
+/* in applications */
+
+.app-from-text {
+  margin-top: 1rem;
+}
+
+button.btn.app-btn  {
+  height: 40px;
+}
+
+button.btn.show-app {
+  margin-top: 1.3rem;
+}
+
+div.container.shadow-sm.p-4.rounded.applic-content {
+  width: 95%;
+}
 
 
   /* admin info end */

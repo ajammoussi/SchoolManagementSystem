@@ -3,6 +3,7 @@
   require_once('../../database/dbcreation.php');
   require_once('../../form/verifyAdmin.php');
   verifyStudent();
+  $pdo = ConnexionBD::getInstance();
   $studentInfo=ConnexionBD::getUserInfo('student');
 ?>
 

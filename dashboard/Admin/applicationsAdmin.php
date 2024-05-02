@@ -89,29 +89,35 @@ $pdfFiles = scandir('../../admission/admission_pdf');
                         </div>
                     </div>
 
-                    <div class="container shadow-sm p-4 rounded">
+                    <div class="container shadow-sm p-4 rounded applic-content">
                         <div class="card-container">
                             <ul class="list-group">
                                 <?php
-                                foreach ($pdfFiles as $file) {
-                                    if ($file != "." && $file != "..") { ?>
-                                        <li class='list-group-item d-flex justify-content-evenly align-items-center' style='border: none; border-radius: 5px; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease-in-out;'>
-                                            <div><a href='../../admission/admission_pdf/<?=$file?>' target='_blank' style='color: #dc3545 !important;' class='text-decoration-none'><?=$file?></a></div>
-                                            <div class='button-group d-flex'>
-                                                <form method='post'>
-                                                    <input type='hidden' name='action' value='accept'>
-                                                    <input type='hidden' name='fileName' value='<?=$file?>'>
-                                                    <button type='submit' class='btn btn-danger'>Accept</button>
-                                                </form>
-                                                <form method='post'>
-                                                    <input type='hidden' name='action' value='refuse'>
-                                                    <input type='hidden' name='fileName' value='<?=$file?>'>
-                                                    <button type='submit' class='btn btn-danger'>Refuse</button>
-                                                </form>
-                                            </div>
-                                        </li>
-                                    <?php }
+                                if (count($pdfFiles) == 0) {
+                                    echo "<h3 class='text-center'>No applications to show</h3>";
+                                } else {
+                                    foreach ($pdfFiles as $file) {
+                                        if ($file != "." && $file != "..") { ?>
+                                            <li class='list-group-item d-flex justify-content-evenly align-items-center' style='border: none; border-radius: 5px; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease-in-out;'>
+                                                <div class="app-from-text app-btn"> <p>From: <?php for ($i=0; $i<10;$i++) echo "&nbsp;"?> <span style='color: #dc3545 !important;' class='text-decoration-none'><?=$file?></span> </p></div>
+                                                <div class='button-group d-flex'>
+                                                    <button class="btn btn-danger app-btn show-app" type="submit" onclick="window.location.href = '../../admission/admission_pdf/<?=$file?>';">Show Application</button>
+                                                    <form method='post'>
+                                                        <input type='hidden' name='action' value='accept'>
+                                                        <input type='hidden' name='fileName' value='<?=$file?>'>
+                                                        <button type='submit' class='btn btn-danger app-btn'>Accept</button>
+                                                    </form>
+                                                    <form method='post'>
+                                                        <input type='hidden' name='action' value='refuse'>
+                                                        <input type='hidden' name='fileName' value='<?=$file?>'>
+                                                        <button type='submit' class='btn btn-danger app-btn'>Refuse</button>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                        <?php }
+                                    }
                                 }
+
                                 ?>
                             </ul>
                         </div>

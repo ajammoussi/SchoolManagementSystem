@@ -46,7 +46,6 @@ $Schedule=ConnexionBD::getScheduleTeacher();
                 <b></b>
                 <b></b>
                 <a href="dashboardTeacher.php">
-                    <img src="../src/profile%20pic.png" alt="home img " class="nav-vertical-icons">
                     <span class="nav-text">Profile</span>
                 </a>
             </li>
